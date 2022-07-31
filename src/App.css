@@ -1,0 +1,20 @@
+
+@font-face {
+  font-family: 'Font_Book';
+  src: local('Font_Book'), url("./fonts/Circular_Book.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: 'Font_Medium';
+  src: local('Font_Medium'), url("./fonts/Circular_Medium.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: 'Font_Bold';
+  src: local('Font_Bold'), url("./fonts/Circular_Bold.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: 'Font_Black';
+  src: local('Font_Black'), url("./fonts/Circular_Black.ttf") format('truetype');
+}

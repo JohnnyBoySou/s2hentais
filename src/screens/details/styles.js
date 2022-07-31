@@ -94,6 +94,21 @@ export const ImgLarge = styled.img`
   `;
 
 
+
+  export const BtSmall = styled.button`
+  background-color: ${props => props.theme.color.primary};
+  width: 100%;
+  height: 174px;
+  border-radius: 12px;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  font-size: 24px;
+  color:  ${props => props.theme.color.light};
+  font-family: ${props => props.theme.font.medium};
+  `;
+
+
   export const CardInfo = styled.div`
     border: 2px solid  ${props => props.theme.color.border};
     padding: 12px;
@@ -353,11 +368,10 @@ export const Profile = styled.div`
   flex-direction: column;
 `
 
-export const ProfileImg = styled.div`
+export const ProfileImg = styled.img`
   width: 52px;
   height: 52px;
   border-radius: 100px;
-  background: ${props => props.theme.color.border};
 `
 
 export const ProfileTitle = styled.span`

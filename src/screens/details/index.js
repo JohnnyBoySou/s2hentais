@@ -6,7 +6,6 @@ import { ThemeContext } from 'styled-components';
 import { 
   Container, 
   Title,
-  Row,
   Like,
   BtAction,
   Spacing,
@@ -16,7 +15,6 @@ import {
   Gallery,
   CardInfo,
 
-  Column,
   Section,
   Code,
   Hr,
@@ -41,23 +39,20 @@ import {
   ProfileTitle,
   ProfileAddress,
   ProfileDescription,
-  ShowImgs,
-
   ItemBt,
   Alert,
   BtBuy, 
   LineV,
   CardInfoT,
-  ContactBt,
+  BtSmall,
 } from './styles';
 import vid from '../../assets/imgs/loader.gif'
 
-import { ButtonBR, ButtonPR, Ripple, Back } from '../../theme/global'
+import { ButtonPR,  Back } from '../../theme/global'
 
 import { useParams, useNavigate } from 'react-router-dom';
  
-
-import { requestSearch } from '../../api/request/index'
+import { requestSearch, requestImobil } from '../../api/request/index'
 
 import stylesModal from './stylesModal.js'
 
@@ -75,7 +70,10 @@ import { FaMapMarkerAlt } from "react-icons/fa"
 import { FiAlertCircle } from "react-icons/fi"
 import { MdKeyboardArrowRight } from 'react-icons/md'
 
+import { IoIosImages } from 'react-icons/io';
+
 import RowListH from '../../structure/rows/list_h';
+import { Item } from '../../structure/rows/list_h/styles';
 
 const Details = ( ) => {
 
@@ -84,7 +82,9 @@ const Details = ( ) => {
   const { color, font } = useContext(ThemeContext)
   const { id } = useParams();
   const [item, setItem] = useState([])
+  const [imobil, setImobil] = useState([])
   const [load, setLoad] = useState(false)
+  const [loadImobil, setLoadImobil] = useState(false)
   const [like, setLike] = useState(false)
   const [firstStep, setFS] = useState(true)
   const [secondStep, setSS] = useState(false)
@@ -97,9 +97,24 @@ const Details = ( ) => {
     requestSearch(id).then(
       function(item) {
         setItem(item)
+        console.log(item)
         setLoad(false)
+        getImobil(item)
       })
   }
+
+  
+  function getImobil( item ){
+    const id = item.post_author
+    setLoadImobil(true)
+    requestImobil(id).then(
+      function(item) {
+        setImobil(item)
+        console.log(item)
+        setLoadImobil(false)
+      })
+  }
+
 
 
 
@@ -123,7 +138,11 @@ const Details = ( ) => {
    const location = {lat: item?.latitude, long: item?.longitude}
 
    const tax = item?.taxas
-   const value = 43
+   const imobilFoto = imobil?.foto
+
+   const openGallery = () => {
+    setModalImages(!modalImages)
+   }
 
   return (
     <div>
@@ -168,7 +187,7 @@ const Details = ( ) => {
           
           <div style={{width: "75%", }}>
             <ImgLarge src={ item?.imagem1 } onClick={() => setModalImages(true)}/>
-            <ShowImgs>VER FOTOS</ShowImgs>
+        
           </div>
           
           
@@ -178,7 +197,9 @@ const Details = ( ) => {
             <Spacing/>
             <ImgSmall src={ item?.imagem3 }/>
             <Spacing/>
-            <ImgSmall src={ item?.imagem4 }/>
+            <BtSmall onClick={openGallery}>
+              <IoIosImages size={52}/><br/>
+              Ver fotos</BtSmall>
           </div>
 
         </Gallery>
@@ -188,8 +209,8 @@ const Details = ( ) => {
           {firstStep &&
         <CardInfo>
           <div style={{flexDirection: 'row', display: 'flex', justifyContent: 'space-between', }}>
-            {item?.tipo == "Por mês" && <Title style={{margin: 0, marginLeft: 10, fontSize: 28, }}>{item?.categoria}, Aluguel</Title>}
-            {item?.tipo == "Valor Único" && <Title style={{margin: 0, marginLeft: 10, fontSize: 28, }}>{item?.categoria}, Comprar</Title> }
+            {item?.tipo === "Por mês" && <Title style={{margin: 0, marginLeft: 10, fontSize: 28, }}>{item?.categoria}, Aluguel</Title>}
+            {item?.tipo === "Valor Único" && <Title style={{margin: 0, marginLeft: 10, fontSize: 28, }}>{item?.categoria}, Comprar</Title> }
             
             <Code>#{item?.ID}</Code>
           </div>
@@ -240,10 +261,10 @@ const Details = ( ) => {
              
           <Profile style={{border: 'none', marginLeft: 10, marginRight: 10, marginTop: 20, backgroundColor: color.light,}}>
           <div style={{display: 'flex', flexDirection: 'row'}}>
-            <ProfileImg/>
+            <ProfileImg src={ imobil?.foto }/>
             <div style={{display: 'flex', flexDirection: 'column', marginLeft: 10,}}>
-              <ProfileTitle>Arthur Muller</ProfileTitle>
-              <ProfileAddress >Rua Gov Jorge Lacerda</ProfileAddress>
+              <ProfileTitle>{imobil?.nome}</ProfileTitle>
+              <ProfileAddress >{imobil?.endereco}</ProfileAddress>
             </div>
             </div>
         

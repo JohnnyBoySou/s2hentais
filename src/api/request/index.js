@@ -85,3 +85,21 @@ export function requestSearch( identification ){
       return response.data[0]
   }).catch(error => {console.log(error)})
 }
+
+
+
+
+
+
+export function requestImobil( identification ){
+
+    const id = Number(identification)
+    const item = 'id=' + id
+  
+    return Axios.get(`${API_URL}/autor/all?${item}`, {
+        headers: headers
+    }).then(response =>  {
+        return response.data[0]
+    }).catch(error => {console.log(error)})
+  }
+  

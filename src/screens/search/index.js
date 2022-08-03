@@ -1,7 +1,5 @@
 import React, { useContext , useState, useEffect, useRef} from 'react';
 
-import Modal from 'react-modal';
-
 import { ThemeContext } from 'styled-components';
 import { 
   Container, 
@@ -29,15 +27,24 @@ import {
 
   Address,
   Description,
-
-
+  Right,
+  Left,
+  Line,
+  Badget,
+  Sublabel,
+  
+  Input,
+  Rs,
 } from './styles';
 import vid from '../../assets/imgs/loader.gif'
 
-import { ButtonBR, ButtonPR, Ripple, Back } from '../../theme/global'
+import { ButtonBR, ButtonPR, Ripple, Back, Label } from '../../theme/global'
 
 import { useParams } from 'react-router-dom';
  
+
+import { IoBedOutline } from 'react-icons/io5'
+import { BiBath } from 'react-icons/bi'
 
 import { requestSearch } from '../../api/request/index'
 
@@ -77,9 +84,16 @@ const Search = ( ) => {
   useEffect(() => {
     //get()
   }, [])
+
+  const lt = 22
+  
+  const [valor_max, setValorMax] = useState(500)
   
 
 
+  const handleValorMax = (event) => {
+    setValorMax(event.target.value);
+  };
 
 
 
@@ -91,10 +105,60 @@ const Search = ( ) => {
       
 
 
+  <div style={{flexDirection: 'row', display: 'flex'}}>
+
+    <Left>
+      <div style={{display: 'flex', paddingLeft: 20, paddingRight: 20, flexDirection: 'row', justifyContent: 'space-between',}}>
+        <Title style={{fontSize: 24, marginLeft: 8, }}>Filtros</Title>
+        <Badget style={{marginBottom: 20,}}>5 aplicados</Badget>
+      </div>
+      <Line/>
+      <div style={{padding: 20,}}>
+
+        <Sublabel>Valor</Sublabel>
+        <div style={{flexDirection: 'row', display: 'flex'}}>
+            <Rs>R$</Rs>
+          <Input type="number" style={{marginLeft: 6, marginBottom: 25, paddingBottom: 0, fontSize: 36, }} value={valor_max} onChange={handleValorMax} placeholder="1200"/>
+        </div>
+
+        <Sublabel>Quartos</Sublabel>
+
+        <div style={{flexDirection: 'row', display: 'flex'}}>
+          <div style={{flexDirection: 'row', display: 'flex'}}>
+              <Rs><IoBedOutline style={{marginTop: 5,}}/></Rs>
+            <Input type="number" style={{marginLeft: 6,  marginBottom: 25, paddingBottom: 0, fontSize: 36, }} value={valor_max} onChange={handleValorMax} placeholder="1200"/>
+          </div>
+
+          <Spacing style={{width: 60,}}/>
+
+          <div style={{flexDirection: 'row', display: 'flex'}}>
+              <Rs><BiBath style={{marginTop: 5,}}/></Rs>
+            <Input type="number" style={{marginLeft: 6,  marginBottom: 25, paddingBottom: 0, fontSize: 36, }} value={valor_max} onChange={handleValorMax} placeholder="1200"/>
+          </div>
+        </div>
+
+        <div style={{flexDirection: 'row', display: 'flex', marginTop: -10,}}>
+              <Rs><BiBath style={{marginTop: 5,}}/></Rs>
+            <Input type="number" style={{marginLeft: 6,  marginBottom: 25, paddingBottom: 0, fontSize: 36, }} value={valor_max} onChange={handleValorMax} placeholder="1200"/>
+          </div>
+
+        <ButtonPR style={{width: "100%"}}>PESQUISAR</ButtonPR>
+      </div>
 
 
 
 
+    </Left>
+    <Right>
+      <div style={{justifyContent: 'space-between', display: 'flex', flexDirection: 'row'  }}>
+        <Label style={{color: color.title, fontSize: 24,}}>Encontramos <span style={{fontFamily: font.bold,}}>{lt}</span> imóveis.</Label>
+        <Label style={{color: color.title, fontSize: 18, marginTop: 8}}>Mostrando <span style={{fontFamily: font.bold,}}>10</span> de <span style={{fontFamily: font.bold,}}>22</span></Label>
+      </div>
+
+      <ButtonPR style={{ display: 'flex', margin: 'auto', borderRadius: 100,}}>Ver mais</ButtonPR>
+    </Right>
+    
+    </div>
 
 
 
@@ -120,10 +184,7 @@ const Search = ( ) => {
     flexWrap: 'wrap', 
     flexDirection: 'row',  
   }}>
-    
-    {data.length > 1 &&  <div>{data.map((data) => <ListH2 key={data.ID} data={data}/> )}</div> }
-    {data.length == 1 &&  <div><ListH2 data={data[0]}/></div> }
-    </div>
+      </div>
 
 
 

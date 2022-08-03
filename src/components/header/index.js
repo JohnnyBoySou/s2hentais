@@ -126,8 +126,9 @@ const Header = ({ toggleTheme }) => {
     
     <Container>
     
-      <img src={LogoH} style={{width: 160,}} />
-
+      <Link to={'../'}>
+        <img src={LogoH} style={{width: 160,}} />
+      </Link>
       <Search/>
 
     <Buttons>

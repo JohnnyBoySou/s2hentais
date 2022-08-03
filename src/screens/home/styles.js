@@ -12,7 +12,9 @@ export const Container = styled.div`
 export const Main = styled.div`
 padding: 30px;
 padding-top: 0px;
+margin-left: -20px;
 
+background: ${props => props.theme.background};
 `
 
 export const Header = styled.div`

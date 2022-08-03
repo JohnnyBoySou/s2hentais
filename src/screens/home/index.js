@@ -61,6 +61,7 @@ import { Link } from 'react-router-dom';
 import ListV from '../../structure/cards/list_v';
 import ListH2 from '../../structure/cards/list_h_2';
 
+import BannerPhone from '../../new_components/banner_phone';
 
 import Character1 from '../../assets/imgs/character1.png'
 import Sk from '../../structure/skeleton';
@@ -150,6 +151,9 @@ return (
 
     <Container>
 
+      
+
+
     <Header style={{}}>
       <div>
       <Title style={{fontSize: 64, lineHeight: '62px', color: color.light, marginBottom: 20,}}>
@@ -207,7 +211,8 @@ return (
 <DreamsScreen/>
 
 
-<Headline data={data[2]}/>
+<BannerPhone/>
+
 
 
 

@@ -55,11 +55,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { requestSearch, requestImobil } from '../../api/request/index'
 
 import stylesModal from './stylesModal.js'
-
+import share from '../../assets/imgs/share.png'
 
 import { 
   FiHeart, 
-  FiMoreHorizontal, 
   FiShare,
   FiArrowRight
 } from "react-icons/fi";
@@ -71,9 +70,6 @@ import { FiAlertCircle } from "react-icons/fi"
 import { MdKeyboardArrowRight } from 'react-icons/md'
 
 import { IoIosImages } from 'react-icons/io';
-
-import RowListH from '../../structure/rows/list_h';
-import { Item } from '../../structure/rows/list_h/styles';
 
 const Details = ( ) => {
 
@@ -132,6 +128,7 @@ const Details = ( ) => {
   useEffect(() => {
     get()
     handlePlayVideo()
+    setModalShare(true)
    }, [])
 
    const a = false;
@@ -143,6 +140,32 @@ const Details = ( ) => {
    const openGallery = () => {
     setModalImages(!modalImages)
    }
+
+  const modalShareStyles = {
+    overlay: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(255, 255, 255, 0.75)'
+    },
+    content: {
+      position: 'absolute',
+      top: '40px',
+      margin: 'auto',
+      width: '500px',
+      border: '2px solid #00000020',
+      background: '#fff',
+      overflow: 'auto',
+      WebkitOverflowScrolling: 'touch',
+      borderRadius: '12px',
+      outline: 'none',
+      transition: 'linear .2s',
+      padding: 0,
+      zIndex: 999,
+    }
+  }
 
   return (
     <div>
@@ -157,6 +180,11 @@ const Details = ( ) => {
           <Routes>
           <Route>Início</Route>
           <MdKeyboardArrowRight/>
+
+          
+          <Route>Jaraguá do Sul</Route>
+          
+          <MdKeyboardArrowRight/>
           <Route>Imóveis</Route>
           <MdKeyboardArrowRight/>
           <Route style={{textDecoration: 'underline', color: color.title,}}>Detalhes</Route>
@@ -164,10 +192,6 @@ const Details = ( ) => {
 
 
           <Like activity={like}><FiHeart size={18}/></Like>
-          
-          <Spacing/>
-          
-          <BtAction><FiMoreHorizontal size={18}/></BtAction>
           
           <Spacing/>
           
@@ -357,6 +381,29 @@ const Details = ( ) => {
 
 
 
+
+
+    <Modal isOpen={modalShare} closeTimeoutMS={300}
+        onRequestClose={() => setModalShare(false)}
+        style={modalShareStyles}>
+        <img src={share} style={{width: '100%' , }}/>
+        <Title style={{textAlign: 'center', marginTop: 20,}}>Compartilhar</Title>
+        <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap',
+      justifyContent: 'center'}}>
+         
+          <BtAction><FiShare size={18}/></BtAction>
+        <Spacing/>
+          <BtAction><FiShare size={18}/></BtAction>
+          <Spacing/>
+          <BtAction><FiShare size={18}/></BtAction>
+        
+         </div>
+
+
+
+
+
+      </Modal>
 
 
 

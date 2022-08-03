@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   background: ${props => props.theme.background};
   justify-content: space-between;
-  flex-direction: row;
+  flex-direction: column;
   display: flex;
 `;
 
@@ -40,16 +40,13 @@ export const Left = styled.div`
   border-radius: 12px;
 `;
 
-
-
 export const Right = styled.div`
-  width: 50%;
-  background: #00000020;
+  width: 100%;
+  height:360px;
+  background: ${props => props.theme.color.off};
   border-radius: 12px;
-  margin-right: 10px;
+  margin-right: 0px;
 `;
-
-
 
 export const Hr = styled.div`
   height: 2px;
@@ -66,6 +63,10 @@ export const Tag = styled.span`
   background: ${props => props.theme.color.primary}20;
 `;
 
+
+export const Map = styled.div`
+height: 400px;
+`
 
 export const Cords = styled.span`
   font-size: 18px;

@@ -34,6 +34,7 @@ export const Bt = styled.button`
   height: 34px;
   padding: 0px;
   cursor: pointer;
+  margin-right: 10px;
   background: ${props => props.focus ? "white" : "#5B72F2"};
 `
 

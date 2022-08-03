@@ -1,3 +1,4 @@
+import { style } from '@mui/system';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -27,6 +28,38 @@ export const Nav = styled.nav`
 `;
 
 
+export const Left = styled.div`
+  display: flex;
+  flex-direction: column;  
+  width: 32%;
+  border: 2px solid #00000020;
+  padding: 20px 0px;
+  border-radius: 12px;
+`
+
+export const Right = styled.div`
+  margin-left: 10px;
+  border-radius: 12px;
+  width: 60%;
+  padding: 10px 20px;
+`
+
+export const Line = styled.div`
+  width: 100%;
+  height: 2px;
+  background: #00000020;
+`
+
+export const Badget = styled.div`
+  border-radius: 60px;
+  background: ${props => props.theme.color.primary};
+  color: ${props => props.theme.color.light};
+  font-family: ${props => props.theme.font.medium};
+  justify-content: center;
+  text-align: center;
+  display: flex; 
+  padding: 10px 20px;
+`
 
 
 export const Gallery = styled.div`
@@ -269,6 +302,36 @@ export const ValueLabel = styled.span`
 `;
 
 
+export const Input = styled.input`
+  border: 2px solid #00000020;
+  border-radius: 0px 6px 6px 0px;
+  justify-content: center;
+  padding: 4px;
+  background: #fff;
+  font-size: 26px;
+  box-sizing: border-box;
+  font-family: ${props => props.theme.font.medium};
+  color: ${props => props.theme.color.title};
+  margin-bottom: 20px;
+  width: 100%;
+  margin-top: 5px; 
+  padding-left: 16px;
+`;
+
+
+export const Rs = styled.span`
+  font-family: ${props => props.theme.font.medium};
+  color: ${props => props.theme.color.light};
+  justify-content: center;
+  padding: 6px 20px;
+  text-align: center;
+  border-radius: 6px 0px 0px 6px;
+  height:38px;
+  font-size: 28px;
+  margin-top: 6px;
+  margin-right: -10px; 
+  background: ${props => props.theme.color.primary};
+`
 
 
 export const ValueTitle = styled.span`
@@ -281,7 +344,7 @@ export const ValueTitle = styled.span`
 
 export const Sublabel = styled.span`
   font-size: 24px;
-  color: ${props => props.theme.color.title}99;
+  color: ${props => props.theme.color.label};
   font-family: ${props => props.theme.font.book};
 `;
 
@@ -314,18 +377,6 @@ export const InfoSection = styled.section`
 
 `
 
-export const Left = styled.div`
-  margin-right: 10px;
-  width: 70%;
-`
-
-
-export const Right = styled.div`
-  margin-left: 10px;
-  border-radius: 12px;
-  width: 30%;
-
-`
 
 
 export const Route = styled.span`

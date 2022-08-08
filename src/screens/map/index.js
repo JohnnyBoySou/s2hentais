@@ -1,59 +1,140 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect , useRef, useContext, } from 'react';
 
-import GoogleMapReact from 'google-map-react'
 
+
+import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
+ 
 import Marker from './components/Marker';
 
-const Wrapper = styled.main`
-  width: 100%;
-  height: 100%;
-  background: red;
-`;
+import { Container,
+  Left,
+  Right,
+  Mapa,
+  Title,
+  QtdText,
+  UserLocation,
+} from './styles';
+import geoJson from "./geojson.json";
+import ReactDOM from 'react-dom';
 
-const Map = () => {
+import { Link } from 'react-router-dom';
+import { ThemeContext } from 'styled-components';
 
-  const API_KEY = 'AIzaSyCY8dXjxyHFTJt4pEgkfKGPSblXD-OnywE'
+import {Sk2} from '../../structure/skeleton';
+import { requestPreferences } from '../../api/request';
 
-  const LOS_ANGELES_CENTER =  [34.0522, -118.2437];
-  const [places, setPlaces] = useState([])
+import ListH3 from '../../structure/cards/list_h_3'
 
-  const fetchPlaces = async () => {
-    fetch('places.json')
-    .then((response) => response.json())
-    .then((data) => setPlaces(data.results))
-  }
+import {ButtonBR} from '../../theme/global'
 
-  useEffect(() => {
-    fetchPlaces();
-  }, [])
+import { BiCurrentLocation } from 'react-icons/bi'
 
-  if (!places || places.length === 0) {
-    return null;
-  }
+const MapExplore = () => {
+
+    const {color, font} = useContext(ThemeContext)
+
+    mapboxgl.accessToken = 'pk.eyJ1Ijoiam9hb2Rlc291c2EyMSIsImEiOiJjbDZlM3BqMjMwMnJ3M2NvYXJwdWk5M2RoIn0.SuRNU78Z1ub0KS0xIIs5Yw';
+  
+
+    const mapContainer = useRef(null);
+    const map = useRef(null);
+    const [lng, setLng] = useState(-70.9);
+    const [lat, setLat] = useState(42.35);
+    const [zoom, setZoom] = useState(9);
+    
+    const [data, setData] = useState([])
+    const [load, setLoad] = useState(true)
+  
+    const [ customMap, setMap ] = useState({ lng: 292929, lat: 9929292}) 
+
+    const addMap = () => {
+      const map = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [lng, lat],
+        zoom: zoom
+      });
+    
+      map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+      setMap(map)
+     // return () => map.remove();
+    }
+
+    useEffect(() => {
+     addMap()
+     requestPreferences().then(
+      function(item) {
+        setData(item)
+        setLoad(false)
+      })
+    }, [])
+
+
+
+    const setItemsMap = () =>{
+      
+        
+      data.forEach((data) => {
+        const ref = React.createRef();
+        ref.current = document.createElement("div");
+        console.log(data.codigo)
+        ReactDOM.render(
+          <Marker oanClick={markerClicked} data={data} />,
+          ref.current
+        );
+        
+        const coordinates = [data.longitude, data.latitude]
+        new mapboxgl.Marker(ref.current)
+          .setLngLat(coordinates)
+          .addTo(map);
+      });
+      
+      
+        }
+  
+    const markerClicked = (title) => {
+      window.alert(title);
+    };
+  
+
+    const qtds = data?.length
+    const a = true;
+
+    function handleLocation  ( item )  {
+      setLng(item.longitude)
+      setLat(item.latitude)
+      customMap.flyTo({center: [item.latitude, item.longitude], zoom: 9, essential: true,});
+    
+    }
 
   return (
-    <div style={{width: 400, height: 400, 
-      backgroundColor: 'red',}}>
-    <Wrapper>
-      <GoogleMapReact
-        defaultZoom={10}
-        yesIWantToUseGoogleMapApiInternals
-        bootstrapURLKeys={{key: API_KEY}}
-        defaultCenter={LOS_ANGELES_CENTER}
-      >
-        {places.map((place) => (
-          <Marker
-            key={place.id}
-            text={place.name}
-            lat={place.geometry.location.lat}
-            lng={place.geometry.location.lng}
-          />
-        ))}
-      </GoogleMapReact>
-    </Wrapper>
-    </div>
+    <Container>
+      <Left>  
+        <div style={{marginLeft: 10,}}><Title>Encontramos <QtdText>{qtds}</QtdText> imóveis confome suas <Link style={{color: color.primary,}} to="/preferences">preferências</Link> de pesquisa. </Title>
+        <div style={{width: '100%', height: 2, background: '#00000020', marginTop: 20, marginBottom: 20,}}/>
+        </div>
+
+
+        {load && <div>
+          <Sk2/><Sk2/><Sk2/>
+        </div>} 
+        
+        {!load && <div>
+        {data?.map((data) => <ListH3 data={data} handleClick={() => handleLocation(data)} key={data.ID}/>)}
+        </div> }
+      </Left>
+    <Right>
+   
+    <span>Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}</span>
+      {a && <Mapa ref={mapContainer}/>}
+
+      <UserLocation>
+          <BiCurrentLocation />
+
+      </UserLocation>
+    </Right>
+    </Container>
   )
 }
 
-export default Map
+export default MapExplore

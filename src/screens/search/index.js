@@ -54,10 +54,14 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 import ListH2 from '../../structure/cards/list_h_2';
 
+import {Sk} from '../../structure/skeleton';
+
+
+
+
 const headers = {
   'Accept': "application/json"
 }
-
 
 
 const Search = ( ) => {
@@ -95,6 +99,26 @@ const Search = ( ) => {
     setValorMax(event.target.value);
   };
 
+  
+  const handleBath = (e) => {
+    setBath(e.target.value);
+  };
+
+
+  const handleRoom = (e) => {
+    setRoom(e.target.value);
+  };
+
+  
+  const handleSize = (e) => {
+    setSize(e.target.value);
+  };
+
+
+  const [loadGet, setLoadGet] = useState(true)
+  const [bath, setBath] = useState(2)
+  const [room, setRoom] = useState(3)
+  const [size, setSize] = useState(120)
 
 
   return (
@@ -126,20 +150,20 @@ const Search = ( ) => {
         <div style={{flexDirection: 'row', display: 'flex'}}>
           <div style={{flexDirection: 'row', display: 'flex'}}>
               <Rs><IoBedOutline style={{marginTop: 5,}}/></Rs>
-            <Input type="number" style={{marginLeft: 6,  marginBottom: 25, paddingBottom: 0, fontSize: 36, }} value={valor_max} onChange={handleValorMax} placeholder="1200"/>
+            <Input type="number" style={{marginLeft: 6,  marginBottom: 25, paddingBottom: 0, fontSize: 36, }} value={room} onChange={handleRoom} placeholder="1200"/>
           </div>
 
           <Spacing style={{width: 60,}}/>
 
           <div style={{flexDirection: 'row', display: 'flex'}}>
               <Rs><BiBath style={{marginTop: 5,}}/></Rs>
-            <Input type="number" style={{marginLeft: 6,  marginBottom: 25, paddingBottom: 0, fontSize: 36, }} value={valor_max} onChange={handleValorMax} placeholder="1200"/>
+            <Input type="number" style={{marginLeft: 6,  marginBottom: 25, paddingBottom: 0, fontSize: 36, }} value={bath} onChange={handleBath} placeholder="1200"/>
           </div>
         </div>
 
         <div style={{flexDirection: 'row', display: 'flex', marginTop: -10,}}>
               <Rs><BiBath style={{marginTop: 5,}}/></Rs>
-            <Input type="number" style={{marginLeft: 6,  marginBottom: 25, paddingBottom: 0, fontSize: 36, }} value={valor_max} onChange={handleValorMax} placeholder="1200"/>
+            <Input type="number" style={{marginLeft: 6,  marginBottom: 25, paddingBottom: 0, fontSize: 36, }} value={size} onChange={handleSize} placeholder="2"/>
           </div>
 
         <ButtonPR style={{width: "100%"}}>PESQUISAR</ButtonPR>
@@ -154,6 +178,20 @@ const Search = ( ) => {
         <Label style={{color: color.title, fontSize: 24,}}>Encontramos <span style={{fontFamily: font.bold,}}>{lt}</span> imóveis.</Label>
         <Label style={{color: color.title, fontSize: 18, marginTop: 8}}>Mostrando <span style={{fontFamily: font.bold,}}>10</span> de <span style={{fontFamily: font.bold,}}>22</span></Label>
       </div>
+
+      {loadGet && <div style={{ paddingTop: 20, 
+        marginLeft: -10,
+        display: 'flex',
+        flexWrap: 'wrap', 
+        flexDirection: 'row',  
+      }}>
+      <Sk/>
+      <Sk/>
+      <Sk/>
+      <Sk/>
+      <Sk/>
+      <Sk/>
+    </div>}
 
       <ButtonPR style={{ display: 'flex', margin: 'auto', borderRadius: 100,}}>Ver mais</ButtonPR>
     </Right>

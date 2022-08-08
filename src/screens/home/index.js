@@ -64,7 +64,7 @@ import ListH2 from '../../structure/cards/list_h_2';
 import BannerPhone from '../../new_components/banner_phone';
 
 import Character1 from '../../assets/imgs/character1.png'
-import Sk from '../../structure/skeleton';
+import {Sk} from '../../structure/skeleton';
 
 const headers = {'Accept': "application/json"}
 const HomeScreen = () => {

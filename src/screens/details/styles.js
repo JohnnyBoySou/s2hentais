@@ -114,7 +114,6 @@ export const ImgLarge = styled.img`
     padding: 12px;
     border-radius: 10px;
     width: 350px;
-  
     `;
   
 
@@ -259,6 +258,7 @@ export const Tax = styled.div`
   border-radius: 6px;
   background: #FCA07960;
   border: 2px dashed #FCA079;
+  transition: linear .2s;
 `
 
 export const TaxLabel = styled.span`
@@ -274,6 +274,32 @@ export const TaxLi = styled.li`
   font-size: 18px;
   color: ${props => props.theme.color.title};
   font-family: ${props => props.theme.font.book};
+`;
+
+
+
+
+export const Infra = styled.div`
+  padding: 10px;
+  padding-bottom: 0px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px;
+`
+
+
+export const InfraLi = styled.li`
+  font-size: 22px;
+  color: ${props => props.theme.color.label};
+  font-family: ${props => props.theme.font.book};
+`;
+
+export const InfraLabel = styled.span`
+  font-size: 28px;
+  margin-bottom: -5px;
+  color: ${props => props.theme.color.title};
+  font-family: ${props => props.theme.font.medium};
 `;
 
 
@@ -463,3 +489,14 @@ export const ContactBt = styled.button`
   margin-right: 10px;
 `;
 
+
+export const QuickPoup = styled.div`
+  padding: 12px 10px;
+  border-radius: 8px;
+  background: ${props => props.theme.color.background};
+  position: fixed;
+  bottom: 30px;
+  right: 88px;
+  border: 2px solid ${props => props.theme.color.border};
+  transition: linear .4s;
+`

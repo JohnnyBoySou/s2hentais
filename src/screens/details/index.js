@@ -2,6 +2,9 @@ import React, { useContext , useState, useEffect, useRef} from 'react';
 
 import Modal from 'react-modal';
 
+import './animation.css'
+
+import 'mapbox-gl/dist/mapbox-gl.css';
 import { ThemeContext } from 'styled-components';
 import { 
   Container, 
@@ -45,9 +48,17 @@ import {
   LineV,
   CardInfoT,
   BtSmall,
+  InfraLabel, 
+  InfraLi,
+  Infra,
+
+  QuickPoup
+
 } from './styles';
 import vid from '../../assets/imgs/loader.gif'
 
+
+import GalleryFull from '../gallery';
 import { ButtonPR,  Back } from '../../theme/global'
 
 import { useParams, useNavigate } from 'react-router-dom';
@@ -62,6 +73,8 @@ import {
   FiShare,
   FiArrowRight
 } from "react-icons/fi";
+
+import  { HiOutlineReceiptTax } from 'react-icons/hi'
 
 import QuickMap from '../../components/quick_map';
 
@@ -128,13 +141,13 @@ const Details = ( ) => {
   useEffect(() => {
     get()
     handlePlayVideo()
-    setModalShare(true)
    }, [])
 
    const a = false;
    const location = {lat: item?.latitude, long: item?.longitude}
 
    const tax = item?.taxas
+   const infra = item?.infraestrutura
    const imobilFoto = imobil?.foto
 
    const openGallery = () => {
@@ -144,7 +157,7 @@ const Details = ( ) => {
   const modalShareStyles = {
     overlay: {
       position: 'fixed',
-      top: 0,
+      top: 10,
       left: 0,
       right: 0,
       bottom: 0,
@@ -167,8 +180,71 @@ const Details = ( ) => {
     }
   }
 
+  
+  const modalGalleryStyles = {
+    overlay: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(255, 255, 255, 0.75)'
+    },
+    content: {
+      position: 'absolute',
+      top: '0px',
+      left: '0px',
+      right: '0px',
+      bottom: '0px',
+      margin: 'auto',
+      border: '2px solid #00000020',
+      background: '#fff',
+      overflow: 'auto',
+      WebkitOverflowScrolling: 'touch',
+      borderRadius: '0px',
+      outline: 'none',
+      transition: 'linear .2s',
+      padding: 10,
+      paddingTop: 20,
+      zIndex: 999,
+    }
+  }
+
+  const [offset, setOffset] = useState(0);
+
+  const [index, setIndex] = useState(true);
+
+  const onScroll = () => setOffset(window.pageYOffset);
+     
+  useEffect(() => {
+  
+      window.removeEventListener('scroll', onScroll);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      return () => window.removeEventListener('scroll', onScroll);
+     }, []);
+
+
+     useEffect(() => {
+        if(offset > 200){
+          setIndex(false)
+}})
+
+
+  const [taxView, setTaxView] = useState(false)
+  const [canView, setCanView] = useState(false)
+  const handleTax = () => {
+    setCanView(!canView)
+    setTimeout(() => {
+      setTaxView(!taxView)
+    
+    }, 300);
+    }
+      
+     
+  const imagesFull = [ item?.imagem1, item?.imagem2, item?.imagem3,item?.imagem4, item?.imagem5, item?.imagem6, item?.imagem7, item?.imagem8, item?.imagem9, item?.imagem10, item?.imagem11, item?.imagem12, item?.imagem13, item?.imagem14, item?.imagem15, ]
+
   return (
-    <div>
+    <div onScroll={() => setOffset(offset)}>
     <Container>
 
       <Nav>
@@ -333,6 +409,10 @@ const Details = ( ) => {
 
         </CardInfoT>
         }
+
+
+
+
         </Right>
 
       </Section> }
@@ -342,14 +422,20 @@ const Details = ( ) => {
         <Title style={{marginLeft:0, fontSize: 32, marginBottom: 10,}}> {item?.categoria} com {item?.qtd1} {item?.item1}s, {item?.qtd2} {item?.item2} e {item?.area} m2</Title>
         <Address><FaMapMarkerAlt size={20} color={color.primary}/> {item?.bairro}, Rua {item?.rua}</Address>
         <Description>{item?.descricao}</Description>
-        <Hr style={{marginTop: 30, marginLeft: 0, marginRight: 10, marginBottom:30,}}/>
+
+        <Hr style={{marginTop: 50, marginLeft: 0, marginRight: 10, marginBottom:30,}}/>
       
-        
         <QuickMap location={location}/>
 
-        <Hr style={{marginTop: 30, marginLeft: 0, marginRight: 10, marginBottom:30,}}/>
-      
+        <Hr style={{marginTop: 50, marginLeft: 0, marginRight: 10, marginBottom:30,}}/>
+        
+        <Infra>
+          <InfraLabel>Infraestrutura</InfraLabel>
+              <ul>{infra?.map((infra) => <InfraLi key={infra}>{infra}</InfraLi> )}</ul>
+        </Infra>
+
       </Left>
+
       <Right style={{width: "34%"}}>
         <Profile>
           <div style={{display: 'flex', flexDirection: 'row'}}>
@@ -366,6 +452,42 @@ const Details = ( ) => {
         </Profile>
       </Right>
     </InfoSection>   }
+
+
+        <QuickPoup className={canView ? 'pophide' : 'popfade'}>
+        <div style={{display: 'flex', flexDirection: 'column', padding: 12,}}>
+            <div style={{flexDirection: 'row', display: 'flex', justifyContent: 'space-between'}}>
+            <div style={{flexDirection: 'column', display: 'flex'}}>
+              <ValueLabel style={{fontSize: 18,}}>{item?.tipo}</ValueLabel>
+              <ValueTitle style={{fontSize: 28,}}>R$ {item?.valor_mensal}</ValueTitle>
+            </div>
+
+            <Tax onClick={handleTax} style={{background: color.secundary, marginTop: 5, border: 'none'}}>
+              <HiOutlineReceiptTax color="#fff" size={28}/>
+            </Tax>
+
+            
+
+            </div>
+{taxView &&
+            <Tax className={canView ? 'fade' : 'hide'}>
+              <TaxLabel style={{fontSize: 18}}>Taxas adicionais</TaxLabel>
+              <ul>
+
+              {tax?.map((tax) => <TaxLi style={{fontSize: 14}} key={tax}>{tax}</TaxLi> )}
+              
+              </ul>
+            </Tax>
+
+
+            }
+            <BtBuy  onClick={next} style={{fontSize: 18}}>
+              <div style={{width: "79%"}}>Alugar agora</div>
+              <LineV style={{height: 46,}}/>
+              <div style={{width: "20%", marginTop: 6,}}><FiArrowRight size={32}/></div>
+            </BtBuy>
+          </div>
+        </QuickPoup>
 
 
 
@@ -416,18 +538,10 @@ const Details = ( ) => {
 
     <Modal isOpen={modalImages} closeTimeoutMS={300}
         onRequestClose={() => setModalImages(false)}
-        style={stylesModal}>
+        style={modalGalleryStyles}>
+          <GalleryFull imgs={imagesFull}/>
+          <ButtonPR onClick={() => setModalImages(false)} style={{position: 'absolute', top: 20, left: 20, background: "#000"}}>FECHAR</ButtonPR>
 
-        <Title>Galeria de imagens</Title>
-        <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
-          <ImgLarge src={ item?.imagem1}/>
-          <Spacing/>
-          <ImgLarge src={ item?.imagem2}/>
-          <Spacing/>
-          <ImgLarge src={ item?.imagem3} style={{marginTop: 20,}}/>
-          <Spacing/>
-          <ImgLarge src={ item?.imagem4} style={{marginTop: 20,}}/>
-        </div>
       </Modal>
 
 

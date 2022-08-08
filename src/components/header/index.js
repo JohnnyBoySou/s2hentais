@@ -24,6 +24,7 @@ import {
   DarkMode,
   BtDelete,
   BtPolitica,
+  BtLocation,
 } from './styles';
 import Ripples from 'react-ripples'
 import Blur from "react-blur";
@@ -36,6 +37,9 @@ import { Ripple } from '../../theme/global';
 import Preferencias from '../../assets/imgs/busca.png'
 
 import CircularProgress from '@mui/material/CircularProgress';
+
+import { MdKeyboardArrowDown } from 'react-icons/md'
+
 
 const Header = ({ toggleTheme }) => {
 
@@ -125,10 +129,22 @@ const Header = ({ toggleTheme }) => {
   return (
     
     <Container>
-    
+    <div style={{flexDirection: 'row', display: 'flex',}}>
       <Link to={'../'}>
-        <img src={LogoH} style={{width: 160,}} />
+        <div>
+          <img src={LogoH} style={{width: 160,}} />
+        </div>
       </Link>
+
+      <div style={{width: 2, marginLeft: 20, marginRight: 10, marginTop: 12, height: 40, background: "#00000020"}}/>
+        
+      <BtLocation>
+        Jaraguá do Sul
+
+        <MdKeyboardArrowDown size={22} style={{marginLeft: 4, marginBottom: -5,}}/>
+      </BtLocation>
+    </div>
+      
       <Search/>
 
     <Buttons>

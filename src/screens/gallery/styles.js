@@ -4,14 +4,9 @@ export const Container = styled.div`
   background: ${props => props.theme.color.header};
   align-items: center;
   justify-content: space-between;
-  padding: 12px 86px;
   flex-direction: row;
   display: flex;
-  //backdrop-filter: blur(8px);
-  //position: fixed; 
-  //top: 0px;
   z-index: 999;
-  //width: 80%;
 `;
 
 
@@ -52,14 +47,6 @@ export const ButtonLabel = styled.span`
   font-family: Font_Medium, sans-serif;
 `;
 
-
-export const Buttons = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-itens: center;
-
-`
 
 
 export const Spacing = styled.div`
@@ -161,3 +148,82 @@ export const BtDelete = styled.button`
   color: #fff;
 `;
 
+
+
+export const Left = styled.div`
+    width: 25%;
+    padding-right: 20px;
+`
+
+export const Right = styled.div`
+    width: 76%;
+    `
+
+export const ImgLarge = styled.img`
+  background: #00000020;
+  border-radius: 12px;
+  width: 100%;
+  object-fit: cover;
+  transition: linear .2s;
+  height: 620px;
+  &:hover {
+   
+  }
+`
+
+export const ImgSmall = styled.img`
+  background: #00000020;
+  border-radius: 12px;
+  width:90%;
+  align-self: center;
+  height: 200px;
+  transition: linear .2s;
+  margin: 0px 10px 20px 10px;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+`
+
+export const Column = styled.div`
+  flex-direction: column;
+  height: 620px;
+  overflow: auto;
+  justify-content: center;
+  align-items: center; 
+`
+
+
+export const Buttons = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-itens: center;
+  position: absolute;
+  bottom: 10px;
+  right: 120px;
+
+`
+
+
+export const Next = styled.button`
+  border: none;
+  background: #000;
+  color: #fff;
+  border-radius: 30px;
+  padding: 8px 20px;
+  font-family: ${props => props.theme.font.book};
+  font-size: 18px;
+  margin-left: 16px;
+`
+
+
+export const Previus = styled.button`
+  border: none;
+  border-radius: 30px;
+  padding: 8px 20px;
+  background: #000;
+  color: #fff;
+  font-family: ${props => props.theme.font.book};
+  font-size: 18px;
+`

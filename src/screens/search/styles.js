@@ -31,7 +31,7 @@ export const Nav = styled.nav`
 export const Left = styled.div`
   display: flex;
   flex-direction: column;  
-  width: 32%;
+  width: 30%;
   border: 2px solid #00000020;
   padding: 20px 0px;
   border-radius: 12px;
@@ -40,7 +40,7 @@ export const Left = styled.div`
 export const Right = styled.div`
   margin-left: 10px;
   border-radius: 12px;
-  width: 60%;
+  width: 70%;
   padding: 10px 20px;
 `
 

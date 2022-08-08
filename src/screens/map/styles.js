@@ -4,7 +4,6 @@ export const Container = styled.div`
   background: ${props => props.theme.background};
   align-items: center;
   justify-content: space-between;
-  padding: 12px 80px;
   flex-direction: row;
   display: flex;
 `;
@@ -45,20 +44,17 @@ export const Spacing = styled.div`
 
 
 
-
-export const TitleModal = styled.h2`
-  font-size: 32px;
+export const Title = styled.span`
+  font-size: 24px;
   color: ${props => props.theme.color.title};
-  font-family: ${props => props.theme.font.bold};
+  font-family: ${props => props.theme.font.book};
 `;
 
 
 
-export const Title = styled.h2`
-  font-size: 28px;
+export const QtdText = styled.span`
+  font-size: 24px;
   color: ${props => props.theme.color.title};
-  margin-left: 10px;
-  margin-top: 6px;
   font-family: ${props => props.theme.font.bold};
 `;
 
@@ -173,4 +169,52 @@ export const CollectionsTitle = styled.span`
 export const CollSpacing = styled.div`
   height: 200px;
   width: 40px;
+`
+
+
+export const Left =  styled.div`
+  width: 40%;
+  padding: 20px;
+  height: 560px;
+  overflow: auto;
+  transition: linear .2s;
+  ::-webkit-scrollbar {
+    width: 0px;
+  }  
+  &:hover{
+    ::-webkit-scrollbar {
+      width: 8px;
+    }  
+
+  }
+  `
+export const Right =  styled.div`
+  width: 60%;
+  margin-right: -8px;
+  margin-bottom: -10px;
+  background: #37CB84; 
+  border-radius: 12px;
+`
+
+
+export const Mapa = styled.div`
+height: 564px;
+border-radius: 12px;
+width: 100%;
+margin-right: 0px;
+`
+
+export const UserLocation = styled.button`
+  border: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 6px;
+  justify-content: center;
+  text-align: center;
+  position: absolute;
+  bottom: 0px;
+  color: #fff;
+  font-size: 24px;
+  right: 30px;
+  background:  ${props => props.theme.color.primary};
 `

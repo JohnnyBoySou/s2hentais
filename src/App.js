@@ -20,6 +20,7 @@ import CollectionsDetails from './screens/collections';
 import Async from './screens/async'
 
 import Search from './screens/search'
+import Gallery from './screens/gallery'
 
 
 import './App.css';
@@ -61,6 +62,11 @@ const App = () => {
         <Route path="/details/:id" element={<Details/>}/>
         <Route path="/detalhes/:id" element={<Details/>}/>
         
+        <Route path="/gallery/:id" element={<Gallery/>}/>
+        <Route path="/galeria/:id" element={<Gallery/>}/>
+        
+
+
       </Routes>
       </div></ThemeProvider>
     </Router>

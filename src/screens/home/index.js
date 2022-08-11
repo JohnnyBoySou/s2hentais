@@ -34,7 +34,7 @@ import {
   Tag,
 
   Subtitle,
-  Header,
+  Headere,
   LineV,
 
   ActionButtons,
@@ -65,8 +65,12 @@ import BannerPhone from '../../new_components/banner_phone';
 
 import Character1 from '../../assets/imgs/character1.png'
 import {Sk} from '../../structure/skeleton';
+import Header from '../../components/header';
 
 const headers = {'Accept': "application/json"}
+
+
+
 const HomeScreen = () => {
 
   const { color } = useContext(ThemeContext)
@@ -146,6 +150,7 @@ const HomeScreen = () => {
 
 return (
   <Main>
+  <Header />
 
     
 
@@ -154,7 +159,7 @@ return (
       
 
 
-    <Header style={{}}>
+    <Headere style={{}}>
       <div>
       <Title style={{fontSize: 64, lineHeight: '62px', color: color.light, marginBottom: 20,}}>
         O que encontramos <br/>para você! </Title>
@@ -162,7 +167,7 @@ return (
       </div>
       <Image src={Character1}/>
    
-    </Header>
+    </Headere>
 
 
 

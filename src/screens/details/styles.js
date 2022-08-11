@@ -500,3 +500,20 @@ export const QuickPoup = styled.div`
   border: 2px solid ${props => props.theme.color.border};
   transition: linear .4s;
 `
+
+export const QuickNext = styled.div`
+  width: 72px;
+  height: 72px; 
+  border-radius: 90px;
+  color: #fff;
+  font-size: 32px;
+  background: ${props => props.theme.color.green};
+  position: fixed;
+  bottom: 30px;
+  right: 88px;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  transition: linear .4s;
+`

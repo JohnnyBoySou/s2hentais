@@ -17,7 +17,7 @@ margin-left: -20px;
 background: ${props => props.theme.background};
 `
 
-export const Header = styled.div`
+export const Headere = styled.div`
   padding: 100px 80px;
   background:  ${props => props.theme.color.primary};
   border-radius: 16px;

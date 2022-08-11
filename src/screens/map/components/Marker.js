@@ -13,15 +13,17 @@ const Bt = styled.div`
 
 
 
-const Marker = ({ onClick, children, props }) => {
+const Marker = ( props ) => {
  
   const handleClick = () => {
     console.log(props)
   }
 
+  const data = props.data
+
   return (
-    <Bt onClick={handleClick} className="marker">
-      {children} 
+    <Bt>
+      {data?.ID}
     </Bt>
   );
 };

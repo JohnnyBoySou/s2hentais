@@ -52,7 +52,8 @@ import {
   InfraLi,
   Infra,
 
-  QuickPoup
+  QuickPoup,
+  QuickNext
 
 } from './styles';
 import vid from '../../assets/imgs/loader.gif'
@@ -79,7 +80,7 @@ import  { HiOutlineReceiptTax } from 'react-icons/hi'
 import QuickMap from '../../components/quick_map';
 
 import { FaMapMarkerAlt } from "react-icons/fa"
-import { FiAlertCircle } from "react-icons/fi"
+import { FiAlertCircle, FiCheck } from "react-icons/fi"
 import { MdKeyboardArrowRight } from 'react-icons/md'
 
 import { IoIosImages } from 'react-icons/io';
@@ -454,7 +455,8 @@ const Details = ( ) => {
     </InfoSection>   }
 
 
-        <QuickPoup className={canView ? 'pophide' : 'popfade'}>
+     {offset > 200 &&  <QuickPoup className={canView ? 'pophide' : 'popfade'}>
+        
         <div style={{display: 'flex', flexDirection: 'column', padding: 12,}}>
             <div style={{flexDirection: 'row', display: 'flex', justifyContent: 'space-between'}}>
             <div style={{flexDirection: 'column', display: 'flex'}}>
@@ -469,6 +471,8 @@ const Details = ( ) => {
             
 
             </div>
+
+            <div>
 {taxView &&
             <Tax className={canView ? 'fade' : 'hide'}>
               <TaxLabel style={{fontSize: 18}}>Taxas adicionais</TaxLabel>
@@ -481,13 +485,19 @@ const Details = ( ) => {
 
 
             }
+
+
             <BtBuy  onClick={next} style={{fontSize: 18}}>
               <div style={{width: "79%"}}>Alugar agora</div>
               <LineV style={{height: 46,}}/>
               <div style={{width: "20%", marginTop: 6,}}><FiArrowRight size={32}/></div>
             </BtBuy>
-          </div>
-        </QuickPoup>
+          </div></div>
+        </QuickPoup>}
+
+        <QuickNext>
+          <FiCheck style={{alignSelf: 'center'}}/>
+        </QuickNext>
 
 
 

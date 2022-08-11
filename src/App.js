@@ -40,7 +40,7 @@ const App = () => {
     <Router>
       <ThemeProvider theme={theme}><div className="App">
       
-      <Header toggleTheme={toggleTheme} />
+      <Header toggleTheme={toggleTheme}/>
       <Routes>
         <Route path="/" exact element={<Async/>}/>
         

@@ -57,40 +57,65 @@ const MapExplore = () => {
     
       map.addControl(new mapboxgl.NavigationControl(), 'top-right');
       setMap(map)
-     // return () => map.remove();
+
+      geoJson.features.forEach((feature) => {
+        // Create a React ref
+        const ref = React.createRef();
+        // Create a new DOM node and save it to the React ref
+        ref.current = document.createElement("div");
+        // Render a Marker Component on our new DOM node
+        ReactDOM.render(
+          <Marker onClick={markerClicked} feature={feature} />,
+          ref.current
+        );
+  
+        // Create a Mapbox Marker at our new DOM node
+        new mapboxgl.Marker(ref.current)
+          .setLngLat(feature.geometry.coordinates)
+          .addTo(map);
+      });
+
+
+     return () => map.remove();
     }
 
     useEffect(() => {
      addMap()
+     
      requestPreferences().then(
       function(item) {
         setData(item)
         setLoad(false)
       })
+    
     }, [])
 
 
 
-    const setItemsMap = () =>{
-      
-        
-      data.forEach((data) => {
+    const setItemsMap = (item) =>{
+      const data = item
+      console.log(data)
+
+      data.forEach((dat) => {
         const ref = React.createRef();
         ref.current = document.createElement("div");
-        console.log(data.codigo)
-        ReactDOM.render(
-          <Marker oanClick={markerClicked} data={data} />,
-          ref.current
-        );
+
+        console.log(data.ID)
         
         const coordinates = [data.longitude, data.latitude]
+
+
+        ReactDOM.render(
+          <Marker data={data} />,
+          ref.current
+        );
         new mapboxgl.Marker(ref.current)
-          .setLngLat(coordinates)
-          .addTo(map);
-      });
-      
-      
-        }
+        .setLngLat(coordinates)
+        .addTo(map);
+
+
+      })
+      }
   
     const markerClicked = (title) => {
       window.alert(title);

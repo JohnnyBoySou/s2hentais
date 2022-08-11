@@ -17,7 +17,8 @@ import { Container,
 import geoJson from "./geojson.json";
 import ReactDOM from 'react-dom';
 
-import { Link } from 'react-router-dom';
+
+import { Link, useNavigate } from 'react-router-dom';
 import { ThemeContext } from 'styled-components';
 
 import {Sk2} from '../../structure/skeleton';
@@ -27,6 +28,9 @@ import ListH3 from '../../structure/cards/list_h_3'
 
 import {ButtonBR} from '../../theme/global'
 
+
+import  ImgSidebar from '../../assets/imgs/sidebar.png'
+
 import { BiCurrentLocation } from 'react-icons/bi'
 
 const MapExplore = () => {
@@ -35,87 +39,78 @@ const MapExplore = () => {
 
     mapboxgl.accessToken = 'pk.eyJ1Ijoiam9hb2Rlc291c2EyMSIsImEiOiJjbDZlM3BqMjMwMnJ3M2NvYXJwdWk5M2RoIn0.SuRNU78Z1ub0KS0xIIs5Yw';
   
-
+    const navigate = useNavigate()
     const mapContainer = useRef(null);
     const map = useRef(null);
-    const [lng, setLng] = useState(-70.9);
-    const [lat, setLat] = useState(42.35);
-    const [zoom, setZoom] = useState(9);
+    const [lng, setLng] = useState(-26.4868);
+    const [lat, setLat] = useState(-49.069);
+    const [zoom, setZoom] = useState(2);
     
     const [data, setData] = useState([])
     const [load, setLoad] = useState(true)
   
     const [ customMap, setMap ] = useState({ lng: 292929, lat: 9929292}) 
 
-    const addMap = () => {
+    function handleDetails  ( item ) {
+      console.log('handledetlais')
+      navigate(`/details/${item.ID}`)
+    }
+
+
+  const addMap = (item) => {
+    if(item.length > 1){
+      
+      //add map
       const map = new mapboxgl.Map({
         container: mapContainer.current,
         style: 'mapbox://styles/mapbox/streets-v11',
         center: [lng, lat],
         zoom: zoom
       });
-    
-      map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+
+      map.addControl(
+        new mapboxgl.GeolocateControl({
+          positionOptions: {
+          enableHighAccuracy: true
+          },
+            trackUserLocation: true,
+            showUserHeading: true
+          })
+      );
+
+      map.addControl(new mapboxgl.NavigationControl(), 'top-right',)
+        
       setMap(map)
 
-      geoJson.features.forEach((feature) => {
-        // Create a React ref
-        const ref = React.createRef();
-        // Create a new DOM node and save it to the React ref
-        ref.current = document.createElement("div");
-        // Render a Marker Component on our new DOM node
-        ReactDOM.render(
-          <Marker onClick={markerClicked} feature={feature} />,
+
+      item.forEach((item) => {
+
+         const ref = React.createRef();
+         ref.current = document.createElement("div");
+          ReactDOM.render(
+          <Marker handleDetails={handleDetails} onClick={markerClicked} data={item}  />,
           ref.current
         );
-  
-        // Create a Mapbox Marker at our new DOM node
-        new mapboxgl.Marker(ref.current)
-          .setLngLat(feature.geometry.coordinates)
+
+      new mapboxgl.Marker(ref.current)
+          .setLngLat([item.longitude, item.latitude])
           .addTo(map);
       });
 
 
      return () => map.remove();
-    }
+    }else{console.log('error request')}}
 
     useEffect(() => {
-     addMap()
-     
-     requestPreferences().then(
+      requestPreferences().then(
       function(item) {
         setData(item)
         setLoad(false)
+        addMap(item)
       })
     
     }, [])
 
-
-
-    const setItemsMap = (item) =>{
-      const data = item
-      console.log(data)
-
-      data.forEach((dat) => {
-        const ref = React.createRef();
-        ref.current = document.createElement("div");
-
-        console.log(data.ID)
-        
-        const coordinates = [data.longitude, data.latitude]
-
-
-        ReactDOM.render(
-          <Marker data={data} />,
-          ref.current
-        );
-        new mapboxgl.Marker(ref.current)
-        .setLngLat(coordinates)
-        .addTo(map);
-
-
-      })
-      }
   
     const markerClicked = (title) => {
       window.alert(title);
@@ -123,40 +118,48 @@ const MapExplore = () => {
   
 
     const qtds = data?.length
-    const a = true;
 
-    function handleLocation  ( item )  {
+
+    const handleLocation =  ( item ) => {
+      console.log(item)
       setLng(item.longitude)
       setLat(item.latitude)
       customMap.flyTo({center: [item.latitude, item.longitude], zoom: 9, essential: true,});
     
     }
 
+    const heightMax = window.innerHeight;
   return (
-    <Container>
-      <Left>  
+
+
+    <Container style={{height: heightMax}}>
+      <Left style={{height: heightMax}} >  
         <div style={{marginLeft: 10,}}><Title>Encontramos <QtdText>{qtds}</QtdText> imóveis confome suas <Link style={{color: color.primary,}} to="/preferences">preferências</Link> de pesquisa. </Title>
         <div style={{width: '100%', height: 2, background: '#00000020', marginTop: 20, marginBottom: 20,}}/>
         </div>
 
 
         {load && <div>
-          <Sk2/><Sk2/><Sk2/>
+          <Sk2/><Sk2/><Sk2/> 
+          
         </div>} 
         
         {!load && <div>
         {data?.map((data) => <ListH3 data={data} handleClick={() => handleLocation(data)} key={data.ID}/>)}
         </div> }
+
+        <div style={{flexDirection: 'column', display: 'flex', justifyItems: 'center', }}>
+
+          <Title style={{fontFamily: 'Font_Medium', textAlign: 'center', marginTop: 50}}>Você chegou ao final da lista!</Title>
+          <img style={{width: 200, height: 130, objectFit: 'cover', borderRadius: 12, marginTop: 10, marginBottom: 20,alignSelf: 'center'}} src={ImgSidebar}/>
+        </div>
       </Left>
     <Right>
    
-    <span>Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}</span>
-      {a && <Mapa ref={mapContainer}/>}
+    
+      <Mapa style={{height: 0.97 * heightMax}} ref={mapContainer}/>
 
-      <UserLocation>
-          <BiCurrentLocation />
-
-      </UserLocation>
+     
     </Right>
     </Container>
   )

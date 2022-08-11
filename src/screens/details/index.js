@@ -53,7 +53,9 @@ import {
   Infra,
 
   QuickPoup,
-  QuickNext
+  QuickNext,
+  QuickTour,
+
 
 } from './styles';
 import vid from '../../assets/imgs/loader.gif'
@@ -72,7 +74,8 @@ import share from '../../assets/imgs/share.png'
 import { 
   FiHeart, 
   FiShare,
-  FiArrowRight
+  FiArrowRight,
+  FiX,
 } from "react-icons/fi";
 
 import  { HiOutlineReceiptTax } from 'react-icons/hi'
@@ -241,7 +244,7 @@ const Details = ( ) => {
     }, 300);
     }
       
-     
+  const [popupview, setPopupView] = useState(false)
   const imagesFull = [ item?.imagem1, item?.imagem2, item?.imagem3,item?.imagem4, item?.imagem5, item?.imagem6, item?.imagem7, item?.imagem8, item?.imagem9, item?.imagem10, item?.imagem11, item?.imagem12, item?.imagem13, item?.imagem14, item?.imagem15, ]
 
   return (
@@ -336,6 +339,7 @@ const Details = ( ) => {
               </ul>
             </Tax>
 
+
             <div style={{display: 'flex', flexDirection: 'row', marginTop: 20,}}>
               <FiAlertCircle style={{marginRight: 10,}} size={32} color="#00000080"/>
               <Alert>Esses valores podem estar sujeitos a mudanças.</Alert>
@@ -422,7 +426,16 @@ const Details = ( ) => {
       <Left>
         <Title style={{marginLeft:0, fontSize: 32, marginBottom: 10,}}> {item?.categoria} com {item?.qtd1} {item?.item1}s, {item?.qtd2} {item?.item2} e {item?.area} m2</Title>
         <Address><FaMapMarkerAlt size={20} color={color.primary}/> {item?.bairro}, Rua {item?.rua}</Address>
-        <Description>{item?.descricao}</Description>
+        <Description>{item?.descricao}
+        
+        
+        </Description>
+        <Infra>
+          <InfraLabel>Infraestrutura</InfraLabel>
+             <div style={{flexDirection: 'row', marginTop: 10, display: 'flex'}}>
+                <InfraLi>Este imóvel possuí </InfraLi>
+               {infra?.map((infra) => <InfraLi key={infra}>{infra}, </InfraLi> )}
+             </div></Infra>
 
         <Hr style={{marginTop: 50, marginLeft: 0, marginRight: 10, marginBottom:30,}}/>
       
@@ -430,10 +443,6 @@ const Details = ( ) => {
 
         <Hr style={{marginTop: 50, marginLeft: 0, marginRight: 10, marginBottom:30,}}/>
         
-        <Infra>
-          <InfraLabel>Infraestrutura</InfraLabel>
-              <ul>{infra?.map((infra) => <InfraLi key={infra}>{infra}</InfraLi> )}</ul>
-        </Infra>
 
       </Left>
 
@@ -455,7 +464,7 @@ const Details = ( ) => {
     </InfoSection>   }
 
 
-     {offset > 200 &&  <QuickPoup className={canView ? 'pophide' : 'popfade'}>
+     {popupview && <QuickPoup className='fade'> 
         
         <div style={{display: 'flex', flexDirection: 'column', padding: 12,}}>
             <div style={{flexDirection: 'row', display: 'flex', justifyContent: 'space-between'}}>
@@ -464,30 +473,26 @@ const Details = ( ) => {
               <ValueTitle style={{fontSize: 28,}}>R$ {item?.valor_mensal}</ValueTitle>
             </div>
 
-            <Tax onClick={handleTax} style={{background: color.secundary, marginTop: 5, border: 'none'}}>
-              <HiOutlineReceiptTax color="#fff" size={28}/>
-            </Tax>
 
             
 
             </div>
 
             <div>
-{taxView &&
-            <Tax className={canView ? 'fade' : 'hide'}>
+            <Tax className='left' style={{paddingLeft: 5}}>
               <TaxLabel style={{fontSize: 18}}>Taxas adicionais</TaxLabel>
               <ul>
 
-              {tax?.map((tax) => <TaxLi style={{fontSize: 14}} key={tax}>{tax}</TaxLi> )}
+              {tax?.map((tax) => <TaxLi style={{fontSize: 14, marginLeft: -5,}} key={tax}>{tax}</TaxLi> )}
               
               </ul>
             </Tax>
 
+            
 
-            }
 
-
-            <BtBuy  onClick={next} style={{fontSize: 18}}>
+            <BtBuy  onClick={next} style={{
+              fontSize: 18, width: '100%'}}>
               <div style={{width: "79%"}}>Alugar agora</div>
               <LineV style={{height: 46,}}/>
               <div style={{width: "20%", marginTop: 6,}}><FiArrowRight size={32}/></div>
@@ -495,10 +500,13 @@ const Details = ( ) => {
           </div></div>
         </QuickPoup>}
 
-        <QuickNext>
-          <FiCheck style={{alignSelf: 'center'}}/>
+        <QuickNext onClick={() => setPopupView(!popupview)}>
+          {!popupview && <FiCheck style={{alignSelf: 'center'}}/>}
+          {popupview && <FiX style={{alignSelf: 'center'}}/>}
+
         </QuickNext>
 
+        {a && <QuickTour src={item.imagem2}/>}
 
 
 

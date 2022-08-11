@@ -36,11 +36,13 @@ const App = () => {
     setTheme(theme.title === 'light' ? dark : light);
   };
 
+  const a = false
+  
   return (
     <Router>
       <ThemeProvider theme={theme}><div className="App">
       
-      <Header toggleTheme={toggleTheme}/>
+      {a && <Header toggleTheme={toggleTheme}/>}
       <Routes>
         <Route path="/" exact element={<Async/>}/>
         

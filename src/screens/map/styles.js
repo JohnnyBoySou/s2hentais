@@ -68,46 +68,6 @@ export const Sublabel = styled.span`
 `;
 
 
-export const Location = styled.div`
-    flexDirection: row;
-`
-
-export const Local = styled.div`
-    padding: 12px 20px;
-    justify-content: center;
-    align-content: center;
-    margin-top: 16px;
-`
-
-export const Preferences = styled.div`
-    border: 2px solid #00000020;
-    border-radius: 12px;
-    padding: 12px 20px;
-    margin-bottom: 16px;
-`
-
-export const Type = styled.div`
-    padding: 12px 20px;
-    justify-content: center;
-    align-content: center;
-    margin-top: 16px;
-`
-
-
-export const Amount = styled.div`   
-    padding: 12px 20px;
-    justify-content: center;
-    align-content: center;
-    margin-top: 16px;
-`
-
-export const About = styled.div`   
-    padding: 12px 20px;
-    justify-content: center;
-    align-content: center;
-    margin-top: 16px;
-`
-
 
 export const Input = styled.input`
   border: none;
@@ -127,55 +87,9 @@ export const Input = styled.input`
 `;
 
 
-
-export const Collections = styled.div`
-  background: ${props => props.theme.background};
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 80px;
-
-`
-
-
-export const CollectionsRow = styled.div`
-  background: ${props => props.theme.background};
-  flex-direction: row;
-  display: flex;
-  justify-content: space-between;
-`
-
-
-export const CollectionsCard = styled.div`
-  background: ${props => props.color};
-  justify-content: space-between;
-  padding: 20px 20px;
-  border-radius: 8px;
-  flex-grow: 1;
-  width: 50%;
-  margin-right: 20px;
-  width: 300px;
-
-`
-
-
-export const CollectionsTitle = styled.span`
-  font-size: 54px;
-  line-height: 50px;
-  color: ${props => props.theme.color.light};
-  font-family: ${props => props.theme.font.bold};
-`;
-
-
-export const CollSpacing = styled.div`
-  height: 200px;
-  width: 40px;
-`
-
-
 export const Left =  styled.div`
   width: 40%;
   padding: 20px;
-  height: 560px;
   overflow: auto;
   transition: linear .2s;
   ::-webkit-scrollbar {
@@ -197,8 +111,7 @@ export const Right =  styled.div`
 `
 
 
-export const Mapa = styled.div`
-height: 564px;
+export const Mapa = styled.div` 
 border-radius: 12px;
 width: 100%;
 margin-right: 0px;

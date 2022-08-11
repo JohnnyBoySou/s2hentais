@@ -280,7 +280,6 @@ export const TaxLi = styled.li`
 
 
 export const Infra = styled.div`
-  padding: 10px;
   padding-bottom: 0px;
   margin-top: 10px;
   display: flex;
@@ -289,8 +288,9 @@ export const Infra = styled.div`
 `
 
 
-export const InfraLi = styled.li`
+export const InfraLi = styled.span`
   font-size: 22px;
+  padding-right: 8px;
   color: ${props => props.theme.color.label};
   font-family: ${props => props.theme.font.book};
 `;
@@ -495,8 +495,9 @@ export const QuickPoup = styled.div`
   border-radius: 8px;
   background: ${props => props.theme.color.background};
   position: fixed;
-  bottom: 30px;
+  bottom: 110px;
   right: 88px;
+  width: 300px;
   border: 2px solid ${props => props.theme.color.border};
   transition: linear .4s;
 `
@@ -516,4 +517,16 @@ export const QuickNext = styled.div`
   flex-direction: row;
   justify-content: center;
   transition: linear .4s;
+  cursor: pointer;
 `
+export const QuickTour = styled.img`
+  width: 134px;
+  height: 200px;
+  border-radius: 12px;
+  background: #fff;
+  border: 4px solid #fff;
+  object-fit: cover;
+  position: fixed;
+  bottom: 30px;
+  right: 80px;
+  `

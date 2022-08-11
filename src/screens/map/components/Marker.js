@@ -1,29 +1,49 @@
 import React from 'react';
 import styled from 'styled-components';
-
-const Bt = styled.div`
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 6px;
-  cursor: ${(props) => (props.onClick ? 'pointer' : 'default')};
-  &:hover {
-    z-index: 1;
-  }
-`;
+import { Popup, Bt, Img,
+  Label,
+  Title,
+  Arrow,
 
 
 
-const Marker = ( props ) => {
+} from './styles'
+
+import './animation.css'
+
+import { FiArrowRight} from 'react-icons/fi'
+
+import { useNavigate } from 'react-router-dom'
+
+const Marker = ( props, handleDetails ) => {
  
+  const [popup, setPoup] = React.useState(false)
   const handleClick = () => {
-    console.log(props)
+    setPoup(!popup)
+    console.log(handleDetails)
   }
 
-  const data = props.data
+  //const navigate = useNavigate()
+  const item = props.data
+
 
   return (
-    <Bt>
-      {data?.ID}
+    <Bt onClick={handleClick}>
+      <Img src={item.imagem1}/>
+      {popup && <Popup className='fade'>
+
+        <div style={{flexDirection: 'column', display: 'flex'}}>
+      {item?.tipo === "Por mês" && <Title>{item?.categoria}, Aluguel</Title>}
+      {item?.tipo === "Valor Único" && <Title>{item?.categoria}, Comprar</Title> }
+            
+        <Label>R$ {item.valor_mensal}</Label>
+        </div>
+
+        <Arrow onClick={handleDetails}>
+          <FiArrowRight style={{marginTop: 3,}}/>
+
+        </Arrow>
+        </Popup>}
     </Bt>
   );
 };

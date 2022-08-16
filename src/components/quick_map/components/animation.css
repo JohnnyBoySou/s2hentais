@@ -1,6 +1,6 @@
 .fade {
     animation-name: fadded;
-    animation-duration: .2s;
+    animation-duration: .3s;
     animation-fill-mode: forwards;
 
 }
@@ -10,14 +10,6 @@
     animation-fill-mode: forwards;
 
 }
-.left {
-    animation-name: lefta;
-    animation-duration: .2s;
-    animation-fill-mode: forwards;
-    animation-delay: 300;
-
-}
-
 
 .popfade{
     animation-name: popheight;
@@ -38,7 +30,7 @@
 @keyframes fadded {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateX(-20px);
         display: none;
         visibility: hidden;
     }
@@ -46,7 +38,7 @@
         opacity: 1;
         display: block;
         visibility: visible;
-        transform: translateY(0px);
+        transform: translateX(0px);
     }
   }
   
@@ -75,48 +67,3 @@
         height: 150px;
      }
   }
-
-
-  
-@keyframes lefta {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-        display: none;
-        visibility: hidden;
-    }
-    to {
-        opacity: 1;
-        display: block;
-        visibility: visible;
-        transform: translateX(0px);
-    }
-  }
-  
-
-  .br {
-    animation-name: border;
-    animation-duration: 8s;
-    animation-iteration-count: infinite;
-    animation-fill-mode: forwards;
-
-}
-
-
-@keyframes border {
-    0% {
-       border: 6px solid #FF9784;
-       transform: scale(1.08);
-    }
-
-    30% {
-        border: 6px solid #F1F1F1;
-        transform: scale(1);
-     }
-    100% {
-        
-       transform: scale(1.08);
-       border: 6px solid #FF9784;
-    }
-  }
-  

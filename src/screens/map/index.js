@@ -68,16 +68,7 @@ const MapExplore = () => {
         zoom: zoom
       });
 
-      map.addControl(
-        new mapboxgl.GeolocateControl({
-          positionOptions: {
-          enableHighAccuracy: true
-          },
-            trackUserLocation: true,
-            showUserHeading: true
-          })
-      );
-
+      map.addControl(new mapboxgl.GeolocateControl({positionOptions: {enableHighAccuracy: true},trackUserLocation: true,showUserHeading: true}));
       map.addControl(new mapboxgl.NavigationControl(), 'top-right',)
         
       setMap(map)
@@ -88,7 +79,7 @@ const MapExplore = () => {
          const ref = React.createRef();
          ref.current = document.createElement("div");
           ReactDOM.render(
-          <Marker handleDetails={handleDetails} onClick={markerClicked} data={item}  />,
+          <Marker handleDetails={handleDetails} data={item}  />,
           ref.current
         );
 
@@ -112,16 +103,11 @@ const MapExplore = () => {
     }, [])
 
   
-    const markerClicked = (title) => {
-      window.alert(title);
-    };
-  
 
     const qtds = data?.length
 
 
     const handleLocation =  ( item ) => {
-      console.log(item)
       setLng(item.longitude)
       setLat(item.latitude)
       customMap.flyTo({center: [item.latitude, item.longitude], zoom: 9, essential: true,});

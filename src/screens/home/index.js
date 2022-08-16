@@ -60,12 +60,16 @@ import Headline from '../../new_components/headline';
 import { Link } from 'react-router-dom';
 import ListV from '../../structure/cards/list_v';
 import ListH2 from '../../structure/cards/list_h_2';
+import ListH4 from '../../structure/cards/list_h_4';
 
 import BannerPhone from '../../new_components/banner_phone';
 
 import Character1 from '../../assets/imgs/character1.png'
 import {Sk} from '../../structure/skeleton';
 import Header from '../../components/header';
+
+import Location from '../../components/location';
+import QuickSearch from '../../components/quick_search'
 
 const headers = {'Accept': "application/json"}
 
@@ -82,7 +86,6 @@ const HomeScreen = () => {
   
   
   const getPreferences = () => {
-    console.log('getpreferences')
     setLoadGet(true)
     try{
       const JSONA = localStorage.getItem('@preferences')
@@ -131,8 +134,8 @@ const HomeScreen = () => {
 
 
     const [modalIsOpen, setIsOpen] = useState(false);
-    const  openModal = () => {setIsOpen(true)}
-    const  closeModal = () => {setIsOpen(false)}
+    const openModal = () => {setIsOpen(true)}
+    const closeModal = () => {setIsOpen(false)}
     const a = false
 
 
@@ -151,7 +154,6 @@ const HomeScreen = () => {
 return (
   <Main>
   <Header />
-
     
 
     <Container>
@@ -209,7 +211,7 @@ return (
     flexDirection: 'row',  
   }}>
       
-    {data.map((data) => <ListH2 key={data.ID} data={data}/> )}
+    {data.map((data) => <ListH4 key={data.ID} data={data}/> )}
   </div>}
 
 

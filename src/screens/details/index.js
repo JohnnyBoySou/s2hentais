@@ -3,6 +3,8 @@ import React, { useContext , useState, useEffect, useRef} from 'react';
 import Modal from 'react-modal';
 
 import './animation.css'
+import AdPoster from '../../components/adposter';
+import Similar from '../../components/similar'
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { ThemeContext } from 'styled-components';
@@ -56,17 +58,20 @@ import {
   QuickNext,
   QuickTour,
 
+  PopularBt,
+
 
 } from './styles';
 import vid from '../../assets/imgs/loader.gif'
 
 
 import GalleryFull from '../gallery';
-import { ButtonPR,  Back } from '../../theme/global'
+import { ButtonPR,  Back, ButtonBR } from '../../theme/global'
 
+import { BsFillLightningChargeFill } from 'react-icons/bs'
 import { useParams, useNavigate } from 'react-router-dom';
  
-import { requestSearch, requestImobil } from '../../api/request/index'
+import { requestSearch, requestImobil , requestPreferences} from '../../api/request/index'
 
 import stylesModal from './stylesModal.js'
 import share from '../../assets/imgs/share.png'
@@ -87,6 +92,7 @@ import { FiAlertCircle, FiCheck } from "react-icons/fi"
 import { MdKeyboardArrowRight } from 'react-icons/md'
 
 import { IoIosImages } from 'react-icons/io';
+import Header from '../../components/header';
 
 const Details = ( ) => {
 
@@ -96,7 +102,7 @@ const Details = ( ) => {
   const { id } = useParams();
   const [item, setItem] = useState([])
   const [imobil, setImobil] = useState([])
-  const [load, setLoad] = useState(false)
+  const [load, setLoad] = useState(true)
   const [loadImobil, setLoadImobil] = useState(false)
   const [like, setLike] = useState(false)
   const [firstStep, setFS] = useState(true)
@@ -110,11 +116,26 @@ const Details = ( ) => {
     requestSearch(id).then(
       function(item) {
         setItem(item)
-        console.log(item)
         setLoad(false)
         getImobil(item)
       })
   }
+
+
+    const [itemSimilar, setItemSimilar] = useState([])
+    const quickItem = [item[1] , item[2] , item[3]]
+
+    function getSimiliar(){
+      setLoad(true)
+      requestPreferences().then(
+        function(item) {
+          setItemSimilar(item)
+          setLoad(false)
+        })}
+
+    useEffect(() => {
+      getSimiliar()
+    }, [])
 
   
   function getImobil( item ){
@@ -123,7 +144,6 @@ const Details = ( ) => {
     requestImobil(id).then(
       function(item) {
         setImobil(item)
-        console.log(item)
         setLoadImobil(false)
       })
   }
@@ -249,11 +269,17 @@ const Details = ( ) => {
 
   return (
     <div onScroll={() => setOffset(offset)}>
+    <Header/>
     <Container>
 
       <Nav>
+        <div style={{flexDirection: 'row', display: 'flex'}}>
         <Back onClick={() => navigate(-1)}>VOLTAR</Back>
-
+        <PopularBt className='br'>
+          <BsFillLightningChargeFill size={12} color={color.secundary} 
+          style={{background: "#fff", padding: 4, marginBottom: -3, marginRight: 8, borderRadius: 12,}}/>
+          POPULAR</PopularBt>
+          </div>
         <div style={{display: 'flex', }}>
 
 
@@ -261,7 +287,7 @@ const Details = ( ) => {
           <Route>Início</Route>
           <MdKeyboardArrowRight/>
 
-          
+           
           <Route>Jaraguá do Sul</Route>
           
           <MdKeyboardArrowRight/>
@@ -439,23 +465,20 @@ const Details = ( ) => {
 
         <Hr style={{marginTop: 50, marginLeft: 0, marginRight: 10, marginBottom:30,}}/>
       
-        <QuickMap location={location}/>
-
-        <Hr style={{marginTop: 50, marginLeft: 0, marginRight: 10, marginBottom:30,}}/>
-        
+        {!load && <QuickMap item={item}/> }
 
       </Left>
 
       <Right style={{width: "34%"}}>
         <Profile>
           <div style={{display: 'flex', flexDirection: 'row'}}>
-            <ProfileImg/>
+            <ProfileImg src={imobil?.foto}/>
             <div style={{display: 'flex', flexDirection: 'column', marginLeft: 10,}}>
-              <ProfileTitle>Arthur Muller</ProfileTitle>
-              <ProfileAddress>Rua Gov Jorge Lacerda</ProfileAddress>
+              <ProfileTitle>{imobil?.nome}</ProfileTitle>
+              <ProfileAddress>{imobil?.endereco}</ProfileAddress>
             </div>
             </div>
-          <ProfileDescription>Com mais de 12 anos no mercado imóbiliario Arthur Muller conta com mais de 10 mil imóveis vendidos.</ProfileDescription>
+          <ProfileDescription>{imobil?.descricao  }</ProfileDescription>
           
         <ButtonPR>VER MAIS</ButtonPR>
 
@@ -463,8 +486,15 @@ const Details = ( ) => {
       </Right>
     </InfoSection>   }
 
+    {!load &&  <Hr style={{marginTop: 50, marginLeft: 0, marginRight: 10, marginBottom:50,}}/>}
+        
 
-     {popupview && <QuickPoup className='fade'> 
+    {!load && <AdPoster/>}
+    
+    {!load &&  <Hr style={{marginTop: 50, marginLeft: 0, marginRight: 10, marginBottom:20,}}/>}
+    {!load && <Similar data={itemSimilar}/>}
+    
+    {popupview && <QuickPoup className='fade'> 
         
         <div style={{display: 'flex', flexDirection: 'column', padding: 12,}}>
             <div style={{flexDirection: 'row', display: 'flex', justifyContent: 'space-between'}}>
@@ -507,7 +537,6 @@ const Details = ( ) => {
         </QuickNext>
 
         {a && <QuickTour src={item.imagem2}/>}
-
 
 
     </Container>

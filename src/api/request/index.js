@@ -103,3 +103,12 @@ export function requestImobil( identification ){
     }).catch(error => {console.log(error)})
   }
   
+
+  
+  
+export function getPreferences(){
+    const JSONstring =  JSON.parse(localStorage.getItem('@preferences'))
+    return JSONstring;  
+}
+  
+  

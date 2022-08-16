@@ -22,6 +22,10 @@ import Async from './screens/async'
 import Search from './screens/search'
 import Gallery from './screens/gallery'
 
+//Dashboard 
+import DashboardHome from './dashboard/home';
+import AddImobiil from './dashboard/add_imobil';
+
 
 import './App.css';
 import './fonts/Circular_Book.ttf'
@@ -66,6 +70,13 @@ const App = () => {
         
         <Route path="/gallery/:id" element={<Gallery/>}/>
         <Route path="/galeria/:id" element={<Gallery/>}/>
+
+        
+        <Route path="/dashboard/add-imovel" exact element={<AddImobiil/>}/>
+        <Route path="/dashboard/add/imovel" exact element={<AddImobiil/>}/>
+
+        <Route path="/dashboard/home" exact element={<DashboardHome/>}/>
+        <Route path="/dashboard" exact element={<DashboardHome/>}/>
         
 
 

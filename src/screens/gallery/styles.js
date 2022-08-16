@@ -177,6 +177,7 @@ export const ImgSmall = styled.img`
   width:90%;
   align-self: center;
   height: 200px;
+  object-fit: cover;
   transition: linear .2s;
   margin: 0px 10px 20px 10px;
 

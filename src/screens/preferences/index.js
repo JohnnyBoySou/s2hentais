@@ -94,7 +94,7 @@ const PreferencesScreen = () => {
   const [savename, setSaveName] = usePersistedState('name', name)
 
 
-  const preferences = {'name': name, 'valor_max': valor_max, 'item1': item1, 'itemview': itemView, 'alugar': aluguel, 'comprar': comprar,}
+  const preferences = {'name': name, 'location': 'Jaraguá do Sul', 'valor_max': valor_max, 'item1': item1, 'itemview': itemView, 'alugar': aluguel, 'comprar': comprar,}
 
 
   const saveData = () => {

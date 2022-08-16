@@ -65,7 +65,7 @@ export const BtArrow = styled.button`
 
 
 export const Title = styled.span`
-  color: ${props => props.theme.color.label};   
+  color: ${props => props.theme.color.medium};   
   display: flex;
   font-size: 18px;
   margin-top: 10px;

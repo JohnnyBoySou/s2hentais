@@ -530,3 +530,19 @@ export const QuickTour = styled.img`
   bottom: 30px;
   right: 80px;
   `
+
+  
+export const PopularBt = styled.button`
+border-radius: 90px;
+background: ${props => props.theme.color.secundary};
+color: #fff;
+font-family: ${props => props.theme.font.medium};
+text-align: center;
+font-size: 18px;
+border: none;
+padding: 8px 14px;
+justify-content: center;
+transition: linear .4s;
+cursor: pointer;
+margin-left: 30px;
+`

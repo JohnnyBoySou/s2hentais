@@ -2,9 +2,12 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   background: ${props => props.theme.background};
-  justify-content: space-between;
   flex-direction: column;
   display: flex;
+  width: 460px;
+    border: 2px solid #00000020;
+    padding: 12px 0px;
+    border-radius: 12px;
 `;
 
 
@@ -17,8 +20,8 @@ export const Spacing = styled.div`
 
 
 export const Title = styled.h2`
-  font-size: 32px;
-  color: ${props => props.theme.color.primary};
+  font-size: 28px;
+  color: ${props => props.theme.color.title};
   font-family: ${props => props.theme.font.bold};
   
   margin: 0px;
@@ -30,22 +33,6 @@ export const Label = styled.span`
   font-size: 24px;
   color: ${props => props.theme.color.label};
   font-family: ${props => props.theme.font.medium};
-`;
-
-export const Left = styled.div`
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  border: 2px solid #00000020;
-  border-radius: 12px;
-`;
-
-export const Right = styled.div`
-  width: 98%;
-  height:300px;
-  background: ${props => props.theme.color.off};
-  border-radius: 12px;
-  margin-right: 0px;
 `;
 
 export const Hr = styled.div`
@@ -64,9 +51,6 @@ export const Tag = styled.span`
 `;
 
 
-export const Map = styled.div`
-height: 400px;
-`
 
 export const Cords = styled.span`
   font-size: 18px;
@@ -78,30 +62,48 @@ export const Cords = styled.span`
   background: ${props => props.theme.color.light};
 `;
 
+export const Line = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 12px 24px;
+`
 
-export const ZoomIn = styled.button`
+export const City = styled.div`
+    display: flex;
+    flex-direction: row;
+    padding: 18px 22px;
+    transition: linear .2s;
+    justify-content: space-between;
+    &:hover{
+        background:  ${props => props.theme.color.off};
+    }
+`
+
+
+export const CityTitle = styled.span`
+  font-size: 24px;
+  color: ${props => props.theme.color.title};
+  font-family: ${props => props.theme.font.medium};
+  margin: 0px;
+`;
+
+
+
+export const CityLabel = styled.span`
+  font-size: 18px;
+  color: ${props => props.theme.color.label};
+  font-family: ${props => props.theme.font.book};
+`;
+
+
+export const CityImoveis = styled.span`
   font-size: 28px;
-  display: flex;
-  width: 38px;
-  justify-content: center;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  border: 0px;
-  color: ${props => props.theme.color.light};
+  color: ${props => props.theme.color.primary};
+  background: ${props => props.theme.color.off};
   font-family: ${props => props.theme.font.medium};
-  background: ${props => props.theme.color.title};
+  margin: 0px;
+  border-radius: 12px;
+  padding: 12px;
 `;
 
-
-export const ZoomOut = styled.button`
-font-size: 28px;
-display: flex;
-width: 38px;
-justify-content: center;
-border-radius: 5px;
-margin-bottom: 10px;
-border: 0px;
-  color: ${props => props.theme.color.light};
-  font-family: ${props => props.theme.font.medium};
-  background: ${props => props.theme.color.primary};
-`;

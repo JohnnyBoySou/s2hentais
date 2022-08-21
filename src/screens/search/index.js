@@ -55,7 +55,8 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import ListH2 from '../../structure/cards/list_h_2';
 
 import {Sk} from '../../structure/skeleton';
-
+import Header from '../../components/header';
+import QuickSearch from '../../components/quick_search';
 
 
 
@@ -68,26 +69,28 @@ const Search = ( ) => {
 
   const { color, font } = useContext(ThemeContext)
   const [data, setData] = useState([])
-  const [load, setLoad] = useState(false)
+  const [loadGet, setLoadGet] = useState(true)
   const [like, setLike] = useState(false)
   
   const { qr } = useParams();
 
+  const lengthData = data?.length
+
 
   function get(){
-    setLoad(true)
+    setLoadGet(true)
     requestSearch(qr).then(
       function(item) {
         console.log(item)
         console.log(data.length)
         setData(item)
-        setLoad(false)
+        setLoadGet(false)
       })
   }
 
   useEffect(() => {
-    //get()
-  }, [])
+    get()
+  }, [qr])
 
   const lt = 22
   
@@ -115,7 +118,6 @@ const Search = ( ) => {
   };
 
 
-  const [loadGet, setLoadGet] = useState(true)
   const [bath, setBath] = useState(2)
   const [room, setRoom] = useState(3)
   const [size, setSize] = useState(120)
@@ -123,12 +125,11 @@ const Search = ( ) => {
 
   return (
     <div>
+    <Header />
     <Container>
 
-      Search {qr}
+      <QuickSearch/>
       
-
-
   <div style={{flexDirection: 'row', display: 'flex'}}>
 
     <Left>
@@ -175,9 +176,12 @@ const Search = ( ) => {
     </Left>
     <Right>
       <div style={{justifyContent: 'space-between', display: 'flex', flexDirection: 'row'  }}>
-        <Label style={{color: color.title, fontSize: 24,}}>Encontramos <span style={{fontFamily: font.bold,}}>{lt}</span> imóveis.</Label>
-        <Label style={{color: color.title, fontSize: 18, marginTop: 8}}>Mostrando <span style={{fontFamily: font.bold,}}>10</span> de <span style={{fontFamily: font.bold,}}>22</span></Label>
+        <Label style={{color: color.title, fontSize: 24,}}>Encontramos <span style={{fontFamily: font.bold,}}>{lengthData}</span> imóveis.</Label>
+        <Label style={{color: color.title, fontSize: 18, marginTop: 8}}>Mostrando  <span style={{fontFamily: font.bold,}}>10</span> de <span style={{fontFamily: font.bold,}}>{lengthData}</span></Label>
       </div>
+
+
+      {!loadGet && <div>{data.map((data) => <ListH2 key={data.ID} data={data}/> )}</div>}
 
       {loadGet && <div style={{ paddingTop: 20, 
         marginLeft: -10,

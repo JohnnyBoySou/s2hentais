@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Marker = ( props, handleDetails ) => {
  
-  const [popup, setPoup] = React.useState(false)
+  const [popup, setPoup] = React.useState(true)
   const handleClick = () => {
     setPoup(!popup)
     console.log(handleDetails)

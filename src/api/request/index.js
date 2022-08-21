@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 
 import { API_URL } from "../index"
 import Axios from 'axios';
-const headers = {'Accept': "application/json"}
+const headers = {'Cache-Control': 's-maxage=60, stale-while-revalidate', 'Accept': "application/json"}
 
 
 export function requestServerData( params ){
@@ -82,7 +82,7 @@ export function requestSearch( identification ){
   return Axios.get(`${API_URL}/search/all?${item}`, {
       headers: headers
   }).then(response =>  {
-      return response.data[0]
+      return response.data
   }).catch(error => {console.log(error)})
 }
 

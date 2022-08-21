@@ -20,17 +20,31 @@ background: ${props => props.theme.background};
 export const Headere = styled.div`
   padding: 100px 80px;
   background:  ${props => props.theme.color.primary};
-  border-radius: 16px;
+  
   margin: 0px;
   display: flex;
   flex-dirction: row;
   padding-bottom: 0px;
+  border-radius: 16px;
 `
+
+
+export const Collections = styled.div`
+  padding: 100px 80px;
+  background:  ${props => props.theme.color.secundary};
+  margin: 0px;
+  display: flex;
+  flex-dirction: row;
+  padding-bottom: 0px;
+  border-radius: 16px;
+`
+
 
 export const ActionButtons = styled.div`
   flex-direction: row;
+  justify-content: space-between;
   display: flex;
-  margin-top: 30px;
+  margin-top: -20px;
   margin-bottom: 10px;
 `
 
@@ -186,14 +200,6 @@ export const Input = styled.input`
 
 
 
-export const Collections = styled.div`
-  background: ${props => props.theme.background};
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 80px;
-
-`
-
 
 export const CollectionsRow = styled.div`
   background: ${props => props.theme.background};
@@ -297,8 +303,9 @@ export const Tag = styled.span`
 
 export const Image = styled.img`
   display: flex;
-  width: 300px;
-  margin-top: -100px;
+  width: 100px;
+  height: 450px;
+  margin-top: -80px;
 `
 
 export const Spacing2 = styled.div`

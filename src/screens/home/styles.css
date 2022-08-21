@@ -21,3 +21,8 @@
     background: #5B72F2;
     
   }
+
+  .caroussel{
+    border-radius: 16px;
+    height: 440px;
+  }

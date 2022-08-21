@@ -26,6 +26,7 @@ import Gallery from './screens/gallery'
 import DashboardHome from './dashboard/home';
 import AddImobiil from './dashboard/add_imobil';
 
+import ImobilProfile from './screens/imobil_profile'
 
 import './App.css';
 import './fonts/Circular_Book.ttf'
@@ -50,8 +51,12 @@ const App = () => {
       <Routes>
         <Route path="/" exact element={<Async/>}/>
         
+        <Route path="/app/:option" exact element={<Home/>}/>
+        <Route path="/home/:option" exact element={<Home/>}/>
+
         <Route path="/app" exact element={<Home/>}/>
         <Route path="/home" exact element={<Home/>}/>
+
 
         <Route path="/search/:qr" exact element={<Search/>}/>
         <Route path="/pesquisar/:qr" exact element={<Search/>}/>

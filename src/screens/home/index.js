@@ -43,6 +43,7 @@ import {
 
   Image,
   Spacing2,
+  Collections,
   
 } from './styles';
 
@@ -70,6 +71,12 @@ import Header from '../../components/header';
 
 import Location from '../../components/location';
 import QuickSearch from '../../components/quick_search'
+
+
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
+
+import ForYou from '../../assets/imgs/for_you.png'
 
 const headers = {'Accept': "application/json"}
 
@@ -158,28 +165,45 @@ return (
 
     <Container>
 
-      
+    <Carousel className='caroussel'  style={{height: 440, borderRadius: 24,}} showArrows={true} showStatus={false} showIndicators={false}>
+      <Headere style={{height: 440}}>
+        <div>
+        <Title style={{fontSize: 64, lineHeight: '62px', color: color.light, marginBottom: 20, marginTop: 30,  textAlign: 'left'}}>
+          O que encontramos <br/>para você! </Title>
+        <Sublabel style={{fontSize: 24,  color: color.light, textAlign: 'left', marginLeft: -230}}>Com base em suas <Link style={{color: color.light}} to="../preferences">Preferências.</Link></Sublabel>
+        </div>
+        <Image style={{width: 350,}} src={Character1}/>
+      </Headere>
+
+      <Collections style={{height: 440}}>
+        <div>
+        <Title style={{fontSize: 64, textAlign: 'left', lineHeight: '62px', color: color.light, marginBottom: 20,}}>
+          Escolhidos especialmentes para você! </Title>
+        <Sublabel style={{fontSize: 24,  textAlign: 'left', marginLeft: -160,  color: color.light,}}>
+          Confira na opção <Link style={{color: color.light,}} to="../app/for_you">Para você.</Link></Sublabel>
+        </div>
+        <Image  src={ForYou} style={{width: 550, marginTop: -30, height: 280}}/>
+      </Collections>
+
+    </Carousel>
 
 
-    <Headere style={{}}>
-      <div>
-      <Title style={{fontSize: 64, lineHeight: '62px', color: color.light, marginBottom: 20,}}>
-        O que encontramos <br/>para você! </Title>
-      <Sublabel style={{fontSize: 24,  color: color.light,}}>Com base em suas <Link style={{color: color.light}} to="../preferences">Preferências.</Link></Sublabel>
-      </div>
-      <Image src={Character1}/>
-   
-    </Headere>
 
 
 
     <ActionButtons>
+      <div style={{flexDirection: 'row', display: 'flex'}}>
       <ButtonPR style={{borderRadius: 50, width: 160,}}>POPULAR</ButtonPR>
       <LineV/>
+      <ButtonPR style={{borderRadius: 50, width: 160, background: color.secundary,}}>PARA VOCÊ</ButtonPR>
+      <Spacing2/>
       <ButtonBR>RECENTES</ButtonBR>
       <Spacing2/>
       <ButtonBR>PARA PETS 🐶</ButtonBR>
-
+      </div>
+      <div>
+      <ButtonBR>Mais Recentes</ButtonBR>
+      </div>
 
     </ActionButtons>
 

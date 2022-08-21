@@ -13,8 +13,11 @@ import { Container,
   Title,
   QtdText,
   UserLocation,
+  Input, 
+  Bt,
+  SearchDiv,
+  Logo,
 } from './styles';
-import geoJson from "./geojson.json";
 import ReactDOM from 'react-dom';
 
 
@@ -22,12 +25,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ThemeContext } from 'styled-components';
 
 import {Sk2} from '../../structure/skeleton';
-import { requestPreferences } from '../../api/request';
+import { requestPreferences, requestSearch } from '../../api/request';
 
 import ListH3 from '../../structure/cards/list_h_3'
 
 import {ButtonBR} from '../../theme/global'
+import logo from '../../assets/imgs/logo1.png'
 
+import { FiSearch , FiMap,} from "react-icons/fi";
 
 import  ImgSidebar from '../../assets/imgs/sidebar.png'
 
@@ -51,10 +56,22 @@ const MapExplore = () => {
   
     const [ customMap, setMap ] = useState({ lng: 292929, lat: 9929292}) 
 
+
+    const [focused, setFocused] = useState(false)
+    const [view, setView] = useState(false)
+
     function handleDetails  ( item ) {
-      console.log('handledetlais')
       navigate(`/details/${item.ID}`)
     }
+
+    const handleLogo = () => {
+      navigate(`/app`)  
+    }
+
+    const [searchValue, setSearchValue] = useState()
+    const handleSearch = (event) => {
+      setSearchValue(event.target.value);
+    };
 
 
   const addMap = (item) => {
@@ -79,7 +96,7 @@ const MapExplore = () => {
          const ref = React.createRef();
          ref.current = document.createElement("div");
           ReactDOM.render(
-          <Marker handleDetails={handleDetails} data={item}  />,
+          <Marker  handleDetails={handleDetails} data={item}  />,
           ref.current
         );
 
@@ -93,15 +110,35 @@ const MapExplore = () => {
     }else{console.log('error request')}}
 
     useEffect(() => {
-      requestPreferences().then(
-      function(item) {
-        setData(item)
-        setLoad(false)
-        addMap(item)
-      })
-    
+      handlePreferences()
     }, [])
 
+
+    const handlePreferences = () => {
+      setLoad(true)
+      requestPreferences().then(
+        function(item) {
+          setData(item)
+          setLoad(false)
+          addMap(item)
+        })  
+    }
+
+    const handleGetSearch = () => {
+      setLoad(true)
+      requestSearch(searchValue).then(
+        function(item) {
+          setData(item)
+          setLoad(false)
+          addMap(item)
+        })  
+    }
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Enter') {
+        handleGetSearch()
+      }
+    }
   
 
     const qtds = data?.length
@@ -119,7 +156,25 @@ const MapExplore = () => {
 
 
     <Container style={{height: heightMax}}>
-      <Left style={{height: heightMax}} >  
+      <Left style={{height: 0.94 * heightMax}} >  
+
+      <Logo src={logo} onClick={handleLogo}/>
+
+      <SearchDiv>
+        <Input placeholder='Pesquisar imóvel...'  
+        onFocus={() => setView(true)} 
+        onBlur={() => setView(false)} 
+        value={searchValue} 
+        view={view}
+        onKeyDown={handleKeyDown}
+        onChange={handleSearch} />
+
+        <Bt type="submit" onClick={handleGetSearch} focus={focused}>
+          <FiSearch size={18} color="#fff"/>
+        </Bt>
+      </SearchDiv>
+
+
         <div style={{marginLeft: 10,}}><Title>Encontramos <QtdText>{qtds}</QtdText> imóveis confome suas <Link style={{color: color.primary,}} to="/preferences">preferências</Link> de pesquisa. </Title>
         <div style={{width: '100%', height: 2, background: '#00000020', marginTop: 20, marginBottom: 20,}}/>
         </div>
@@ -143,7 +198,7 @@ const MapExplore = () => {
     <Right>
    
     
-      <Mapa style={{height: 0.97 * heightMax}} ref={mapContainer}/>
+      <Mapa style={{height: 0.98 * heightMax, }} ref={mapContainer}/>
 
      
     </Right>

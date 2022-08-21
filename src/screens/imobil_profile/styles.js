@@ -48,11 +48,6 @@ export const Spacing = styled.div`
 
 
 
-export const Title = styled.span`
-  font-size: 24px;
-  color: ${props => props.theme.color.title};
-  font-family: ${props => props.theme.font.book};
-`;
 
 
 
@@ -161,3 +156,26 @@ export const Logo = styled.img`
   cursor: pointer;
   
 `
+
+export const ProfileImg = styled.img`
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+`
+
+
+
+export const Label = styled.span`
+  font-size: 24px;
+  color: ${props => props.theme.color.label};
+  font-family: ${props => props.theme.font.book};
+`;
+
+
+export const Title = styled.span`
+  font-size: 32px;
+  color: ${props => props.theme.color.title};
+  font-family: ${props => props.theme.font.bold};
+`;
+

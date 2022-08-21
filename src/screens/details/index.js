@@ -115,9 +115,10 @@ const Details = ( ) => {
     setLoad(true)
     requestSearch(id).then(
       function(item) {
-        setItem(item)
+        setItem(item[0])
+        console.log(item)
         setLoad(false)
-        getImobil(item)
+        //getImobil(item)
       })
   }
 
@@ -465,7 +466,7 @@ const Details = ( ) => {
 
         <Hr style={{marginTop: 50, marginLeft: 0, marginRight: 10, marginBottom:30,}}/>
       
-        {!load && <QuickMap item={item}/> }
+        {a && <QuickMap item={item}/> }
 
       </Left>
 

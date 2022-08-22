@@ -15,6 +15,8 @@ import {
 } from './styles';
 
 import ListV from '../../structure/cards/list_v';
+import ListH2 from '../../structure/cards/list_h_2'
+
 
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import { ButtonBR,   ButtonPR } from '../../theme/global'
@@ -117,25 +119,31 @@ const DreamsScreen = () => {
 return (
   <Main>
     <div style={{padding: 60, display: 'flex', flexDirection: 'column'}}>
-        <Title style={{fontSize: 52, margin: 0, textAlign: 'center'}}>O Sonho de consumo!</Title>
-        <Subtitle style={{fontSize: 32, textAlign: 'center'}}>Imóveis dos sonhos</Subtitle>
- 
+        
+        <div style={{display: 'flex', marginBottom: 20, marginLeft: 10, marginRight: 10, flexDirection: 'row', justifyContent: 'space-between'}}>
+          <div>
+            <Title style={{fontSize: 42, margin: 0, }}>O Sonho de consumo!</Title>
+            <Subtitle style={{fontSize: 28, }}>Imóveis dos sonhos</Subtitle>
+          </div>
+
+          <div style={{justifyContent: 'center', flexDirection: 'row', display: 'flex'}}>
+            <ButtonBR style={{width: 70, height: 70, borderRadius: 100, }} onClick={anterior}>
+              <FiArrowLeft size={32} style={{marginLeft: -2}}/></ButtonBR>
+            <Spacing/>
+            <ButtonPR style={{width: 70, height: 70, borderRadius: 100, }} onClick={proximo}>
+              <FiArrowRight size={32} style={{marginLeft: -2}}/>
+            </ButtonPR>
+          </div>
+
+
+        </div>
 
 
         <div style={{flexDirection: 'row', display: 'flex', flexWrap: 'wrap'}}>
-            {data.map((data) => <ListV key={data.ID} data={data}/> )}
+            {data.map((data) => <ListH2 key={data.ID} data={data}/> )}
         </div>
 
-        <div style={{justifyContent: 'center', flexDirection: 'row', display: 'flex'}}>
-        <ButtonBR onClick={anterior}>
-            <FiArrowLeft size={32}/>   
-        </ButtonBR>
-        <Spacing/>
-        <ButtonPR onClick={proximo}>
-            <FiArrowRight size={32}/>
-        </ButtonPR>
-    
-    </div>
+        
 
     </div>
 </Main>

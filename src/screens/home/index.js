@@ -21,7 +21,6 @@ import {
   About,
   Input,
 
-  Select,
   SelectLabel,
   Spacing,
   Spacing1,
@@ -53,6 +52,7 @@ import { ButtonBR, ButtonPR, Ripple } from '../../theme/global'
 
 import RowListH from '../../structure/rows/list_h';
 
+import Select from 'react-select' 
 
 import ListH from '../../structure/cards/list_h';
 import Bairro from '../../new_components/bairro';
@@ -84,14 +84,15 @@ const headers = {'Accept': "application/json"}
 
 const HomeScreen = () => {
 
-  const { color } = useContext(ThemeContext)
+  const { color, font } = useContext(ThemeContext)
 
   const [prefe, setPrefe] = useState([])
   const [loadGet, setLoadGet] = useState(false)
   const [data, setData] = useState([])
+  const [dataPopular, setDataPopular] = useState([])
+  const [dataForYou, setDataForYou] = useState([])
 
-  
-  
+
   const getPreferences = () => {
     setLoadGet(true)
     try{
@@ -103,6 +104,7 @@ const HomeScreen = () => {
           
         }, 1000);} 
       getData(JsonString)
+      getDataPopular(JsonString)
       }
     catch(e){console.log(e)}
   }
@@ -115,6 +117,7 @@ const HomeScreen = () => {
 
     if(valor.alugar){
       Axios.get(`${API_URL}/feed/alugar?${item}${max}`, {headers: headers}).then(function (response) {
+        setDataForYou(response.data)
         setData(response.data)
         setLoadGet(false)
 
@@ -125,6 +128,7 @@ const HomeScreen = () => {
       Axios.get(`${API_URL}/feed/comprar?${item}${max}`, {
         headers: headers
     }).then(function (response) {
+        setDataForYou(response.data)
         setData(response.data)
         setLoadGet(false)
     }).catch(error => { 
@@ -132,6 +136,43 @@ const HomeScreen = () => {
     })
     }
   }
+
+  
+  function getDataPopular( params ){
+    setLoadGet(true)
+    const valor = params
+    const max = 'valor_max=' + valor.valor_max
+    const item =  valor.item1 
+
+    if(dataPopular.length > 1){
+      setLoadGet(false)
+      return
+    }else{
+      
+
+    if(valor.alugar){
+      Axios.get(`${API_URL}/feed/popular/alugar?${item}${max}`, {headers: headers}).then(function (response) {
+        setDataPopular(response.data)
+        setLoadGet(false)
+        setData(dataPopular)
+    }).catch(error => {
+        console.log(error)
+    })}
+    if(valor.comprar){
+      Axios.get(`${API_URL}/feed/popular/comprar?${item}${max}`, {
+        headers: headers
+    }).then(function (response) {
+        setDataPopular(response.data)
+        setLoadGet(false)
+        setData(dataPopular)
+    }).catch(error => { 
+        console.log(error)
+    })
+    }
+  }
+  }
+
+
 
 
 
@@ -154,6 +195,57 @@ const HomeScreen = () => {
     useEffect(() => {
       getPreferences()
     }, [])
+
+
+    const [forYou, setForYou] = useState(true)
+    const [popular, setPopular] = useState(false)
+
+
+    const handleForYou = ( ) => {
+      setData(dataForYou)
+      setPopular(false)
+      setForYou(true)
+    }
+
+    const handlePopular = ( ) => {
+      setData(dataPopular) 
+      setPopular(true)
+      setForYou(false)
+    }
+
+    
+    const options = [
+      { value: 'Popular', label: 'Popular' },
+      { value: 'Recentes', label: 'Recentes' },
+      { value: 'Aleatorio', label: 'Aleatório' }
+    ]
+
+    const customStyles = {
+      option: (provided, state) => ({
+        ...provided,
+        color: state.isSelected ? color.light : color.title,
+       fontFamily: font.medium,
+      }),
+      control: () => ({
+        border: '1px solid #00000020',
+        display: 'flex',
+        borderRadius: 5,  
+        fontFamily: font.medium,
+        fontSize: 18,
+        flexDirection: 'row'
+      }),
+      indicatorSeparator: () => ({
+        width: 0,
+        display: 'none'
+      }),
+
+      dropdownIndicator : () => ({
+        color: "#000",
+        fontSize: 28,
+        marginRight: 5,
+        marginLeft: -5,
+      })
+    }
     
 
 
@@ -165,7 +257,7 @@ return (
 
     <Container>
 
-    <Carousel className='caroussel'  style={{height: 440, borderRadius: 24,}} showArrows={true} showStatus={false} showIndicators={false}>
+    <Carousel showThumbs={false} className='caroussel'  style={{height: 440, borderRadius: 24,}} showArrows={true} showStatus={false} showIndicators={false}>
       <Headere style={{height: 440}}>
         <div>
         <Title style={{fontSize: 64, lineHeight: '62px', color: color.light, marginBottom: 20, marginTop: 30,  textAlign: 'left'}}>
@@ -193,16 +285,20 @@ return (
 
     <ActionButtons>
       <div style={{flexDirection: 'row', display: 'flex'}}>
-      <ButtonPR style={{borderRadius: 50, width: 160,}}>POPULAR</ButtonPR>
+     {forYou && <ButtonPR onClick={handleForYou} style={{borderRadius: 50, width: 160,  background: color.primary,}}>PARA VOCÊ</ButtonPR>}
+     {popular &&  <ButtonPR onClick={handlePopular} style={{borderRadius: 50, width: 160, background: color.primary,}}>POPULAR</ButtonPR>}
+     
       <LineV/>
-      <ButtonPR style={{borderRadius: 50, width: 160, background: color.secundary,}}>PARA VOCÊ</ButtonPR>
+      {!forYou && <ButtonPR onClick={handleForYou} style={{borderRadius: 50, width: 160, background: color.secundary,}}>PARA VOCÊ</ButtonPR>}
+      {!popular &&  <ButtonPR onClick={handlePopular} style={{borderRadius: 50, width: 160, background: color.secundary,}}>POPULAR</ButtonPR>}
       <Spacing2/>
-      <ButtonBR>RECENTES</ButtonBR>
-      <Spacing2/>
-      <ButtonBR>PARA PETS 🐶</ButtonBR>
+      
       </div>
       <div>
-      <ButtonBR>Mais Recentes</ButtonBR>
+      <div style={{fontFamily: font.book, display: 'flex', marginTop: 6,}}>
+          <span style={{marginTop: 6, marginRight: 10, fontSize: 18}}>Ordernar por</span> 
+          <Select styles={customStyles} options={options} defaultValue={options[0]} />
+        </div>
       </div>
 
     </ActionButtons>
@@ -235,7 +331,7 @@ return (
     flexDirection: 'row',  
   }}>
       
-    {data.map((data) => <ListH4 key={data.ID} data={data}/> )}
+    {data.map((data) => <ListH4 className="fadeIn" key={data.ID} data={data}/> )}
   </div>}
 
 

@@ -280,12 +280,56 @@ export const TaxLi = styled.li`
 
 
 export const Infra = styled.div`
-  padding-bottom: 0px;
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  border-radius: 6px;
+padding: 10px;
+padding-bottom: 0px;
+display: flex;
+flex-direction: column;
+border-radius: 8px;
+background: #70779C20;
+border: 2px solid #70779C80;
+transition: linear .2s;
+padding-right: 30px;
+width: 100%;
+margin-right: 20px;
 `
+
+
+
+export const Conservation = styled.div`
+  flex-direction: column;
+  display: flex;
+  padding: 10px 20px;
+  border-radius: 8px;
+  justify-content: center;
+  width: 100%;
+  background: ${props => props.theme.color.green}20;
+`
+
+export const AnyTitle = styled.span`
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: ${props => props.theme.color.title};
+  font-family: ${props => props.theme.font.medium};
+`
+
+export const BarOn = styled.div`
+  width: 74px;
+  height: 14px;
+  border-radius: 100px;
+  margin: 0px 5px;
+  background: ${props => props.theme.color.green};
+`
+
+
+export const BarOff = styled.div`
+  width: 74px;
+  height: 14px;
+  border-radius: 100px;
+  margin: 0px 5px;
+  background: ${props => props.theme.color.green}30;
+`
+
+
 
 
 export const InfraLi = styled.span`

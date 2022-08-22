@@ -1,0 +1,22 @@
+.br {
+    animation-name: border;
+    animation-duration: 8s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: forwards;
+
+}
+
+
+@keyframes border {
+    0% {
+       border: 10px solid #5B72F270;
+    }
+
+    30% {
+        border: 10px solid #F1F3FF;
+     }
+    100% {
+       border: 10px solid #5B72F270;
+    }
+  }
+  

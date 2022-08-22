@@ -67,3 +67,14 @@ export const Arrow = styled.span`
   margin-top: 18px;
   cursor: pointer;
 `  
+
+
+export const Radius = styled.div`
+  width: 120px;
+  height: 120px;
+  top: -20px;
+  border-radius: 100px;
+  background: #5B72F240;
+  border: 3px solid #5B72F2;
+  position: absolute;
+`

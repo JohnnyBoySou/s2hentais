@@ -4,9 +4,7 @@ import { Popup, Bt, Img,
   Label,
   Title,
   Arrow,
-
-
-
+  Radius
 } from './styles'
 
 import './animation.css'
@@ -17,7 +15,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Marker = ( props, handleDetails ) => {
  
-  const [popup, setPoup] = React.useState(true)
+  const [popup, setPoup] = React.useState(false)
   const handleClick = () => {
     setPoup(!popup)
     console.log(handleDetails)
@@ -25,11 +23,13 @@ const Marker = ( props, handleDetails ) => {
 
   //const navigate = useNavigate()
   const item = props.data
+  const a = false;
 
 
   return (
     <Bt onClick={handleClick}>
       <Img src={item.imagem1}/>
+      {a && <Radius/>}
       {popup && <Popup className='fade'>
 
         <div style={{flexDirection: 'column', display: 'flex'}}>

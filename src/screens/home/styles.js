@@ -44,7 +44,7 @@ export const ActionButtons = styled.div`
   flex-direction: row;
   justify-content: space-between;
   display: flex;
-  margin-top: -20px;
+  margin-top: 30px;
   margin-bottom: 10px;
 `
 

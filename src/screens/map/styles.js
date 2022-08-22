@@ -85,7 +85,7 @@ export const Left =  styled.div`
 export const Right = styled.div`
   width: 60%;
   margin-right: -8px;
-  background: #37CB84; 
+  background:  ${props => props.theme.color.primary}; 
   border-radius: 12px;
   overflow-y: hidden;
 `
@@ -117,7 +117,14 @@ export const UserLocation = styled.button`
 export const SearchDiv = styled.div`
   display: flex;
   flex-direction: row;
-  margin: 20px 10px;
+  padding: 20px 10px;
+  background: ${props => props.theme.background};
+  position: -webkit-sticky;
+  position: sticky;
+  top: -12px;
+  margin-top: 0px;
+  z-index: 99;
+  border-radius: 0px 0px 6px 6px;
 `
 
 
@@ -157,7 +164,27 @@ export const Logo = styled.img`
   object-fit: cover;
   margin-bottom: -20px;
   margin-left: -10px;
-  margin-top: -20px;
+  margin-top: 20px;
   cursor: pointer;
   
 `
+
+
+
+export const Route = styled.span`
+  font-size: 16px;
+  margin-top: -2px;
+  margin-right: 5px;
+  margin-left: 10px;
+  cursor: pointer;
+   color: ${props => props.theme.color.label};
+  font-family: ${props => props.theme.font.medium};
+`;
+
+
+export const Routes = styled.span`
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  margin-right: 50px;
+`;

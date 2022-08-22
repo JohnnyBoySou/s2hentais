@@ -59,7 +59,10 @@ import {
   QuickTour,
 
   PopularBt,
-
+  Conservation,
+  BarOn,
+  BarOff,
+  AnyTitle,
 
 } from './styles';
 import vid from '../../assets/imgs/loader.gif'
@@ -118,7 +121,7 @@ const Details = ( ) => {
         setItem(item[0])
         console.log(item)
         setLoad(false)
-        //getImobil(item)
+        getImobil(item)
       })
   }
 
@@ -453,16 +456,40 @@ const Details = ( ) => {
       <Left>
         <Title style={{marginLeft:0, fontSize: 32, marginBottom: 10,}}> {item?.categoria} com {item?.qtd1} {item?.item1}s, {item?.qtd2} {item?.item2} e {item?.area} m2</Title>
         <Address><FaMapMarkerAlt size={20} color={color.primary}/> {item?.bairro}, Rua {item?.rua}</Address>
-        <Description>{item?.descricao}
-        
-        
-        </Description>
+        <Description>{item?.descricao}</Description>
+
+
+        <div style={{flexDirection: 'row', justifyContent: 'space-between', display: 'flex'}}>
         <Infra>
-          <InfraLabel>Infraestrutura</InfraLabel>
-             <div style={{flexDirection: 'row', marginTop: 10, display: 'flex'}}>
-                <InfraLi>Este imóvel possuí </InfraLi>
-               {infra?.map((infra) => <InfraLi key={infra}>{infra}, </InfraLi> )}
-             </div></Infra>
+        
+              <TaxLabel>Infraestrutura</TaxLabel>
+              <ul>
+
+              {infra?.map((infra) => <TaxLi key={infra}>{infra}</TaxLi> )}
+              
+              </ul>
+      </Infra>
+
+      <Conservation>
+
+
+        <AnyTitle>Estado de Conservação</AnyTitle>
+      <div style={{display: 'flex', marginLeft: -5, flexDirection: 'row'}}>
+
+        <BarOn/>
+        <BarOn/>
+        <BarOff/>
+
+
+      </div>
+
+      </Conservation>
+      </div>
+
+
+
+
+
 
         <Hr style={{marginTop: 50, marginLeft: 0, marginRight: 10, marginBottom:30,}}/>
       

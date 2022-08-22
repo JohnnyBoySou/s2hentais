@@ -17,9 +17,13 @@ import { Container,
   Bt,
   SearchDiv,
   Logo,
+  Routes,
+  Route,
 } from './styles';
 import ReactDOM from 'react-dom';
 
+import Select from 'react-select' 
+import Switch from 'react-switch';
 
 import { Link, useNavigate } from 'react-router-dom';
 import { ThemeContext } from 'styled-components';
@@ -36,11 +40,11 @@ import { FiSearch , FiMap,} from "react-icons/fi";
 
 import  ImgSidebar from '../../assets/imgs/sidebar.png'
 
-import { BiCurrentLocation } from 'react-icons/bi'
+import { MdKeyboardArrowRight } from 'react-icons/md'
 
 const MapExplore = () => {
 
-    const {color, font} = useContext(ThemeContext)
+  const {color, font} = useContext(ThemeContext)
 
     mapboxgl.accessToken = 'pk.eyJ1Ijoiam9hb2Rlc291c2EyMSIsImEiOiJjbDZlM3BqMjMwMnJ3M2NvYXJwdWk5M2RoIn0.SuRNU78Z1ub0KS0xIIs5Yw';
   
@@ -55,6 +59,8 @@ const MapExplore = () => {
     const [load, setLoad] = useState(true)
   
     const [ customMap, setMap ] = useState({ lng: 292929, lat: 9929292}) 
+
+    const [mapView, setMapView] = useState(true)
 
 
     const [focused, setFocused] = useState(false)
@@ -111,7 +117,7 @@ const MapExplore = () => {
 
     useEffect(() => {
       handlePreferences()
-    }, [])
+    }, [mapView])
 
 
     const handlePreferences = () => {
@@ -152,13 +158,83 @@ const MapExplore = () => {
     }
 
     const heightMax = window.innerHeight;
-  return (
+
+
+    const options = [
+      { value: 'Popular', label: 'Popular' },
+      { value: 'Recentes', label: 'Recentes' },
+      { value: 'Aleatorio', label: 'Aleatório' }
+    ]
+
+    const customStyles = {
+      option: (provided, state) => ({
+        ...provided,
+        color: state.isSelected ? color.light : color.title,
+       fontFamily: font.medium,
+      }),
+      control: () => ({
+        border: '1px solid #00000020',
+       display: 'flex',
+       borderRadius: 5,  
+       fontFamily: font.medium,
+        flexDirection: 'row'
+      }),
+      indicatorSeparator: () => ({
+        width: 0,
+        display: 'none'
+      }),
+
+      dropdownIndicator : () => ({
+        color: "#000",
+        fontSize: 28,
+        marginRight: 5,
+        marginLeft: -5,
+      })
+    }
+
+    const a = false;
+    
+    
+
+return (
 
 
     <Container style={{height: heightMax}}>
-      <Left style={{height: 0.94 * heightMax}} >  
+      <Left style={{height: 0.94 * heightMax, width: mapView ? '40%' : '100%' }} >  
 
-      <Logo src={logo} onClick={handleLogo}/>
+
+      <div  style={{display:'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+        <Routes>
+          <Route  onClick={handleLogo}>Mapa</Route>
+          <MdKeyboardArrowRight/>
+          <Route style={{textDecoration: 'underline', color: color.title,}}>Feed</Route>
+        </Routes>
+
+
+        <div style={{fontFamily: font.book, display: 'flex'}}>
+          <span style={{marginTop: 8, marginRight: 6,}}>Mapa Grande</span> 
+      
+      <div style={{marginTop: 6,}}>
+        <Switch 
+        onChange={() => setMapView(!mapView)}
+        checked={mapView} checkedIcon={false} uncheckedIcon={false}
+        height={14} width={30} handleDiameter={20}
+        offColor="#D1D1D1" onColor="#8D9FFF"
+        onHandleColor={color.primary} offHandleColor="#9C9C9C"
+        /></div>
+      </div>
+
+
+      </div>
+
+      <div style={{width: '97%', marginLeft: 10, height: 2, background: '#00000020', marginTop: 20, marginBottom: 20,}}/>
+       
+      <div style={{marginLeft: 10,}}><Title>Encontramos <QtdText>{qtds}</QtdText> imóveis conforme suas <Link style={{color: color.primary,}} to="/preferences">preferências</Link> de pesquisa. </Title>
+       </div>
+
+
+
+    {a &&  <Logo src={logo} onClick={handleLogo}/>}
 
       <SearchDiv>
         <Input placeholder='Pesquisar imóvel...'  
@@ -175,35 +251,48 @@ const MapExplore = () => {
       </SearchDiv>
 
 
-        <div style={{marginLeft: 10,}}><Title>Encontramos <QtdText>{qtds}</QtdText> imóveis confome suas <Link style={{color: color.primary,}} to="/preferences">preferências</Link> de pesquisa. </Title>
-        <div style={{width: '100%', height: 2, background: '#00000020', marginTop: 20, marginBottom: 20,}}/>
-        </div>
-
 
         {load && <div>
           <Sk2/><Sk2/><Sk2/> 
           
         </div>} 
+
         
-        {!load && <div>
+      <div style={{width: '97%', marginLeft: 10, height: 2, background: '#00000020', marginTop: 20, marginBottom: 20,}}/>
+       <div style={{flexDirection: 'row', display: 'flex', marginRight: 10, marginLeft: 10, marginBottom: 10, justifyContent: 'space-between'}}>
+        
+        <div>
+
+        <Title style={{fontSize: 18,}}>Encontramos <QtdText style={{fontSize: 22,}}>{qtds}</QtdText> imóveis</Title>
+        </div>
+        <div style={{fontFamily: font.book, display: 'flex'}}>
+          <span style={{marginTop: 8, marginRight: 10,}}>Ordernar por</span> 
+          <Select styles={customStyles} options={options} defaultValue={options[0]} />
+        </div>
+       </div>
+        
+        {!load && <div style={{display: 'flex',flexWrap: 'wrap', flexDirection: 'row', }}>
         {data?.map((data) => <ListH3 data={data} handleClick={() => handleLocation(data)} key={data.ID}/>)}
         </div> }
 
-        <div style={{flexDirection: 'column', display: 'flex', justifyItems: 'center', }}>
-
-          <Title style={{fontFamily: 'Font_Medium', textAlign: 'center', marginTop: 50}}>Você chegou ao final da lista!</Title>
+        <div style={{flexDirection: 'column', marginTop: 50, display: 'flex', justifyItems: 'center', }}>
+        <Title style={{textAlign: 'center'}}>Ajuste suas <Link style={{color: color.primary,}} to="/preferences">preferências</Link> de pesquisa para encontrar mais imóveis. </Title>
+          
           <img style={{width: 200, height: 130, objectFit: 'cover', borderRadius: 12, marginTop: 10, marginBottom: 20,alignSelf: 'center'}} src={ImgSidebar}/>
         </div>
       </Left>
-    <Right>
+
+    <Right style={{width: mapView ? '60%' : '40%' }}>
    
     
       <Mapa style={{height: 0.98 * heightMax, }} ref={mapContainer}/>
 
      
     </Right>
+
     </Container>
   )
+
 }
 
 export default MapExplore

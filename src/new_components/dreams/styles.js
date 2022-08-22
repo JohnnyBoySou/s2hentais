@@ -12,6 +12,11 @@ export const Container = styled.div`
 export const Main = styled.div`
 padding: 30px;
 padding-top: 0px;
+margin: 0px;
+display: flex;
+margin-right: -36px;
+margin-bottom: 40px;
+background: ${props => props.theme.color.off};
 
 `
 

@@ -26,3 +26,18 @@
     border-radius: 16px;
     height: 440px;
   }
+
+  .fadeIn{
+    animation-duration: 2000;
+    animation-name: fadeIn;
+  }
+
+
+  @keyframes fadeIn {
+    0%{
+      opacity: 0;
+    }
+    100%{
+      opacity: 1;
+    }
+  }

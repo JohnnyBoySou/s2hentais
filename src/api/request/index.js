@@ -2,9 +2,9 @@ import React, {useState} from 'react'
 
 import { API_URL } from "../index"
 import Axios from 'axios';
-const headers = {'Cache-Control': 's-maxage=60, stale-while-revalidate', 'Accept': "application/json"}
-
-
+const headers = {'Accept': "application/json"}
+//'Cache-Control': 's-maxage=60, stale-while-revalidate',
+// 'Cache-Control': 'max-age=0'
 export function requestServerData( params ){
 
     const valor = params

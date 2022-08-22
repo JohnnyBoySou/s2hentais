@@ -1,32 +1,13 @@
 import React, { useContext , useState, useEffect, useRef} from 'react';
 
+
+import Select from 'react-select' 
+
 import { ThemeContext } from 'styled-components';
 import { 
   Container, 
   Title,
-  Row,
-  Like,
-  BtAction,
-  Spacing,
-  ImgLarge, 
-  ImgSmall,
-  Nav,
-  Gallery,
-  CardInfo,
-
-  Column,
-  Section,
-  Code,
   Hr,
-  Value,
-  ValueLabel,
-  ValueTitle,
-  Tax,
-  TaxLabel,
-  TaxLi,
-
-  Address,
-  Description,
   Right,
   Left,
   Line,
@@ -35,13 +16,22 @@ import {
   
   Input,
   Rs,
+  AnyButton,
+  AnyColumn, 
+  AnyIcon,
+  AnyLabel,
+  AnyTitle,
+
+  Spacing,
+  InputValue,
+
 } from './styles';
-import vid from '../../assets/imgs/loader.gif'
 
 import { ButtonBR, ButtonPR, Ripple, Back, Label } from '../../theme/global'
 
 import { useParams } from 'react-router-dom';
  
+import './animation.css'
 
 import { IoBedOutline } from 'react-icons/io5'
 import { BiBath } from 'react-icons/bi'
@@ -58,6 +48,12 @@ import {Sk} from '../../structure/skeleton';
 import Header from '../../components/header';
 import QuickSearch from '../../components/quick_search';
 
+import { FaMapMarkerAlt , FaSearch } from 'react-icons/fa'
+import {BsCashCoin} from 'react-icons/bs'
+import {TbAdjustmentsHorizontal} from 'react-icons/tb'
+import { BiSearch} from 'react-icons/bi'
+
+import {MdBed} from 'react-icons/md'
 
 
 const headers = {
@@ -67,10 +63,14 @@ const headers = {
 
 const Search = ( ) => {
 
+
+
   const { color, font } = useContext(ThemeContext)
   const [data, setData] = useState([])
   const [loadGet, setLoadGet] = useState(true)
   const [like, setLike] = useState(false)
+  
+  const [item, setItem] =  useState()
   
   const { qr } = useParams();
 
@@ -89,7 +89,10 @@ const Search = ( ) => {
   }
 
   useEffect(() => {
-    get()
+    console.log(qr)
+    if(qr === 'undefined'){
+      return
+    }else{get()}
   }, [qr])
 
   const lt = 22
@@ -122,59 +125,137 @@ const Search = ( ) => {
   const [room, setRoom] = useState(3)
   const [size, setSize] = useState(120)
 
+  const a = false
+
+  
+  const valor = (Number(item?.valor_max)).toFixed(2).replace(".",",").replace(/\d(?=(\d{3})+\,)/g, '$&.')
+
+  const [bairro, setBairro] = useState('Todos')
+
+  
+  const options = [
+    { value: 'Casa', label: 'Casa' },
+    { value: 'Apartamento', label: 'Apartamento' },
+    { value: 'Sítio', label: 'Sítio' }
+  ]
+
+  const quartos = [
+    { value: 1, label: 1 },
+    { value: 2, label: 2 },
+    { value: 3, label: 3 },
+    { value: 4, label: 4 },
+    { value: 5, label: '+5' },
+  ]
+
+  
+  const bairros = [
+    { value: 'Todos', label: 'Todos' },
+    { value: 'Centro', label: 'Centro' },
+    { value: 'Vila Lalau', label: 'Vila Lalau' },
+    ]
+
+  const customStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      color: state.isSelected ? color.light : color.title,
+     fontFamily: font.medium,
+    }),
+    control: () => ({
+      border: '0px solid #00000020',
+     display: 'flex',
+     borderRadius: 5,  
+     fontFamily: font.medium,
+     fontSize: 22,
+      flexDirection: 'row',
+      marginLeft: -6,
+      marginTop: -6,
+    }),
+    indicatorSeparator: () => ({
+      width: 0,
+      display: 'none'
+    }),
+
+    dropdownIndicator : () => ({
+      color: "#000",
+      fontSize: 28,
+      marginRight: 5,
+      marginLeft: -5,
+    })
+  }
+
+
 
   return (
     <div>
     <Header />
-    <Container>
+    <Container> 
 
-      <QuickSearch/>
+      <Line>
+          <AnyButton>
+            <AnyIcon><FaMapMarkerAlt/></AnyIcon>
+            <AnyColumn>
+              <AnyLabel>Bairro</AnyLabel>
+              <Select styles={customStyles} options={bairros} defaultValue={bairros[0]} />
+    
+            </AnyColumn>
+          </AnyButton>
+
+        <Hr/>
+          
+          <AnyButton>
+            <AnyIcon><BsCashCoin/></AnyIcon>
+            <AnyColumn>
+              <AnyLabel>Valor máximo</AnyLabel>
+              <div style={{flexDirection: 'row', display: 'flex'}}>
+                <AnyTitle style={{color: color.primary}}>R$</AnyTitle><InputValue/>
+              </div>
+            </AnyColumn>
+          </AnyButton>  
+
+          
+        <Hr/>
+          
+          <AnyButton>
+            <AnyIcon><TbAdjustmentsHorizontal/></AnyIcon>
+            <AnyColumn>
+              <AnyLabel>Tipo</AnyLabel>
+
+              <Select styles={customStyles} options={options} defaultValue={options[0]} />
       
-  <div style={{flexDirection: 'row', display: 'flex'}}>
+            </AnyColumn>
+          </AnyButton>  
 
-    <Left>
-      <div style={{display: 'flex', paddingLeft: 20, paddingRight: 20, flexDirection: 'row', justifyContent: 'space-between',}}>
-        <Title style={{fontSize: 24, marginLeft: 8, }}>Filtros</Title>
-        <Badget style={{marginBottom: 20,}}>5 aplicados</Badget>
-      </div>
-      <Line/>
-      <div style={{padding: 20,}}>
+          
+        <Hr/>
 
-        <Sublabel>Valor</Sublabel>
-        <div style={{flexDirection: 'row', display: 'flex'}}>
-            <Rs>R$</Rs>
-          <Input type="number" style={{marginLeft: 6, marginBottom: 25, paddingBottom: 0, fontSize: 36, }} value={valor_max} onChange={handleValorMax} placeholder="1200"/>
-        </div>
 
-        <Sublabel>Quartos</Sublabel>
-
-        <div style={{flexDirection: 'row', display: 'flex'}}>
-          <div style={{flexDirection: 'row', display: 'flex'}}>
-              <Rs><IoBedOutline style={{marginTop: 5,}}/></Rs>
-            <Input type="number" style={{marginLeft: 6,  marginBottom: 25, paddingBottom: 0, fontSize: 36, }} value={room} onChange={handleRoom} placeholder="1200"/>
-          </div>
-
-          <Spacing style={{width: 60,}}/>
-
-          <div style={{flexDirection: 'row', display: 'flex'}}>
-              <Rs><BiBath style={{marginTop: 5,}}/></Rs>
-            <Input type="number" style={{marginLeft: 6,  marginBottom: 25, paddingBottom: 0, fontSize: 36, }} value={bath} onChange={handleBath} placeholder="1200"/>
-          </div>
-        </div>
-
-        <div style={{flexDirection: 'row', display: 'flex', marginTop: -10,}}>
-              <Rs><BiBath style={{marginTop: 5,}}/></Rs>
-            <Input type="number" style={{marginLeft: 6,  marginBottom: 25, paddingBottom: 0, fontSize: 36, }} value={size} onChange={handleSize} placeholder="2"/>
-          </div>
-
-        <ButtonPR style={{width: "100%"}}>PESQUISAR</ButtonPR>
-      </div>
+          <AnyButton>
+            <AnyIcon><MdBed/></AnyIcon>
+            <AnyColumn>
+              <AnyLabel>Quartos</AnyLabel>
+              
+              <Select styles={customStyles} options={quartos} defaultValue={quartos[2]} />
+      
+            </AnyColumn>
+          </AnyButton>  
 
 
 
 
-    </Left>
-    <Right>
+
+
+            <ButtonPR className='br' style={{borderRadius:54, 
+              borderWidth: 10,
+              fontSize: 34,
+              marginLeft: 30,
+              marginRight: 30,
+              width: 92, }}><BiSearch style={{marginTop: 10,}}/></ButtonPR>
+        </Line>
+
+       
+
+      
+
       <div style={{justifyContent: 'space-between', display: 'flex', flexDirection: 'row'  }}>
         <Label style={{color: color.title, fontSize: 24,}}>Encontramos <span style={{fontFamily: font.bold,}}>{lengthData}</span> imóveis.</Label>
         <Label style={{color: color.title, fontSize: 18, marginTop: 8}}>Mostrando  <span style={{fontFamily: font.bold,}}>10</span> de <span style={{fontFamily: font.bold,}}>{lengthData}</span></Label>
@@ -198,9 +279,8 @@ const Search = ( ) => {
     </div>}
 
       <ButtonPR style={{ display: 'flex', margin: 'auto', borderRadius: 100,}}>Ver mais</ButtonPR>
-    </Right>
+   
     
-    </div>
 
 
 

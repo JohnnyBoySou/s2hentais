@@ -40,14 +40,7 @@ export const Left = styled.div`
 export const Right = styled.div`
   margin-left: 10px;
   border-radius: 12px;
-  width: 70%;
   padding: 10px 20px;
-`
-
-export const Line = styled.div`
-  width: 100%;
-  height: 2px;
-  background: #00000020;
 `
 
 export const Badget = styled.div`
@@ -500,3 +493,77 @@ export const ContactBt = styled.button`
   margin-right: 10px;
 `;
 
+
+export const Line = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 12px 24px;
+  border: 2px solid #00000020;
+  border-radius: 12px;
+  margin: 20px 0px;
+`
+export const AnyIcon = styled.span`
+  color: ${props => props.theme.color.primary};
+  font-size: 32px;
+  padding: 8px 14px 0px 0px;
+  text-align: center;
+`
+
+export const AnyButton = styled.div`
+    display: flex;
+    flex-direction: row;
+  
+    padding: 18px 22px;
+    border-radius: 8px;
+    transition: linear .2s;
+    justify-content: space-between;
+    &:hover{
+        background:  ${props => props.theme.color.off};
+    }
+`
+
+
+export const AnyTitle = styled.span`
+  font-size: 24px;
+  color: ${props => props.theme.color.title};
+  font-family: ${props => props.theme.font.medium};
+  margin: 0px;
+`;
+
+
+
+export const AnyLabel = styled.span`
+  font-size: 18px;
+  color: ${props => props.theme.color.label};
+  font-family: ${props => props.theme.font.book};
+`;
+
+
+export const CityImoveis = styled.span`
+  font-size: 28px;
+  color: ${props => props.theme.color.primary};
+  background: ${props => props.theme.color.off};
+  font-family: ${props => props.theme.font.medium};
+  margin: 0px;
+  border-radius: 12px;
+  padding: 12px;
+`;
+
+
+export const AnyColumn = styled.div`
+    flex-direction: column;
+    display: flex;
+`
+
+export const InputValue = styled.input`
+  border: 0px; 
+  border-bottom: 2px solid #00000020;
+  font-size: 24px;
+  color: ${props => props.theme.color.title};
+  font-family: ${props => props.theme.font.medium};
+  margin: 0px;
+  width: 100px;
+  margin-left: 10px;
+
+`

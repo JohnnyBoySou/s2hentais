@@ -110,5 +110,38 @@ export function getPreferences(){
     const JSONstring =  JSON.parse(localStorage.getItem('@preferences'))
     return JSONstring;  
 }
-  
-  
+ 
+
+
+
+
+export async function requestUserImoveis( user ){
+  console.log(user)
+    return Axios.get(`${API_URL}/my/imoveis?user=${user}`,  
+    ).then(response => {
+      return response.data
+    }).catch(error => {
+      console.log(error.code)
+      const response = "" 
+      return response
+    });
+}
+
+
+
+
+
+export async function requestNotifications( ){
+    return Axios.get(`${API_URL}/notifications/all`,  
+    ).then(response => {
+      return response.data
+    }).catch(error => {
+      console.log(error.code)
+      const response = "" 
+      return response
+    });
+}
+
+
+
+//s2hentais.com/novoimovel/wp-json/my/imoveis?user=1 

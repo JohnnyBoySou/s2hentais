@@ -19,6 +19,7 @@ import { Container,
   Logo,
   Routes,
   Route,
+  BtSearch,
 } from './styles';
 import ReactDOM from 'react-dom';
 
@@ -33,7 +34,7 @@ import { requestPreferences, requestSearch } from '../../api/request';
 
 import ListH3 from '../../structure/cards/list_h_3'
 
-import {ButtonBR} from '../../theme/global'
+import {ButtonBR, ButtonChecked} from '../../theme/global'
 import logo from '../../assets/imgs/logo1.png'
 
 import { FiSearch , FiMap,} from "react-icons/fi";
@@ -41,6 +42,9 @@ import { FiSearch , FiMap,} from "react-icons/fi";
 import  ImgSidebar from '../../assets/imgs/sidebar.png'
 
 import { MdKeyboardArrowRight } from 'react-icons/md'
+import Bairro from '../../new_components/bairro'
+
+import useScrollPosition from '../../utils/scrollPosition'
 
 const MapExplore = () => {
 
@@ -55,6 +59,7 @@ const MapExplore = () => {
     const [lat, setLat] = useState(-49.069);
     const [zoom, setZoom] = useState(2);
     
+    
     const [data, setData] = useState([])
     const [load, setLoad] = useState(true)
   
@@ -65,6 +70,19 @@ const MapExplore = () => {
 
     const [focused, setFocused] = useState(false)
     const [view, setView] = useState(false)
+
+    const scroll = document.getElementById('scroll')
+    const { scrollX, scrollY } = useScrollPosition('scroll')
+
+    const searchBt = ( ) => {
+      console.log(scrollY)
+      if (scrollY > 300) {
+        setSearchButton(true)
+      }else{
+        setSearchButton(false)
+      }
+    }
+
 
     function handleDetails  ( item ) {
       navigate(`/details/${item.ID}`)
@@ -118,6 +136,10 @@ const MapExplore = () => {
     useEffect(() => {
       handlePreferences()
     }, [mapView])
+
+    useEffect(() => {
+      searchBt()
+    },)
 
 
     const handlePreferences = () => {
@@ -192,16 +214,20 @@ const MapExplore = () => {
       })
     }
 
-    const a = false;
-    
-    
+    const a = false
 
+    const [bairro, setBairro] = useState(true)
+    const [searchButton, setSearchButton] = useState(false) 
+    
 return (
 
 
     <Container style={{height: heightMax}}>
-      <Left style={{height: 0.94 * heightMax, width: mapView ? '40%' : '100%' }} >  
+      <Left id="scroll" style={{height: 0.94 * heightMax, width: mapView ? '40%' : '100%' }} >  
 
+      {searchButton &&  <BtSearch type="submit" onClick={handleGetSearch} focus={focused}>
+          <FiSearch size={18} color="#fff"/>
+        </BtSearch>}
 
       <div  style={{display:'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
         <Routes>
@@ -251,6 +277,11 @@ return (
       </SearchDiv>
 
 
+      <ButtonChecked style={{borderRadius:100, marginBottom: 5, marginLeft: 10,}} checked={bairro} onClick={() => setBairro(!bairro)}>Por Bairro</ButtonChecked>
+     {!bairro && <div style={{marginTop: 20, marginLeft: 10, marginRight: 10}}>
+      <Bairro /></div>}
+
+
 
         {load && <div>
           <Sk2/><Sk2/><Sk2/> 
@@ -289,6 +320,7 @@ return (
 
      
     </Right>
+
 
     </Container>
   )

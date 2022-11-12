@@ -43,6 +43,8 @@ import {
   Image,
   Spacing2,
   Collections,
+
+  BtAction,
   
 } from './styles';
 
@@ -302,6 +304,15 @@ return (
       </div>
 
     </ActionButtons>
+
+    <ActionButtons style={{borderBottom: '2px solid #00000020', justifyContent: 'flex-start'}}>
+      <BtAction onClick={handlePopular} select={popular}>Popular</BtAction>
+      <BtAction onClick={handleForYou} select={forYou}>Para você</BtAction>
+
+    </ActionButtons>
+
+
+
 
     </Container>
 

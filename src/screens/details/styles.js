@@ -280,13 +280,11 @@ export const TaxLi = styled.li`
 
 
 export const Infra = styled.div`
-padding: 10px;
-padding-bottom: 0px;
+padding: 20px;
 display: flex;
 flex-direction: column;
 border-radius: 8px;
-background: #70779C20;
-border: 2px solid #70779C80;
+background: ${props => props.theme.color.off};
 transition: linear .2s;
 padding-right: 30px;
 width: 100%;
@@ -340,8 +338,7 @@ export const InfraLi = styled.span`
 `;
 
 export const InfraLabel = styled.span`
-  font-size: 28px;
-  margin-bottom: -5px;
+  font-size: 22px;
   color: ${props => props.theme.color.title};
   font-family: ${props => props.theme.font.medium};
 `;
@@ -589,4 +586,43 @@ justify-content: center;
 transition: linear .4s;
 cursor: pointer;
 margin-left: 30px;
+`
+
+
+export const Lista = styled.div`
+  flex-direction: row;
+  margin-bottom: 12px;
+  display: flex;
+  
+`
+export const Ball = styled.div`
+  width: 6px;
+  height: 6px;
+  border-radius: 12px;
+  margin-left: 12px;
+  align-self: center;
+  background: ${props => props.theme.color.label};
+`
+
+
+export const ListaLabel = styled.span`
+  font-size: 20px;
+  font-family: ${props => props.theme.font.book};
+  color: ${props => props.theme.color.label};
+  margin-left: 10px;
+  align-self: center;
+  
+`;
+
+
+
+export const InfraBall = styled.div`
+  width: 28px;
+  height: 28px;
+  border-radius: 52px;
+  margin-right: 10px;
+  align-self: center;
+  text-align: center;
+  justify-content: center;
+  background: ${props => props.theme.color.primary};
 `

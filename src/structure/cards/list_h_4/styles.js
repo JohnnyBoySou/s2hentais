@@ -5,9 +5,9 @@ import { style } from '@mui/system';
 
 
 export const Card = styled.div`
-    border: 2px solid #00000020;
+    border: 0px solid #00000020;
     background: ${props => props.theme.background};
-    margin: 10px;
+    margin: 20px;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
@@ -18,8 +18,8 @@ export const Card = styled.div`
 `
 
 export const Description = styled.div`
-  margin-left: 16px;
-  margin-right: 10px;
+  margin-left: 0px;
+  margin-right: 0px;
   padding-top: 10px;
   padding-bottom:12px;
   display: flex;
@@ -69,7 +69,7 @@ export const Img = styled.img`
   width: 100%;
   height:380px;
   transition: linear .2s;
-  border-radius: 6px;
+  border-radius: 10px;
   object-fit: cover;
 `
 
@@ -114,11 +114,11 @@ export const LineArrow = styled.div`
   flex-direction: row;
   justify-content: space-between;
   display: flex;
-  width: 90px;
+  width: 325px;
   padding: 0px 12px;
   position: absolute;
   z-index: 99;
-  margin-top: 12px;
+  margin-top: 160px;
 `
 
 
@@ -132,11 +132,13 @@ export const BtArrow = styled.button`
   transition: linear .2s;
   text-align: center;
   justify-content: center;
+  opacity: 0.6;
   transition: linear .2s;
   color: ${props => props.theme.color.primary};  
   background:${props => props.theme.color.off};   
   &:hover{
-    background: ${props => props.theme.color.primary}; 
-    color: ${props => props.theme.color.light};  
+    opacity: 1;
+    background: ${props => props.theme.color.light}; 
+    color: ${props => props.theme.color.primary};  
   }
   `

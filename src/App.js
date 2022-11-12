@@ -22,9 +22,17 @@ import Async from './screens/async'
 import Search from './screens/search'
 import Gallery from './screens/gallery'
 
+//Starter
+import Starter from './screens/starter'
+
+
 //Dashboard 
 import DashboardHome from './dashboard/home';
 import AddImobiil from './dashboard/add_imobil';
+import New from './dashboard/new/index'
+
+//Components
+import Components from './screens/components';
 
 import ImobilProfile from './screens/imobil_profile'
 
@@ -33,6 +41,9 @@ import './fonts/Circular_Book.ttf'
 import './fonts/Circular_Bold.ttf'
 import './fonts/Circular_Medium.ttf'
 import './fonts/Circular_Black.ttf'
+
+import Auth from './screens/auth';
+import Profile from './screens/auth/profile';
 
 const App = () => {
   const [theme, setTheme] = usePeristedState('theme', light);
@@ -56,6 +67,7 @@ const App = () => {
 
         <Route path="/app" exact element={<Home/>}/>
         <Route path="/home" exact element={<Home/>}/>
+        <Route path="/components" exact element={<Components/>}/>
 
 
         <Route path="/search/:qr" exact element={<Search/>}/>
@@ -76,15 +88,23 @@ const App = () => {
         <Route path="/gallery/:id" element={<Gallery/>}/>
         <Route path="/galeria/:id" element={<Gallery/>}/>
 
-        
+        <Route path="/dashboard/details/:id" element={<DashboardHome/>}/>
+      
         <Route path="/dashboard/add-imovel" exact element={<AddImobiil/>}/>
         <Route path="/dashboard/add/imovel" exact element={<AddImobiil/>}/>
+        
+        <Route path="/dashboard/new" exact element={<New/>}/>
 
         <Route path="/dashboard/home" exact element={<DashboardHome/>}/>
         <Route path="/dashboard" exact element={<DashboardHome/>}/>
+        <Route path="/dashboard/:path" exact element={<DashboardHome/>}/>
+       
+
+        <Route path="/profile" exact element={<Profile/>}/>
         
-
-
+        <Route path="/starter" exact element={<Starter/>}/>
+  
+        <Route path="/auth" exact element={<Auth/>}/>
       </Routes>
       </div></ThemeProvider>
     </Router>

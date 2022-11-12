@@ -64,6 +64,8 @@ import {
   BarOff,
   AnyTitle,
 
+  Lista,
+  InfraBall,
 } from './styles';
 import vid from '../../assets/imgs/loader.gif'
 
@@ -84,14 +86,15 @@ import {
   FiShare,
   FiArrowRight,
   FiX,
+  FiCheck,
+  FiAlertCircle
 } from "react-icons/fi";
 
-import  { HiOutlineReceiptTax } from 'react-icons/hi'
+import { HiOutlineReceiptTax } from 'react-icons/hi'
 
 import QuickMap from '../../components/quick_map';
 
 import { FaMapMarkerAlt } from "react-icons/fa"
-import { FiAlertCircle, FiCheck } from "react-icons/fi"
 import { MdKeyboardArrowRight } from 'react-icons/md'
 
 import { IoIosImages } from 'react-icons/io';
@@ -462,12 +465,16 @@ const Details = ( ) => {
         <div style={{flexDirection: 'row', justifyContent: 'space-between', display: 'flex'}}>
         <Infra>
         
-              <TaxLabel>Infraestrutura</TaxLabel>
-              <ul>
+              <TaxLabel style={{fontSize: 28,}}>Infraestrutura</TaxLabel>
+             <div style={{marginLeft: 10, marginTop: 20,}}>
 
-              {infra?.map((infra) => <TaxLi key={infra}>{infra}</TaxLi> )}
+              {infra?.map((infra) => 
+              <Lista>
+                <InfraBall><FiCheck style={{textAlign: 'center', marginTop: 4,}} size={22} color="#FFF" /></InfraBall>
+                <InfraLabel>{infra}</InfraLabel>
+              </Lista> )}
               
-              </ul>
+              </div>
       </Infra>
 
       <Conservation>

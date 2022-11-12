@@ -1,0 +1,43 @@
+[{
+    "codigo": "232323",
+    "nome": "Residência Adila",
+    "valor_mensal": "1000",
+    "endereco": "Rua dos Carijós, 100, Centro",
+    "imagem1": "https://s2hentais.com/novoimovel/wp-content/uploads/2021/10/jonathan-borba-hkCh2aHw2Dw-unsplash-1.jpg",
+    "imagem2": "https://s2hentais.com/novoimovel/wp-content/uploads/2021/10/jonathan-borba-N3z-oIHLL3w-unsplash.jpg",
+    "imagem3": "https://s2hentais.com/novoimovel/wp-content/uploads/2021/10/jonathan-borba-kjh70RMHDco-unsplash.jpg",
+    "tipo": "Por mês",
+    "item1": "Quarto",
+    "qtd1": "6",
+    "item2": "Banheiro",
+    "qtd2": "3",
+    "item3": "Garagem",
+    "qtd3": "2",
+    "taxas": [
+      "Taxa de lixo",
+      "Seguro contra incêndio",
+      "IPTU"
+    ],
+    "categoria": "Casa",
+    "infraestrutura": [
+      "Circuito de TV",
+      "Jardim",
+      "Piscina",
+      "Área de Serviço",
+      "Banheiro Social",
+      "Churrasqueira",
+      "Escritório",
+      "Lavabo",
+      "Sala de Jantar",
+      "Hidromassagem"
+    ],
+    "conservacao": "3",
+    "area": "245",
+    "post_author": "6",
+    "post_title": "Residência Adila",
+    "descricao": "A casa possui: 4 quartos, 2 banheiros, 1 sala de estar, garagem para 2 carros.",
+    "bairro": "Centro",
+    "rua": "Rua dos Carijós",
+    "numero": "100",
+    "ID": 1897
+  }]

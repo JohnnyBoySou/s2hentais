@@ -312,3 +312,17 @@ export const Spacing2 = styled.div`
   width: 20px;
   height: 5px;
 `
+
+
+
+export const BtAction = styled.button`
+  border: none;
+  font-family: ${props => props.theme.font.book}; 
+  color: ${props => props.select ? 'blue' : '#000000020'}; 
+  font-size: 24px;
+  background: none;
+  transition: linear .2s;
+  padding: 10px 20px;
+  border-bottom: ${props => props.select ? ' 3px solid blue' : '3px solid #00000020'};
+  margin-bottom: -2px;
+`

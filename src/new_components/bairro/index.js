@@ -118,7 +118,8 @@ export default function Bairro({ route, ...props }){
   ]
       
   const RenderItem = ({ item }) => (
-    <button style={{marginBottom: 16, background: color.background, borderRadius: 8, width: 300, border: '2px solid #00000020', display: 'flex', flexDirection: 'row'}}>
+    <button style={{marginBottom: 16, background: color.background, borderRadius: 8, 
+    width: '100%', border: '2px solid #00000020', display: 'flex', flexDirection: 'row'}}>
     <div style={{flexDirection: 'row', justifyContent: 'space-between',}}>
 
       <div style={{flexDirection: 'row', display: 'flex'}}>
@@ -154,7 +155,7 @@ export default function Bairro({ route, ...props }){
   
   return(
     
-    <div>{data.map((data) => <RenderItem item={data}/> )}
+    <div>{data.map((data) => <RenderItem key={data.nome} item={data}/> )}
 </div>
     
   )

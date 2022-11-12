@@ -141,10 +141,13 @@ export const Input = styled.input`
   border-radius: 6px;
   transition: linear .1s;
   &:focus {
-    border: 3px solid #5B72F2;
-    outline: none;
+    outline: none; 
+    box-shadow: 0px 0px 0px 3px ${props => props.theme.color.primary}60;
+    border: 2px solid ${props => props.theme.color.primary};
 }
 `;
+
+
 
 
 export const Bt = styled.button`
@@ -188,3 +191,31 @@ export const Routes = styled.span`
   align-self: center;
   margin-right: 50px;
 `;
+
+export const BairroLine = styled.div`
+  display: flex;
+  border: 2px solid #00000020;
+  flex-direction: row;
+  border-radius: 8px;
+  padding: 8px 12px;
+
+`
+
+export const BairroLabel = styled.div`
+`
+
+
+export const BtSearch = styled.button`
+  border: none;
+  justify-content: center;
+  text-align: center;
+  border-radius: 6px;
+  padding: 14px 16px;
+  cursor: pointer;
+  position: absolute; 
+  top: 40px;
+  left: 40px;
+  z-index: 999;
+  background: ${props => props.theme.color.primary};
+`
+

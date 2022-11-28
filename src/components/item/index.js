@@ -24,11 +24,11 @@ export default function Item({...props }){
     <Button>
       <View style={{flexDirection: 'row', display: 'flex', alignContent: 'center'}}>
           <View>
-            {type == 'Quarto' && <Image src={Quarto}/>}
-            {type == 'Banheiro' &&  <Image src={Banheiro} />}      
-            {type == 'Cozinha' && <Image src={Cozinha} />}
-            {type == 'Sala' && <Image src={SalaDeEstar} />}
-            {type == 'Garagem' && <Image src={Garagem} />}
+            {type === 'Quarto' && <Image src={Quarto}/>}
+            {type === 'Banheiro' &&  <Image src={Banheiro} />}      
+            {type === 'Cozinha' && <Image src={Cozinha} />}
+            {type === 'Sala' && <Image src={SalaDeEstar} />}
+            {type === 'Garagem' && <Image src={Garagem} />}
           </View>
       
       { type !== "Area" && <View style={{justifyContent: 'center'}}>

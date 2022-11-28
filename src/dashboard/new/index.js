@@ -109,6 +109,7 @@ import Profile from './profile/index'
 import ListH7 from '../../structure/cards/list_h_7';
 import DocumentMeta from 'react-document-meta'
 import { requestNotifications, requestUserImoveis } from '../../api/request';
+import ImoveisList from './imoveislist';
 
 const Auth = ( ) => {
 
@@ -166,7 +167,7 @@ const Auth = ( ) => {
   )
 
     const views = {
-      name: 'Views',
+      name: 'Visualizações',
       value1: '12.323',
       value2: '8.214',
     }
@@ -177,11 +178,23 @@ const Auth = ( ) => {
       value2: '2.664',
     }
 
+    const interaction = {
+      name: 'Interações',
+      value1: '8.989',
+      value2: '6.332',
+    }
+
+    const popular = {
+      name: 'Popularidade',
+      value1: '22.332',
+      value2: '9.877',
+    }
+
 
 
     const [page, setPage] = useState({
       name: 'Dashboard',
-      desc: "SEO Overview"
+      desc: "Visão geral de seus imóveis"
     })
     const [dashboard, setDashboard] = useState(true)
     const [plans, setPlans] = useState(false)
@@ -205,7 +218,7 @@ const Auth = ( ) => {
         setAddImovel(false)
         setPage({
           name: 'Dashboard',
-          desc: 'SEO Overview'
+          desc: 'Visão geral de seus imóveis'
         })
       }
       else if(course === "plans"){
@@ -281,6 +294,7 @@ const Auth = ( ) => {
         function(response, error) {
           if(response){
             console.log(response)
+            console.log('aq')
             setUserImoveis(response)
             return
           }else if(
@@ -416,12 +430,23 @@ const Auth = ( ) => {
           </View>
         </Head>
         
-        {dashboard && <View><Dashboard user={userData} click={handleClick} className="fadeUp" views={views}/> </View> }
+        {dashboard && <View>
+          <Dashboard user={userData} click={handleClick} className="fadeUp" 
+            views={views} 
+            popular={popular}
+            interaction={interaction} 
+            likes={likes}/> 
+        </View> }
         {addimovel && <AddImobil userData={userData} />}
       
-       {imoveis &&  <ImoveisContainer>
+       {imoveis &&  <View>
+
+        <ImoveisList userImoveL={userImoveis} />
+        
+        <ImoveisContainer>
         {userImoveis.map((userImovei) =>  <ListH7 data={userImovei} />)}
-        </ImoveisContainer>}
+        </ImoveisContainer>
+        </View>}
        
         
        {settings && <Settings userData={userData}/>}
@@ -441,9 +466,9 @@ const Auth = ( ) => {
 
       {plans &&
         <View style={{flexDirection: 'row', justifyContent: 'space-between', display: 'flex'}}>
-          <Plans/>
-          <Plans/>
-          <Plans/>
+          <Plans type="normal"/>
+          <Plans type="premium"/>
+          <Plans type="imobil"/>
         </View>
         }
 

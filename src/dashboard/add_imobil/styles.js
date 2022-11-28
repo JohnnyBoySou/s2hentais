@@ -370,3 +370,167 @@ export const CardImg = styled.img`
   margin-top: 0px;
   margin-bottom: 20px;
 `
+export const ImageUpload = styled.img`
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+`
+
+export const InputImageUpload = styled.button`
+  border: none;
+  width: 120px;
+  height: 104px;
+  margin: 10px;
+  background: ${props => props.theme.color.primary}20;
+  border-radius: 12px;
+  font-size: 32px;
+  cursor: pointer;
+  color: ${props => props.theme.color.title};
+  font-family: ${props => props.theme.font.book};
+`
+
+
+export const ImgLabel = styled.span `
+  font-size: 16px;
+  color: ${props => props.theme.color.title};
+  font-family: ${props => props.theme.font.medium};
+
+`;
+
+
+export const PublishBt = styled.button`
+  background: ${props => props.theme.color.primary};
+  color: ${props => props.theme.color.light};
+  font-family: ${props => props.theme.font.medium};
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 20px;
+  border-radius: 6px;
+  display: flex;
+  border: none;
+  flex-direction: row;
+  transition: .2s linear;
+  &:hover{
+    background: ${props => props.theme.color.primary}20;
+    color: ${props => props.theme.color.primary};
+      
+  }
+`
+
+export const PublishBtIcon = styled.div`
+  padding: 14px;
+  margin-left: -5px;
+  height: 28px;
+  background: #00000020;
+  justify-content: center;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+`
+
+export const PublishLabel = styled.span`
+font-family: ${props => props.theme.font.medium};
+font-size: 20px;
+padding-top: 15px;
+padding-left: 20px;
+padding-right: 20px;
+`
+
+export const PublishType = styled.span`
+font-family: ${props => props.theme.font.medium};
+color: ${props => props.theme.color.primary};
+letter-spacing: 4;
+font-size: 16px;
+padding-top: 10px;
+text-transform: uppercase;
+`
+
+export const PublishTitle = styled.span`
+font-family: ${props => props.theme.font.medium};
+color: ${props => props.theme.color.title};
+
+font-size: 24px;
+padding-top: 4px;
+`
+
+export const PublishDescription = styled.span`
+font-family: ${props => props.theme.font.book};
+color: ${props => props.theme.color.label};
+font-size: 18px;
+padding-top: 10px;
+margin-bottom: 20px;
+`
+
+export const PublishCard = styled.div`
+  border: 2px solid #00000020;
+  border-radius: 12px;
+  margin: auto;
+  margin-top: 10px;
+  padding-top: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+  display: flex;
+  flex-direction: column;
+`
+
+
+export const PublishImage = styled.img`
+  width: 104%;
+  margin: -8px;
+
+  margin-bottom: 10px;
+  height: 300px;
+  border-radius: 12px;
+`
+
+
+export const TextArea = styled.textarea`
+  font-size: 22px;
+  margin: 8px 0px;
+  border-radius: 6px;
+  border: 2px solid #00000020;
+  transition: .2s linear;
+  resize: vertical;
+  padding: 6px 8px;
+  &:focus {
+    outline: none; 
+    box-shadow: 0px 0px 0px 3px ${props => props.theme.color.primary}60;
+    border: 2px solid ${props => props.theme.color.primary};
+  }
+  color: ${props => props.theme.color.label};
+  font-family: ${props => props.theme.font.book};`
+
+
+
+  
+export const PublishTip = styled.div`
+  color: ${props => props.theme.color.secundary};
+  background:  ${props => props.theme.color.secundary}30;
+  font-family: ${props => props.theme.font.book};
+  padding: 10px 16px;
+  flex-direction: row;
+  display: flex;
+  margin-top: 20px;
+  border-radius: 0px 8px 8px 0px;
+  border-left: 4px solid  ${props => props.theme.color.secundary};
+  margin-left: 20px;
+`
+
+
+export const PublishTipLabel = styled.span`
+  color: ${props => props.theme.color.secundary};
+  font-size: 16px;
+  padding-top: 2px;
+  font-family: ${props => props.theme.font.book};
+`
+
+
+export const PublishValue = styled.span`
+  color: ${props => props.theme.color.light};
+  background: ${props => props.theme.color.primary};
+  font-size: 18px;
+  border-radius: 6px;
+  text-align: center;
+  padding: 8px 12px;
+  margin: auto;
+  font-family: ${props => props.theme.font.medium};
+`

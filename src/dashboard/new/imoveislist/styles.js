@@ -72,14 +72,15 @@ export const Card = styled.div`
 `
 
 export const CardTitle = styled.span `
-  font-size: 20px;
-  color: ${props => props.theme.color.label};
+  font-size: 42px;
+  margin-top: -12px;
+  color: ${props => props.theme.color.title};
   font-family: ${props => props.theme.font.medium};
 `;
 
 
 export const CardLabel = styled.span `
-  font-size: 16px;
+  font-size: 18px;
   margin-top: 5px;
   color: ${props => props.theme.color.label};
   font-family: ${props => props.theme.font.book};

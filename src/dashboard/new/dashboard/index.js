@@ -49,6 +49,7 @@ import Modal from 'react-modal';
 import Suff from '../../../assets/imgs/suff.png'
 import Stats from '../stats';
 import Box from '../box'
+import { linkClasses } from '@mui/material';
 
 const Dashboard = ( props ) => {
 
@@ -59,6 +60,9 @@ const Dashboard = ( props ) => {
   const click = props.click
   const user = props.user
   const views = props.views
+  const likes = props.likes
+  const popular = props.popular
+  const interaction = props.interaction
 
   const [visibility, setVisibility] = useState(true)
 
@@ -102,7 +106,7 @@ const Dashboard = ( props ) => {
   };
 
 
-  const [imovelNome, setNomeImovel] = useState('')
+  const [imovelNome, setNomeImovel] = useState('meunovoimovel')
   const [next, setNext] = useState(false)
 
   React.useEffect(() => {
@@ -115,7 +119,6 @@ const Dashboard = ( props ) => {
   
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      console.log('enter')
       if(imovelNome === "meunovoimovel"){
         click()
       }else{return}
@@ -134,7 +137,7 @@ const Dashboard = ( props ) => {
           </View>
           <View style={{flexDirection: 'row', marginTop: 40,  display: 'flex', marginBottom: 40,}}>
 
-            <Box item={views}/>
+            <Box item={popular}/>
             <Spacing />
             <Box item={views}/>
             <Spacing/>
@@ -146,14 +149,15 @@ const Dashboard = ( props ) => {
         <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20,  display: 'flex'}}>
           <Box item={views}/>
           <Spacing/>
-          <Box item={views}/>
+          <Box item={interaction}/>
+          <Spacing/>
+          <Box item={likes}/>
           <Spacing/>
           <Box item={views}/>
-          <Spacing/>
-          <Add style={{backgroundImage: `url(${Suff})`}}>
+          {a && <Add style={{backgroundImage: `url(${Suff})`}}>
             <CardTitle style={{fontSize: 24, fontFamily: font.medium, color: color.light, textAlign: 'center',}}>Adicionar</CardTitle>
             <ButtonBR style={{background: color.light, marginTop: 10, border: 'none', color: color.light, borderRadius: 100, color: color.primary, }}>Novo Imóvel</ButtonBR>
-          </Add>
+          </Add>}
         </View>
 
         <Card>

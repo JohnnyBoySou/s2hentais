@@ -15,13 +15,15 @@ import {
 
 import { ButtonOffColor, Back, ButtonBR } from '../../../theme/global'
 import { BiCheck } from 'react-icons/bi'
-import { BsPatchCheck } from 'react-icons/bs'
+import { BsPatchCheck, BsBuilding, BsBriefcase } from 'react-icons/bs'
 import { useNavigate, useParams } from 'react-router-dom';
  
 
-const Plans = ( ) => {
+const Plans = ( props ) => {
 
   const { color, font } = useContext(ThemeContext)
+
+  const type = props.type
   
   const navigate = useNavigate()
 
@@ -36,36 +38,107 @@ const Plans = ( ) => {
 
   const a = false;
 
-    const items = [
-        {name: "Unlimited views"},
-        {name: "Show destaques"},
-        {name: "Special stats"},
-        {name: "Contact profile"},
-        {name: "Unlimited likes"},
+    const normal = [
+        {name: "1 imóvel"},
+        {name: "Estatísticas"},
+        {name: "Suporte básico"},
     ]
 
-  return (
+    
+    const premium = [
+      {name: "5 imóveis"},
+      {name: "Incluso nos Destaques"},
+      {name: "Estatísticas especiais"},
+      {name: "Suporte 24/7"},
+      {name: "Acesso a Storys"},
+      {name: "Página de Reviews"}
+  ]
+
   
-        <Card className='fadeUp'>
+  const imobil = [
+    {name: "+15 imóveis"},
+    {name: "Incluso nos Destaques"},
+    {name: "Estatísticas avançadas"},
+    {name: "Suporte 24/7"},
+    {name: "Acesso a Storys"},
+    {name: "Página de Reviews"},
+    {name: "Acesso a novas funções de teste"},
+    {name: "Parceria com Fotógrafos"},
+]
+
+  return (
+        <View>
+
+          {type === "normal" && 
+          <Card className='fadeUp'>
             <BsPatchCheck style={{fontSize: 32, color:  color.primary, marginBottom: 20,}}/>
             <CardTitle>
-                Starter
+                Inicial
             </CardTitle>
             <CardLabel>
-                Basic features for validating and getting started
+                Funções básicas para você começar a vender
             </CardLabel>
-            <CardValue>R$ 159</CardValue>
-            <CardLabel style={{fontSize: 20, fontFamily: font.medium,}}>/year</CardLabel>
+            <CardValue>R$ 0,00</CardValue>
+            <CardLabel style={{fontSize: 20, fontFamily: font.medium,}}>/ ∞</CardLabel>
             
-            <ButtonOffColor style={{marginBottom: 20,}}>Get starter plan</ButtonOffColor>
+            <ButtonOffColor style={{marginBottom: 20,}}>Escolher plano</ButtonOffColor>
 
             <List>
-               {items.map(items => <Item> 
+               {normal.map(items => <Item> 
                     <Icon><BiCheck/></Icon>    
                     <ItemLabel>{items.name}</ItemLabel>
                 </Item>)}
             </List>
-        </Card>
+          </Card>
+          }
+
+          {type === "premium" && 
+          <Card className='fadeUp'>
+            <BsBriefcase style={{fontSize: 32, color:  color.primary, marginBottom: 20,}}/>
+            <CardTitle>
+                Premium
+            </CardTitle>
+            <CardLabel>
+                Funções avançadas para você alavancar suas conversões
+            </CardLabel>
+            <CardValue>R$ 49,99</CardValue>
+            <CardLabel style={{fontSize: 20, fontFamily: font.medium,}}>/ por mês</CardLabel>
+            
+            <ButtonOffColor style={{marginBottom: 20,}}>Escolher plano</ButtonOffColor>
+
+            <List>
+               {premium.map(items => <Item> 
+                    <Icon><BiCheck/></Icon>    
+                    <ItemLabel>{items.name}</ItemLabel>
+                </Item>)}
+            </List>
+          </Card>
+          }
+
+         {type === "imobil" && 
+            <Card className='fadeUp'>
+            <BsBuilding style={{fontSize: 32, color:  color.primary, marginBottom: 20,}}/>
+            <CardTitle>
+                Imobiliárias
+            </CardTitle>
+            <CardLabel>
+                Funções avançadas para seu negócio crescer
+            </CardLabel>
+            <CardValue>R$ 199,99</CardValue>
+            <CardLabel style={{fontSize: 20, fontFamily: font.medium,}}>/ por mês</CardLabel>
+            
+            <ButtonOffColor style={{marginBottom: 20,}}>Entrar em contato</ButtonOffColor>
+
+            <List>
+               {imobil.map(items => <Item> 
+                    <Icon><BiCheck/></Icon>    
+                    <ItemLabel>{items.name}</ItemLabel>
+                </Item>)}
+            </List>
+          </Card>
+          }
+
+        </View>
 
   );
 };

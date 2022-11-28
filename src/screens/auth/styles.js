@@ -183,8 +183,8 @@ export const Routes = styled.span `
 
 export const Image = styled.img `
   width: 100%;
-  height: 90%;
   border-radius: 12px;
+  object-fit: cover;
 `
 
 export const GreenAcess = styled.span `
@@ -213,6 +213,13 @@ export const RedAcess = styled.span `
 `
 
 
+export const RedAcessLabel = styled.span `
+  color: ${props => props.theme.color.red};
+  font-family: ${props => props.theme.font.book};
+  font-size: 16px;
+`
+
+
 
 export const FinishImg = styled.img `
   width: 300px;
@@ -229,4 +236,6 @@ export const ShowIcon = styled.div`
   margin-left: -40px;
   margin-right: 10px;
   margin-top: 15px;
+  cursor: pointer;
+
 `

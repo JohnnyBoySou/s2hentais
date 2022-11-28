@@ -206,7 +206,7 @@ export const ResourceBt = styled.div`
 
 export const Line = styled.div`
   width: 2px;
-  height: 200px;
+  height: 170px;
   background: #00000020;
 `
 
@@ -216,7 +216,7 @@ export const Line = styled.div`
 export const ResourceTitle = styled.span`
   font-size: 24px;
   color: ${props => props.theme.color.title};
-  margin-bottom: 10px;
+  margin-bottom: 0px;
   font-family: ${props => props.theme.font.medium};
 `;
 
@@ -228,7 +228,58 @@ export const Banner = styled.div`
   padding-top: 40px;
   padding-bottom: 40px;
   width: 100%;
-  margin: auto;
-  background: ${props => props.theme.color.title};
+  margin-bottom: 40px;
+  border-radius: 12px;
+  background: ${props => props.theme.color.primary};
   justify-content: center;
+`
+
+
+export const Footer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0px;
+  border-radius: 12px;
+  background: #f1f1f1;
+  padding: 40px 80px;
+  justify-content: space-between;
+`
+
+
+export const Link = styled.a `
+  font-size: 16px;
+  text-decoration: none;
+  margin-top: 10px;
+  color: ${props => props.theme.color.label};
+  font-family: ${props => props.theme.font.book};
+`;
+
+
+
+
+export const TitleLink = styled.a `
+  font-size: 22px;
+  text-decoration: none;
+  color: ${props => props.theme.color.title};
+  font-family: ${props => props.theme.font.medium};
+`;
+
+
+export const Tips = styled.div`
+  display: flex;
+  margin: auto;
+  flex-direction: row;
+  margin-bottom: 30px;
+  background: #FFF;
+  width: 80%;
+  padding: 40px 80px 0px 80px;
+  justify-content: space-between;
+  border-bottom: 2px solid #00000010;
+`
+
+export const TipsImg = styled.img`
+  width: 600px;
+  height: 550px;
+  margin: auto;
+  margin-bottom: -4px;
 `

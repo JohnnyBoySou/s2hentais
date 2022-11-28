@@ -16,7 +16,6 @@ export function requestServerData( params ){
       return Axios.get(`${API_URL}/feed/alugar?${item}${max}`, {
         headers: headers
     }).then(function (response) {
-        console.log('function server')
         console.log(response.data)
         return response.data
         
@@ -90,6 +89,24 @@ export function requestSearch( identification ){
 
 
 
+export function requestCEP( value ){
+  if(value){
+  const val = String(value)
+  const cep = val.replace('-', "")
+
+  return Axios.get(`https://viacep.com.br/ws/${cep}/json/`, {
+      headers: headers
+  }).then(response =>  {
+      return response.data
+  }).catch(error => {console.log(error)})
+  }
+  else{
+    return
+  }
+}
+
+
+
 
 export function requestImobil( identification ){
 
@@ -117,8 +134,9 @@ export function getPreferences(){
 
 export async function requestUserImoveis( user ){
   console.log(user)
-    return Axios.get(`${API_URL}/my/imoveis?user=${user}`,  
+    return Axios.get(`${API_URL}/user/imoveis?id=${user}`,  
     ).then(response => {
+      console.log(response)
       return response.data
     }).catch(error => {
       console.log(error.code)

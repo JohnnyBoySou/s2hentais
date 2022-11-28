@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import React, { useContext , useState, useEffect, useRef} from 'react';
 
 
@@ -37,6 +38,7 @@ import {
   Image,
   GreenAcess,
   RedAcess,
+  RedAcessLabel,
   Logo,
   FinishImg,
   ShowIcon
@@ -57,7 +59,7 @@ import {mask } from './mask'
 import IconPerson from "../../assets/imgs/icon_person.png"
 import IconImobil from "../../assets/imgs/icon_imobil.png"
 
-import Suff from '../../assets/imgs/suff.png'
+import Suff from '../../assets/imgs/auth_img.png'
 
 import Loader from  '../../components/loader'
 import registerFinishImage from '../../assets/imgs/registerFinishImage.png'
@@ -136,11 +138,11 @@ const Auth = ( ) => {
     setLoadLogin(true)
 
     try{
-      const user = JSON.parse(localStorage.getItem('@user'))
-      if(user){
-        navigate('/dashboard/new')
-      }
-      else{
+      //const user = JSON.parse(localStorage.getItem('@user'))
+      //if(user){
+        //navigate('/dashboard/new')
+      //}
+      //else{
         requestLogin(email, password).then(
           function(response, error) {
         
@@ -156,7 +158,7 @@ const Auth = ( ) => {
         setLoadLogin(false)
         })
 
-      }
+      //}
     }
    catch(e){
      console.log(e)
@@ -170,6 +172,8 @@ const Auth = ( ) => {
     navigate("/dashboard/new");
   }
 
+  const [error, setError] = useState([])
+
   function handleRegisterPerson(){
 
     setErrorRegister(false)
@@ -179,17 +183,18 @@ const Auth = ( ) => {
     
 
    requestRegister(params).then(
-      function(response, error) {
+      function(response) {
         
-        if(response){
+        if(response.data.status != 403){
           setUserData(response.token)
-          console.log(response)
           setErrorRegister(false)
-          setFinishRegister(true)
-          setTimeout(() => {
-            navigate('/dashboard')
-          }, 1500);
-        }else{
+          setFinishRegister(true)          
+        }
+        else if(response.data.status === 403){
+          console.log('identifiquei q é erro')
+          console.log(response)
+        }
+        else{
           setFinishRegister(false)
           setErrorRegister(true)
         }
@@ -334,10 +339,9 @@ const Auth = ( ) => {
       <Left>
 
         <View style={{justifyContent: 'space-between', marginBottom: 40, display: 'flex', flexDirection: 'row'}}>
-          <Back onClick={handleBack} style={{width: 52, height: 52, padding: 0, fontSize: 24, borderRadius: 100, marginBottom: 20,}}><FiArrowLeft style={{marginTop: 6,}}/></Back>
+          <Back onClick={() => navigate('/starter')} style={{width: 52, height: 52, padding: 0, fontSize: 24, borderRadius: 100, marginBottom: 20,}}><FiArrowLeft style={{marginTop: 6,}}/></Back>
           <Logo src={logo} onClick={handleHome}/>
-          <Back onClick={handleFAQ} style={{width: 52, height: 52, padding: 0, fontSize: 24, borderRadius: 100, marginBottom: 20,}}><RiQuestionMark style={{marginTop: 6,}}/></Back>
-        </View>
+           </View>
       {login && 
       <Login className='fadeUp'>
 
@@ -506,7 +510,7 @@ const Auth = ( ) => {
 
        <View style={{flexDirection: 'column', display: 'flex'}}>
 
-       {errorRegister && <RedAcess className='fadeUp'>Credênciais inválidas</RedAcess>}
+       {errorRegister && <RedAcess className='fadeUp'>{error.message}</RedAcess>}
         {finishRegister && <GreenAcess className='fadeUp'>Registro concluída</GreenAcess>}
 
 
@@ -528,7 +532,7 @@ const Auth = ( ) => {
          </View>
          <ButtonPR onClick={handleRegisterPerson} style={{marginTop: 30, borderRadius: 100, width: '100%', fontSize: 18, padding: 14,}}>
           {!loadRegister && <span>Entrar</span> } 
-          {loadRegister && <Loader className='fadeUp' type="spin" color={color.light}/>}
+          {loadRegister && <Loader className='fadeUp' type="spin" size={24} color={color.light}/>}
           </ButtonPR>
    
        </View>

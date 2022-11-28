@@ -65,9 +65,9 @@ export async function requestLogin( email, password ){
   ).then(response => {
     return response.data
   }).catch(error => {
+    console.log('erro')
     console.log(error)
-    const response = "" 
-    return response
+    return error
   });
 
   }
@@ -78,7 +78,6 @@ export async function requestLogin( email, password ){
     
     const data = params[0]
     const token = params[0].token
-    console.log(data)
 
     const headers = {
       'Content-Type': 'application/json',
@@ -103,6 +102,13 @@ export async function requestLogin( email, password ){
     const response = "" 
     return response
   });
+
+  }
+
+
+  
+  export async function requestNewMedia( params ){
+    
 
   }
 

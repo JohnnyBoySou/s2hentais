@@ -1,23 +1,19 @@
 import React, { useContext , useState, } from 'react';
 import { ThemeContext } from 'styled-components';
 import {
-  View, 
-  Container, 
+  View,  
   Card,
   CardTitle,
   CardLabel,
-  CardValue,
-  List,
-  Item,
-  Icon,
-  ItemLabel,
-
-  Chip,
+  Label,
+  Bold,
+  Column,
+  ColumnLabel,
 } from './styles';
 import { TfiStatsUp } from 'react-icons/tfi'
-import { ButtonOffColor, Back, ButtonBR } from '../../../theme/global'
+import { ButtonOffColor, Back, ButtonBR, SelectLabel, SelectBt } from '../../../theme/global'
 import { BiCheck, BiBuildingHouse } from 'react-icons/bi'
-import { FiUsers } from 'react-icons/fi'
+import { FiUsers, FiCheck, FiX } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom';
  
 import Select from 'react-select' 
@@ -77,6 +73,20 @@ const ImoveisList = ( props ) => {
     })
   }
 
+
+  const offset = 20
+  const value_total = 38
+
+  const [publish, setPublish] = useState(true)
+  
+  const handlePublish = ( value ) => {
+    if(value){
+      setPublish(false)
+    }else if(!value){
+      setPublish(true)
+    }
+  }
+
   return (
 
     <View className='column'>
@@ -98,12 +108,36 @@ const ImoveisList = ( props ) => {
         </Card>
         </View>
         <View style={{marginBottom: 20, justifyContent: 'space-between'}} className='row'>
-        <Select styles={customStyles} onChange={setOrder} options={options2} defaultValue={options2[0]} />
         
-        <Select styles={customStyles} onChange={setOrder} options={options} defaultValue={options[0]} />
-          
+
+        <SelectBt style={{width: 140,}} on={publish} onClick={() => handlePublish(publish)}>
         
+        {publish && <SelectLabel on={publish}><FiCheck style={{paddingTop: 4, marginBottom: -3, fontSize: 20,}}/> Publicados</SelectLabel>}
+        {!publish && <SelectLabel on={publish}><FiX style={{paddingTop: 4, marginBottom: -3, fontSize: 20,}}/>Rascunhos</SelectLabel>}
+        </SelectBt>
+
+
+        <View className='row'>
+         <Label style={{paddingRight: 20,}}><Bold>{offset}</Bold> de <Bold>{value_total}</Bold> imóveis</Label>  
+         <Select styles={customStyles} onChange={setOrder} options={options} defaultValue={options[0]} />
+       </View>
         </View>
+
+
+        <View style={{flexDirection: 'row', display: 'flex', borderTop: '2px solid #00000020', borderTopLeftRadius: 12, borderTopRightRadius: 12, borderLeft: '2px solid #00000020',borderRight: '2px solid #00000020',  }}>
+          <Column style={{width: 20}}><ColumnLabel></ColumnLabel></Column>
+          <Column style={{width: 70,}}><ColumnLabel>Código (ID)</ColumnLabel></Column>
+          <Column style={{width: 100,}}><ColumnLabel>Categoria (Tipo)</ColumnLabel></Column>
+          <Column style={{width: 70,}}><ColumnLabel>Valor (R$)</ColumnLabel></Column>
+          <Column style={{width: 100,}}><ColumnLabel>Qtd. Quartos</ColumnLabel></Column>
+          <Column style={{width: 100,}}><ColumnLabel>Qtd. Banheiros</ColumnLabel></Column>
+          
+          <Column style={{width: 80,}}><ColumnLabel>Área <br/>total (m²) </ColumnLabel></Column>
+          <Column style={{ width: 180, textAlign: 'center'  }}>
+          <ColumnLabel style={{margin: 'auto'}}>Açãoes <br/> rápidas</ColumnLabel>
+        </Column>
+        
+      </View>
 
       </View>
   );

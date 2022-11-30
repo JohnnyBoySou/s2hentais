@@ -283,3 +283,18 @@ export const TipsImg = styled.img`
   margin: auto;
   margin-bottom: -4px;
 `
+
+
+
+
+export const Planos = styled.div`
+  display: flex;
+  margin: auto;
+  flex-direction: row;
+  padding-top: 40px;
+  padding-bottom: 0px;
+  width: 80%;
+  margin-bottom: 40px;
+  border-radius: 12px;
+  justify-content: space-between;
+`

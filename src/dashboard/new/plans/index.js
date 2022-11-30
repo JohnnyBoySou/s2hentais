@@ -81,7 +81,7 @@ const Plans = ( props ) => {
             <CardValue>R$ 0,00</CardValue>
             <CardLabel style={{fontSize: 20, fontFamily: font.medium,}}>/ ∞</CardLabel>
             
-            <ButtonOffColor style={{marginBottom: 20,}}>Escolher plano</ButtonOffColor>
+            <ButtonOffColor style={{marginBottom: 20,}}>COMEÇAR DE GRAÇA</ButtonOffColor>
 
             <List>
                {normal.map(items => <Item> 

@@ -38,7 +38,7 @@ export const Right = styled.div `
 
 
 export const Title = styled.span `
-  font-size: 32px;
+  font-size: 24px;
   color: ${props => props.theme.color.primary};
   text-align: center;
   font-family: ${props => props.theme.font.bold};
@@ -50,8 +50,16 @@ export const Label = styled.span `
   font-size: 20px;
   color: ${props => props.theme.color.title};
   margin-top: 20px;
-  font-family: ${props => props.theme.font.medium};
+  font-family: ${props => props.theme.font.book};
 `;
+
+
+export const Bold = styled.span `
+  font-size: 20px;
+  color: ${props => props.theme.color.title};
+  font-family: ${props => props.theme.font.bold};
+`;
+
 
 export const Hr = styled.div `
   height: 2px;
@@ -134,3 +142,24 @@ export const Chip = styled.div`
     display: flex;
     flex-direction: row;
 `
+
+export const Column = styled.div`
+  text-align: center;
+  padding: 12px 20px;
+  display: flex:
+  justify-content: center;
+  border-right: 0.5px solid #00000010;
+`
+
+
+export const ColumnLabel = styled.span`
+  text-align: center;
+  font-size: 18px;
+  color: ${props => props.theme.color.title};
+  font-family: ${props => props.theme.font.book};
+  &:hover{
+    font-family: ${props => props.theme.font.medium};
+    
+  }
+`
+

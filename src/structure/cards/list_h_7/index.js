@@ -11,6 +11,7 @@ QuickBt,
 
  } from './styles'
 
+import { BsPen , BsTrash, BsBarChartLine, BsShare } from 'react-icons/bs'
 import { FiEdit, FiExternalLink, FiBarChart2}  from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom';
 
@@ -41,7 +42,7 @@ export default function ListH7( props ){
   <Card >
      <View style={{flexDirection: 'row', display: 'flex', }}>
         <Column style={{padding: 0,}}><Img onClick={() => getDetails(dashboard)} src={imgUrl} /></Column>
-        <Column style={{width: 50,}}><ColumnLabel>#{item?.ID}</ColumnLabel></Column>
+        <Column style={{width: 70,}}><ColumnLabel>#{item?.ID}</ColumnLabel></Column>
         <Column style={{width: 100,}}><ColumnLabel>{item?.categoria}</ColumnLabel></Column>
         <Column style={{width: 70,}}><ColumnLabel>R$ {item?.valor_mensal}{item?.valor_unico}</ColumnLabel></Column>
         <Column style={{width: 100,}}><ColumnLabel>{item?.qtd1} {item?.item1}</ColumnLabel></Column>
@@ -49,9 +50,11 @@ export default function ListH7( props ){
         
         <Column style={{width: 80,}}><ColumnLabel>{item?.area} m² </ColumnLabel></Column>
         <Column style={{flexDirection: 'row', display: 'flex'}}>
-          <QuickBt><FiEdit/></QuickBt>
-          <QuickBt onClick={() => getDetails(true)}><FiBarChart2/></QuickBt>
-          <QuickBt onClick={() => getDetails(false)}><FiExternalLink/></QuickBt>
+          <QuickBt><BsPen/></QuickBt>
+          <QuickBt onClick={() => getDetails(true)}><BsBarChartLine/></QuickBt>
+          <QuickBt onClick={() => getDetails(false)}><BsShare/></QuickBt>
+          <QuickBt onClick={() => getDetails(false)}><BsTrash/></QuickBt>
+       
         </Column>
         
       </View>

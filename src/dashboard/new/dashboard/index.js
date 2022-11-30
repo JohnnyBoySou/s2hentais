@@ -31,7 +31,7 @@ import {
   Img,
 } from './styles';
 
-import { ButtonOffColor, Back, ButtonBR, ButtonPR } from '../../../theme/global'
+import { ButtonOffColor, Back, ButtonBR, ButtonPR, ButtonLight } from '../../../theme/global'
 import { BiCheck } from 'react-icons/bi'
 import { BsPatchCheck } from 'react-icons/bs'
 import { AiOutlineEdit , AiOutlineSetting, AiOutlineUsergroupAdd} from 'react-icons/ai'
@@ -50,6 +50,7 @@ import Suff from '../../../assets/imgs/suff.png'
 import Stats from '../stats';
 import Box from '../box'
 import { linkClasses } from '@mui/material';
+import { Label } from '../styles';
 
 const Dashboard = ( props ) => {
 
@@ -160,7 +161,38 @@ const Dashboard = ( props ) => {
           </Add>}
         </View>
 
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20,  display: 'flex'}}>
+        
+
+        <Banner style={{width: 300, height: 300, background: color.secundary, padding: 20,}} >
+            <View className='column'>
+
+              <Title style={{marginTop: 0, textAlign: 'left', color: color.light, fontSize: 28, marginBottom: -10,  }}>Acompanhe nossas dicas!</Title>
+              <Label style={{color: color.light + 90, fontSize: 18, fontFamily: font.book, }}>Prepare-se para mostrar seu imóvel para o Brasil inteiro.</Label>
+              <ButtonLight style={{marginTop: 20,}}>VER BLOG</ButtonLight>
+            </View>
+        </Banner>
+
         <Card>
+
+            <CardImg src={newImovel}/>
+ 
+            <View style={{marginTop: 20, marginBottom: 10,}}>
+              <View className='column'>
+                <CardTitle style={{fontSize: 19,}}>Adicione seu primero imóvel!</CardTitle>
+                <CardLabel style={{fontSize: 16,}}>Prepare-se para mostrar seu imóvel para o Brasil inteiro.</CardLabel>
+              </View>
+
+            </View>
+  
+            <Line style={{marginBottom: 20,}}/>
+            <ButtonPR onClick={() => setIsOpen(true)}>Adicionar Imóvel</ButtonPR>
+       
+        </Card>
+
+      </View>
+
+        
 
         <Modal isOpen={modalIsOpen} onRequestClose={() => setIsOpen(false)} style={customStyles}>
             
@@ -225,10 +257,6 @@ const Dashboard = ( props ) => {
             </View>
 
             <Line/>
-
-
-
-
            
               <View style={{justifyContent: 'space-between', display: 'flex', flexDirection: 'row', margin: 20,}}>
                 <ButtonBR style={{width:'100%'}} onClick={click}>ANTERIOR</ButtonBR>
@@ -238,30 +266,8 @@ const Dashboard = ( props ) => {
               </View>
               </View>  
             
-          
             </Modal>
 
-            <CardImg src={newImovel}/>
-
-            <View style={{marginTop: 20, marginBottom: 10,}}>
-              <View className='column'>
-                <CardTitle style={{fontSize: 19,}}>Adicione seu primero imóvel!</CardTitle>
-                <CardLabel style={{fontSize: 16,}}>Prepare-se para mostrar seu imóvel para o Brasil inteiro.</CardLabel>
-              </View>
-
-             
-
-
-            </View>
-
-
-
-        
-            <Line style={{marginBottom: 20,}}/>
-
-            <ButtonPR onClick={() => setIsOpen(true)}>Adicionar Imóvel</ButtonPR>
-       
-        </Card>
         </Column>
         </Main>
 

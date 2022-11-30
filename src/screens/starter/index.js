@@ -36,9 +36,11 @@ import {
   TitleLink,
   Tips,
   TipsImg,
+
+  Planos,
 } from './styles';
 
-import { ButtonPR, Back } from '../../theme/global'
+import { ButtonPR, Back, ButtonBR } from '../../theme/global'
 
 import axios from 'axios'
 
@@ -46,7 +48,7 @@ import { useNavigate, useParams } from 'react-router-dom';
  
 import logo from '../../assets/imgs/logo_h_light.png'
 import Bairros from '../../api/bairros'
-
+import Plans from '../../dashboard/new/plans';
 import './animation.css'
 
 import IconPerson from "../../assets/imgs/icon_person.png"
@@ -180,6 +182,16 @@ Simples. Prático. Confiavél. Deixa que a parte complicada a gente cuida, divul
 
 
       </Banner>
+
+      <Title style={{color: color.title, fontSize: 28, marginBottom: 10,}}>Escolha um de nossos Planos disponíveis!</Title>
+      <Label style={{textAlign: 'center', width: 700, margin: 'auto'}}>Decida o que melhor se encaixa com sua perspectiva de negócio, faça um <i>"upgrade"</i> de plano a qualquer momento.</Label>
+      <Planos>
+          <Plans type="normal"/>
+          <Plans type="premium"/>
+          <Plans type="imobil"/>
+        </Planos>
+
+        <ButtonPR style={{width: 300, margin: 'auto', marginBottom: 40, }}>ENTRAR EM CONTATO</ButtonPR>
 
 
       <Footer>

@@ -48,8 +48,8 @@ export const Img = styled.img`
   transition: linear .2s;
   border-radius: 6px;
   object-fit: cover;
-  margin: 6px;
-  margin-top: 8px;
+  margin: 8px;
+  margin-top: px;
 `
 
 

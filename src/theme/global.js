@@ -103,3 +103,48 @@ export const ButtonOffColor = styled.button`
 
 }
 `;
+
+
+
+
+export const SelectBt = styled.button`
+  background: ${props => props.on ? "#5B72F2" : "#F1F3FF"};
+  border-radius: 6px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 0px;
+  padding-bottom: 4px;
+  text-align: center;
+  border: none;
+  transition: linear .2s;
+  cursor: pointer;
+`
+
+export const SelectLabel = styled.span`
+  color: ${props => props.on ? "#FFF" : "#5B72F2"};
+  font-size: 18px;
+  font-family: ${props => props.on ? "Font_Bold" : "Font_Medium"};
+  text-align: center;
+`;
+
+
+
+export const ButtonLight = styled.button`
+  border-radius: 10px;
+  justify-content: center;
+  border: 0px;
+  padding: 10px 20px;
+  background: ${props => props.off ? "#d1d1d1" : "#FFF"};
+  color:${props => props.off ? "#fff" : "#FE7359"};
+  font-size: 18px;
+  font-family: ${props => props.theme.font.medium};
+  text-transform: uppercase;
+  cursor:  ${props => props.off ? "default" : "pointer"};
+  transition: .2s linear;
+  &:hover{
+    background: ${props => props.off ? "#d1d1d1" : "#FFFFFF90"};
+    color:${props => props.off ? "#fff" : "#FFF"};
+  }
+`;

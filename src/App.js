@@ -60,7 +60,7 @@ const App = () => {
       
       {a && <Header toggleTheme={toggleTheme}/>}
       <Routes>
-        <Route path="/" exact element={<Async/>}/>
+        <Route path="/" exact element={<Starter/>}/>
         
         <Route path="/app/:option" exact element={<Home/>}/>
         <Route path="/home/:option" exact element={<Home/>}/>

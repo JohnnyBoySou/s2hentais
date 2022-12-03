@@ -1,0 +1,95 @@
+
+
+.border{
+    animation-name: border;
+    animation-duration: 8s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: forwards;
+}
+
+
+.border-bt{
+   animation-name: border;
+   animation-duration: 5s;
+   animation-iteration-count: infinite;
+   animation-fill-mode: forwards;
+}
+
+@keyframes border {
+    0% {
+       border: 10px solid #6bc499;
+       transform: scale(1.08);
+    }
+
+    30% {
+        border: 10px solid #5B72F2;
+        transform: scale(1);
+     }
+    100% {
+        
+       transform: scale(1.08);
+       border: 10px solid #37CB84;
+    }
+  }
+
+  
+  .br {
+   animation-name: border;
+   animation-duration: 8s;
+   animation-iteration-count: infinite;
+   animation-fill-mode: forwards;
+
+}
+
+.fadeUp {
+  animation-name: fadded;
+  animation-duration: .4s;
+  animation-fill-mode: forwards;
+
+}
+
+@keyframes border {
+   0% {
+      border: 10px solid #5B72F270;
+   }
+
+   30% {
+       border: 10px solid #F1F3FF;
+    }
+   100% {
+      border: 10px solid #5B72F270;
+   }
+ }
+ 
+
+ @keyframes fadded {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+      display: none;
+      visibility: hidden;
+  }
+  to {
+      opacity: 1;
+      display: block;
+      visibility: visible;
+      transform: translateY(0px);
+  }
+}
+
+
+.row{
+   display: flex;
+   flex-direction: row;
+}
+
+.column{
+   display: flex;
+   flex-direction: column;
+}
+
+.txt-center{
+   text-align: center;
+   align-self: center;
+   margin: auto;
+}

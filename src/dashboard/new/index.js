@@ -317,10 +317,7 @@ const Auth = ( ) => {
           setNotifications(response)
           return
         }else if(
-          console.log(error)
-        )
-        return
-        })
+console.log(error))return})
   }
 
   useEffect(() => {
@@ -439,16 +436,21 @@ const Auth = ( ) => {
         </View> }
         {addimovel && <AddImobil userData={userData} />}
       
+
+
+
        {imoveis &&  <View>
 
         <ImoveisList userImoveL={userImoveis} />
+
         
         <ImoveisContainer>
         {userImoveis.map((userImovei) =>  <ListH7 data={userImovei} />)}
         </ImoveisContainer>
         </View>}
        
-        
+
+
        {settings && <Settings userData={userData}/>}
 
        {statistics &&

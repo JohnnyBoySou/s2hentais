@@ -43,6 +43,13 @@ export default function Item({...props }){
           <Label style={{alignSelf: 'center'}}>{amount} m²</Label>
         </View>
         }
+
+      {type === 'area' &&
+        <View style={{ display: 'flex', justifyContent: 'center', flexDirection: 'row', alignContent: 'center'}}>
+          <Image src={Area} />
+          <Label style={{alignSelf: 'center'}}>{amount} m²</Label>
+        </View>
+        }
   
       </View>
     </Button>

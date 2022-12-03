@@ -90,6 +90,8 @@ const ImoveisList = ( props ) => {
   return (
 
     <View className='column'>
+
+      
       <View style={{marginBottom: 20, justifyContent: 'space-between'}} className='row'>
         <Card className='fadeUp'>
           <CardLabel>Seus Imóveis</CardLabel>

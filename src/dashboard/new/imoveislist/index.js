@@ -2,147 +2,116 @@ import React, { useContext , useState, } from 'react';
 import { ThemeContext } from 'styled-components';
 import {
   View,  
-  Card,
-  CardTitle,
-  CardLabel,
   Label,
   Bold,
   Column,
   ColumnLabel,
 } from './styles';
-import { TfiStatsUp } from 'react-icons/tfi'
-import { ButtonOffColor, Back, ButtonBR, SelectLabel, SelectBt } from '../../../theme/global'
-import { BiCheck, BiBuildingHouse } from 'react-icons/bi'
-import { FiUsers, FiCheck, FiX } from 'react-icons/fi'
-import { useNavigate } from 'react-router-dom';
- 
+import { SelectLabel, SelectBt } from '../../../theme/global'
+import { FiCheck, FiX } from 'react-icons/fi'
+import Categories  from '../../../api/categories.json'
 import Select from 'react-select' 
+import { customStyles } from './../../../api/customStyles';
+import { requestAuthorImoveisByCategories } from '../../../api/request';
+import ListH7 from './../../../structure/cards/list_h_7/index';
+import { ImoveisContainer } from '../styles';
+import Skeleton from '../../../components_2/skeleton';
 
-const ImoveisList = ( props ) => {
+import vid from '../../../assets/imgs/loader.gif'
 
-  const { color, font } = useContext(ThemeContext)
-  
-  const navigate = useNavigate()
+function ImoveisList(props) {
 
-  const options = [
-    {value: 'popular', label: 'Popular'},
-    {value: 'recentes', label: 'Recentes'}  
-  ]
+  const { color, font } = useContext(ThemeContext);
+  const categories = Categories;
+  const userID = props.userID.id;
+  const [data, setData] = useState([]);
+  const [category, setCategory] = useState(categories[0]);
+  const [loading, setLoading] = useState(true);
 
-  const options2 = [
-    {value: 'ativos', label: 'Publicados'},
-    {value: 'desativados', label: 'Rascunho'}  
-  ]
 
-  const [order, setOrder] = useState()
+  const handleData = () => {
+    setLoading(true);
+    requestAuthorImoveisByCategories(userID, category).then(
+      function (response, error) {
+        if (response) {
+          setData(response);
+          setLoading(false);
+          return;
+        } else {
+          console.log(error);
+          setLoading(false);
+        }
+        return;
+      });
+  };
 
-  
 
-  const item = props?.item
 
   const a = false;
 
-  
-  const customStyles = {
-    option: (provided, state) => ({
-      ...provided,
-      color: state.isSelected ? color.off : color.title,
-     fontFamily: font.medium,
-     fontSize: 18,
-    }),
-    control: () => ({
-      border: '2px solid #00000020',
-      display: 'flex',
-      borderRadius: 5,  
-      fontFamily: font.medium,
-      flexDirection: 'row',
-      fontSize: 18,
-      marginTop: 10,
-      marginBottom: 10,
-    }),
-    indicatorSeparator: () => ({
-      width: 0,
-      display: 'none'
-    }),
+  React.useEffect(() => {
+    handleData();
+  }, [category]);
 
-    dropdownIndicator : () => ({
-      color: "#000",
-      fontSize: 28,
-      marginRight: 5,
-      marginLeft: -5,
-    })
-  }
+  const offset = data.length;
+  const value_total = data.length;
 
+  const [publish, setPublish] = useState(true);
 
-  const offset = 20
-  const value_total = 38
-
-  const [publish, setPublish] = useState(true)
-  
-  const handlePublish = ( value ) => {
-    if(value){
-      setPublish(false)
-    }else if(!value){
-      setPublish(true)
+  const handlePublish = (value) => {
+    if (value) {
+      setPublish(false);
+    } else if (!value) {
+      setPublish(true);
     }
-  }
+  };
 
   return (
 
     <View className='column'>
 
-      
-      <View style={{marginBottom: 20, justifyContent: 'space-between'}} className='row'>
-        <Card className='fadeUp'>
-          <CardLabel>Seus Imóveis</CardLabel>
-          <View className='row'>
-            <BiBuildingHouse style={{fontSize: 32, marginBottom: 5, marginRight: 10, color: color.primary,}}/>
-            <CardTitle>23</CardTitle>
-          </View>
-        </Card>
 
-        <Card className='fadeUp'>
-          <CardLabel>Sua equipe</CardLabel>
-          <View className='row'>
-            <FiUsers style={{fontSize: 32, marginBottom: 5, marginRight: 10, color: color.primary,}}/>
-            <CardTitle>1</CardTitle>
-          </View>
-        </Card>
-        </View>
-        <View style={{marginBottom: 20, justifyContent: 'space-between'}} className='row'>
-        
+      <View style={{ marginBottom: 20, justifyContent: 'space-between' }} className='row'>
 
-        <SelectBt style={{width: 140,}} on={publish} onClick={() => handlePublish(publish)}>
-        
-        {publish && <SelectLabel on={publish}><FiCheck style={{paddingTop: 4, marginBottom: -3, fontSize: 20,}}/> Publicados</SelectLabel>}
-        {!publish && <SelectLabel on={publish}><FiX style={{paddingTop: 4, marginBottom: -3, fontSize: 20,}}/>Rascunhos</SelectLabel>}
+
+        <SelectBt style={{ width: 140, }} on={publish} onClick={() => handlePublish(publish)}>
+
+          {publish && <SelectLabel on={publish}><FiCheck style={{ paddingTop: 4, marginBottom: -3, fontSize: 20, marginRight: 5, }} /> Publicados</SelectLabel>}
+          {!publish && <SelectLabel on={publish}><FiX style={{ paddingTop: 4, marginBottom: -3, marginRight: 10, fontSize: 20, }} />Rascunhos</SelectLabel>}
         </SelectBt>
 
 
         <View className='row'>
-         <Label style={{paddingRight: 20,}}><Bold>{offset}</Bold> de <Bold>{value_total}</Bold> imóveis</Label>  
-         <Select styles={customStyles} onChange={setOrder} options={options} defaultValue={options[0]} />
-       </View>
+          <Label style={{ paddingRight: 20, }}><Bold>{value_total}</Bold> imóveis</Label>
+          <Select styles={customStyles} onChange={(selectedOption) => setCategory(selectedOption)} options={categories} defaultValue={categories[0]} />
         </View>
+      </View>
 
 
-        <View style={{flexDirection: 'row', display: 'flex', borderTop: '2px solid #00000020', borderTopLeftRadius: 12, borderTopRightRadius: 12, borderLeft: '2px solid #00000020',borderRight: '2px solid #00000020',  }}>
-          <Column style={{width: 20}}><ColumnLabel></ColumnLabel></Column>
-          <Column style={{width: 70,}}><ColumnLabel>Código (ID)</ColumnLabel></Column>
-          <Column style={{width: 100,}}><ColumnLabel>Categoria (Tipo)</ColumnLabel></Column>
-          <Column style={{width: 70,}}><ColumnLabel>Valor (R$)</ColumnLabel></Column>
-          <Column style={{width: 100,}}><ColumnLabel>Qtd. Quartos</ColumnLabel></Column>
-          <Column style={{width: 100,}}><ColumnLabel>Qtd. Banheiros</ColumnLabel></Column>
-          
-          <Column style={{width: 80,}}><ColumnLabel>Área <br/>total (m²) </ColumnLabel></Column>
-          <Column style={{ width: 180, textAlign: 'center'  }}>
-          <ColumnLabel style={{margin: 'auto'}}>Açãoes <br/> rápidas</ColumnLabel>
+      <View style={{ flexDirection: 'row', display: 'flex', borderTop: '2px solid #00000020', borderTopLeftRadius: 12, borderTopRightRadius: 12, borderLeft: '2px solid #00000020', borderRight: '2px solid #00000020', }}>
+        <Column style={{ width: 20 }}><ColumnLabel></ColumnLabel></Column>
+        <Column style={{ width: 70, }}><ColumnLabel>Código (ID)</ColumnLabel></Column>
+        <Column style={{ width: 100, }}><ColumnLabel>Categoria (Tipo)</ColumnLabel></Column>
+        <Column style={{ width: 70, }}><ColumnLabel>Valor (R$)</ColumnLabel></Column>
+        <Column style={{ width: 100, }}><ColumnLabel>Qtd. Quartos</ColumnLabel></Column>
+        <Column style={{ width: 100, }}><ColumnLabel>Qtd. Banheiros</ColumnLabel></Column>
+
+        <Column style={{ width: 80, }}><ColumnLabel>Área <br />total (m²) </ColumnLabel></Column>
+        <Column style={{ width: 180, textAlign: 'center' }}>
+          <ColumnLabel style={{ margin: 'auto' }}>Açãoes <br /> rápidas</ColumnLabel>
         </Column>
-        
-      </View>
 
       </View>
+      
+      {loading && <img alt='loader novo imovel' src={vid} style={{ width: 400, height: 300, alignSelf: 'center', }} />}
+
+      {!loading && <ImoveisContainer>
+        {data.map((data, index) => <ListH7 key={index} data={data} />)}
+      </ImoveisContainer>}
+
+
+    </View>
   );
-};
+}
 
 export default ImoveisList;

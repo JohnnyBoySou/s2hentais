@@ -163,3 +163,8 @@ export const ColumnLabel = styled.span`
   }
 `
 
+
+export const ImoveisContainer = styled.div`
+  border: 2px solid #00000020;
+  border-bottom: none;
+` 

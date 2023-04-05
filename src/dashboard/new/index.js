@@ -1,53 +1,27 @@
-import React, { useContext , useState, useEffect, useRef} from 'react';
+import React, { useContext , useState, useEffect} from 'react';
 
 
-import Select from 'react-select' 
 
-import { AiOutlineSetting } from 'react-icons/ai';
 import { FiSearch, FiHelpCircle, FiBell , FiSettings} from 'react-icons/fi'
 import { MdOutlineSpaceDashboard } from 'react-icons/md'
-import { RiQuestionMark } from 'react-icons/ri'
 import { BsHouseDoor , BsCreditCard , BsLightbulb, BsLightbulbOff} from 'react-icons/bs'
-import { ImStatsDots } from 'react-icons/im'
-import { IoIosHelpCircleOutline} from 'react-icons/io'
 import { TfiStatsUp } from 'react-icons/tfi'
 
 
 import Drawer from '@mui/material/Drawer';
 import Settings from './settings';
-
+  
 import { ThemeContext } from 'styled-components';
 import {
   View, 
   Container, 
-  Title,
-  Label,
-
-  Input,
-  Spacing,
-  Checkbox,
+  
   Left, 
   Right,
-  SelectTitle,
-  CheckBt,
-  CheckTitle,
-  CircleCheck,
-  CheckImg,
-  CheckLabel,
-  Side,
-
-  Login,
-  Register,
-
-  Route,
-  Routes,
-
-  Image,
-  GreenAcess,
-  RedAcess,
-  Logo,
-  FinishImg,
-
+  
+  
+  
+  
 
 
   Bar,
@@ -63,32 +37,18 @@ import {
 
   IconBt,
 
-  SideBar, 
-  ActionButtons,
-  BtAction,
-  MarkerRead,
-  SubTitle,
-
+  
   ProfileContainer,
   ProfileImg,
-  BtSettings,
   CardLabel,
   CardTitle,
-
-  Notification,
-  NotificationLabel,
-  NotificationTitle,
-
-  ImoveisContainer,
 } from './styles';
 
-import { ButtonPR, Back } from '../../theme/global'
 
 
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
  
 import logo from '../../assets/imgs/logo_h_light.png'
-import Details from './details/index';
 
 import imovel from '../../api/imovel.json'
 import '../animation.css'
@@ -99,29 +59,21 @@ import Inovice from './inovice'
 
 import Suff from '../../assets/imgs/suff.png'
 
-import Loader from  '../../components/loader'
-import { requestLogin, requestRegister } from '../../api/request/auth_requests';
-
+import Notify from './notifications';
 import Dashboard from './dashboard/index'
 import AddImobil from '../add_imobil/index'
-import Appearance from'./appearance/index'
 import Profile from './profile/index'
-import ListH7 from '../../structure/cards/list_h_7';
 import DocumentMeta from 'react-document-meta'
-import { requestNotifications, requestUserImoveis } from '../../api/request';
-import ImoveisList from './imoveislist';
+import ImoveisList from './imoveislist';  
+
+import { requestUserEndpoint } from '../../api/request/index'
 
 const Auth = ( ) => {
 
   const { color, font } = useContext(ThemeContext)
-  const [data, setData] = useState([])
-  
   const navigate = useNavigate()
-
-  const [imobil, setImobil] = useState(true)
   const [userData, setUserData] = useState([])
-  const [notifications, setNotifications] = useState([])
-
+  
     
   const [state, setState] = React.useState({top: false, left: false, bottom: false, right: false,});
 
@@ -144,27 +96,6 @@ const Auth = ( ) => {
   setProfileState({ ...profileState, [anchor]: open });};
 
 
-  const List = ( ) => (
-    <SideBar>
-      <View style={{flexDirection: 'row', display: 'flex', justifyContent: 'space-between'}}>
-        <SubTitle style={{marginLeft: 24, }}>Notificações</SubTitle>
-        <MarkerRead>Marcar como lida</MarkerRead>
-      </View>
-      <ActionButtons style={{marginTop: 10, borderBottom: '2px solid #00000020', justifyContent: 'flex-start'}}>
-        <BtAction style={{marginLeft: 24, paddingRight: 10, paddingLeft: 10, fontSize: 18}}  select={true}>Geral</BtAction>
-        <BtAction style={{fontSize: 18, paddingRight: 10, paddingLeft: 10,}}  select={false}>Imóveis</BtAction>
-     </ActionButtons>
-
-     {notifications.map((notification) => 
-      <Notification>
-      <NotificationTitle>{notification.titulo}</NotificationTitle>
-      <NotificationLabel>{notification.descricao}</NotificationLabel>
-      </Notification>
-
-    )}
-    
-    </SideBar>
-  )
 
     const views = {
       name: 'Visualizações',
@@ -289,19 +220,10 @@ const Auth = ( ) => {
   async function getUserData () {
     try{
       const user = JSON.parse(localStorage.getItem('@user'))
-      setUserData(user)
-      requestUserImoveis(user.id).then(
-        function(response, error) {
-          if(response){
-            console.log(response)
-            console.log('aq')
-            setUserImoveis(response)
-            return
-          }else if(
-            console.log(error)
-          )
-          return
-          })
+      requestUserEndpoint(user.id).then(response => {
+        setUserData(response)
+      })
+     
       return    
     }
     catch(e){
@@ -310,23 +232,11 @@ const Auth = ( ) => {
   }
 
 
-  function getNotifications (){
-    requestNotifications().then(
-      function(response, error) {
-        if(response){
-          setNotifications(response)
-          return
-        }else if(
-console.log(error))return})
-  }
 
   useEffect(() => {
     getUserData()
-    getNotifications()
-
   }, [])
 
-  const [userImoveis, setUserImoveis] = useState([])
   const [dark, setDark] = useState(false)
   const [light, setLight] = useState(true) 
 
@@ -419,7 +329,7 @@ console.log(error))return})
           <ProfileContainer onClick={toggleProfile('right', true)}>
             <ProfileImg src={Suff}/>
             <View className='column' style={{}}>
-            <CardTitle style={{fontSize: 18, marginTop:10,}}>{userData?.name}</CardTitle>
+            <CardTitle style={{fontSize: 18, marginTop:10,}}>{userData?.display_name}</CardTitle>
             <CardLabel style={{fontSize:14,}}>Gerenciar perfil</CardLabel>
             </View>
           </ProfileContainer>
@@ -441,12 +351,9 @@ console.log(error))return})
 
        {imoveis &&  <View>
 
-        <ImoveisList userImoveL={userImoveis} />
+        <ImoveisList userID={userData} />
 
         
-        <ImoveisContainer>
-        {userImoveis.map((userImovei) =>  <ListH7 data={userImovei} />)}
-        </ImoveisContainer>
         </View>}
        
 
@@ -478,14 +385,16 @@ console.log(error))return})
 
       
       <Drawer
+      disableEnforceFocus 
             anchor="right"
             open={state['right']}
             onClose={toggleDrawer('right', false)}
           >
-            <List/>
+            <Notify/>
           </Drawer>
 
           <Drawer
+          disableEnforceFocus 
             anchor="right"
             open={state2['right']}
             onClose={toggleDrawer2('right', false)}
@@ -494,7 +403,7 @@ console.log(error))return})
           </Drawer>
 
           <Drawer
-            anchor="right"
+            anchor="right" variant="temporary"
             open={profileState['right']}
             onClose={toggleProfile('right', false)}
           >

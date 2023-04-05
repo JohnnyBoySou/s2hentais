@@ -5,18 +5,11 @@ import {
   Card,
   CardTitle,
   CardLabel,
-  CardValue,
-  List,
-  Item,
-  Icon,
-  ItemLabel,
-
+  
   CardImg,
-  Chip,
   Line,
 
   Main, 
-  Column,
 
   Premium,
   Profile,
@@ -25,37 +18,40 @@ import {
   BtSettings,
   Input,
   Spacing,
-  Add,
   Banner,
   Title,
   Img,
+  Row,
 } from './styles';
 
-import { ButtonOffColor, Back, ButtonBR, ButtonPR, ButtonLight } from '../../../theme/global'
-import { BiCheck } from 'react-icons/bi'
-import { BsPatchCheck } from 'react-icons/bs'
-import { AiOutlineEdit , AiOutlineSetting, AiOutlineUsergroupAdd} from 'react-icons/ai'
-import { useNavigate, useParams } from 'react-router-dom';
-import { FiX } from 'react-icons/fi' 
+import Carousel from 'react-grid-carousel'
+import { ButtonBR, ButtonPR, ButtonLight } from '../../../theme/global'
+import { AiOutlineSetting, AiOutlineUsergroupAdd} from 'react-icons/ai'
+import { useNavigate } from 'react-router-dom';
 
-import Switch from 'react-switch';
+
+import Select from 'react-select' 
+
+
 import newImovel from '../../../assets/imgs/new_imovel.png'
 
 import Character1 from '../../../assets/imgs/character1.png'
 
-import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 
 import Suff from '../../../assets/imgs/suff.png'
-import Stats from '../stats';
 import Box from '../box'
-import { linkClasses } from '@mui/material';
 import { Label } from '../styles';
+import RowFlow from './../../../components/cards/row_flow/index';
+import { customStyles } from '../../../api/customStyles';
+import { requestFeed } from '../../../api/request';
+import { Column } from './../../../theme/global';
 
 const Dashboard = ( props ) => {
 
   const { color, font } = useContext(ThemeContext)
-
+  const [item, setFeed] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate()
 
   const click = props.click
@@ -64,53 +60,26 @@ const Dashboard = ( props ) => {
   const likes = props.likes
   const popular = props.popular
   const interaction = props.interaction
-
-  const [visibility, setVisibility] = useState(true)
-
   const [modalIsOpen, setIsOpen] = useState(false);
   const [modalIsOpen2, setIsOpen2] = useState(false);
 
+
+  const handleFeed = () => { 
+    setLoading(true)
+    requestFeed().then(response => {
+      setFeed(response)
+      setLoading(false)
+    })
+   }
   
   const a = false;
-
-  const [theme, setTheme] = useState()
-  
-  const [dark, setDark] = useState(false)
-  const [light, setLight] = useState(true)
-
-
-  const handleTheme = () => {
-    if(light === true){
-      setLight(false)
-      setDark(true)
-    } 
-    if(dark === true){
-      setLight(true)
-      setDark(false)
-    }
-  }
-
-  const customStyles = {
-    content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      width: 450,
-      bottom: 'auto',
-      border: '2px solid #00000010',
-      borderRadius: '22px',
-      marginRight: '-50%',
-      padding: 0,
-      transform: 'translate(-50%, -50%)',
-      transition: 'linear .2s',
-    },
-  };
 
 
   const [imovelNome, setNomeImovel] = useState('meunovoimovel')
   const [next, setNext] = useState(false)
 
   React.useEffect(() => {
+    handleFeed()
     if(imovelNome === "meunovoimovel"){
       setNext(true)
     }else{return}
@@ -127,53 +96,92 @@ const Dashboard = ( props ) => {
     }
   }
 
+
+
+  const Imoveis = () => {
+    return (
+      <Carousel showDots cols={3} rows={1} gap={20} loop>
+        {item.map((item, i) => 
+          <Carousel.Item key={i}>
+            <RowFlow data={item}/>   
+          </Carousel.Item>
+          )}
+        </Carousel>
+      )
+  }
+
+
+  
+  const options = [
+    { value: 'Popular', label: 'Popular' },
+    { value: 'Recentes', label: 'Recentes' },
+    { value: 'Aleatorio', label: 'Aleatório' }
+  ]
+
+
+
   return (
       <Main className='fadeUp'>
         <Column>
         <Banner>
           <View style={{flexDirection: 'row', display: 'flex',
         justifyContent: 'flex-start'}}>
-            <Title style={{marginTop: 80, marginLeft: 40, textAlign: 'left', color: color.light, fontSize: 32, }}>Confira suas estatísticas</Title>
-            <Img src={Character1} style={{marginRight: 50,}}/>
+            <Title style={{marginTop: 80, marginLeft: 40, textAlign: 'left', color: color.light, fontSize: 42, }}>Confira suas estatísticas</Title>
+            <Img src={Character1} style={{marginRight: 50, marginLeft: -80, }}/>
           </View>
-          <View style={{flexDirection: 'row', marginTop: 40,  display: 'flex', marginBottom: 40,}}>
 
-            <Box item={popular}/>
-            <Spacing />
-            <Box item={views}/>
+          <Column style={{marginTop: 40, marginBottom: 40, marginLeft: -40, marginRight: 30,}}>
+
+            <Row>
+              <Box item={popular}/>
+              <Spacing />
+              <Box item={views}/>
+            </Row>
+            
+            <Spacing/>
+
+            <Row>
+              <Box item={interaction}/>
+              <Spacing />
+              <Box style={{flexGrow: 1,}} item={likes}/>
+            </Row>
+
             <Spacing/>
             <Spacing/>
-          </View>
+          </Column>
           
         </Banner>
-      
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20,  display: 'flex'}}>
-          <Box item={views}/>
-          <Spacing/>
-          <Box item={interaction}/>
-          <Spacing/>
-          <Box item={likes}/>
-          <Spacing/>
-          <Box item={views}/>
-          {a && <Add style={{backgroundImage: `url(${Suff})`}}>
-            <CardTitle style={{fontSize: 24, fontFamily: font.medium, color: color.light, textAlign: 'center',}}>Adicionar</CardTitle>
-            <ButtonBR style={{background: color.light, marginTop: 10, border: 'none', color: color.light, borderRadius: 100, color: color.primary, }}>Novo Imóvel</ButtonBR>
-          </Add>}
-        </View>
 
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20,  display: 'flex'}}>
+        <Column style={{ marginBottom: 20, }}>
         
 
-        <Banner style={{width: 300, height: 300, background: color.secundary, padding: 20,}} >
+        <Row style={{justifyContent: 'space-between'}}>
+          <Title>Meus imóveis</Title>
+
+          <Select styles={customStyles} options={options} defaultValue={options[0]} />
+        </Row>
+
+        {!loading && <View style={{width: 1100, marginLeft: -20,}}><Imoveis/></View>}
+
+
+     
+        {a &&  <Banner style={{width: 300, height: 300, background: color.secundary, padding: 20,}} >
             <View className='column'>
 
               <Title style={{marginTop: 0, textAlign: 'left', color: color.light, fontSize: 28, marginBottom: -10,  }}>Acompanhe nossas dicas!</Title>
               <Label style={{color: color.light + 90, fontSize: 18, fontFamily: font.book, }}>Prepare-se para mostrar seu imóvel para o Brasil inteiro.</Label>
               <ButtonLight style={{marginTop: 20,}}>VER BLOG</ButtonLight>
             </View>
-        </Banner>
+        </Banner>}
 
-        <Card>
+
+
+
+
+
+
+
+      {a && <Card>
 
             <CardImg src={newImovel}/>
  
@@ -188,9 +196,15 @@ const Dashboard = ( props ) => {
             <Line style={{marginBottom: 20,}}/>
             <ButtonPR onClick={() => setIsOpen(true)}>Adicionar Imóvel</ButtonPR>
        
-        </Card>
+        </Card>}
 
-      </View>
+
+
+
+
+        
+
+      </Column>
 
         
 

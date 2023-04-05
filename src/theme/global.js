@@ -148,3 +148,37 @@ export const ButtonLight = styled.button`
     color:${props => props.off ? "#fff" : "#FFF"};
   }
 `;
+
+export const TouchableOpacity = styled.button`
+  border: none;
+  border-radius: 6px;
+  justify-content: center;
+  cursor: pointer;
+`;
+
+
+export const View = styled.div`
+`;
+
+
+export const Row = styled.div`
+  flex-direction: row;
+  display: flex;
+`
+
+
+export const Column = styled.div`
+  flex-direction: column;
+  display: flex;
+`
+
+
+
+export const Spacing = styled.div`
+width: ${props => props.width || '100%'};
+  display: flex;
+  height: ${props => props.height};
+`
+
+export const Text = styled.span`
+`

@@ -66,6 +66,7 @@ export const Card = styled.div`
     display: flex;
     border: 2px solid #00000010;
     padding: 20px;
+    flex-grow: 1;
     border-radius: 12px;
     background: ${props => props.theme.background};
 

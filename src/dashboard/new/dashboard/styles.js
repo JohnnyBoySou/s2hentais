@@ -13,7 +13,6 @@ export const View = styled.div `
 
 
 export const Row = styled.div `
-  background: ${props => props.theme.background};
   justify-content: space-between;
   flex-direction: row;
   display: flex;
@@ -255,8 +254,7 @@ export const Add = styled.div`
 `
 
 export const Banner = styled.div`
-  width: 100%;
-  height: 240px;
+  width: 100%;    
   margin-bottom: 20px;
   background: ${props => props.theme.color.primary};
   border-radius: 12px;
@@ -267,6 +265,7 @@ export const Banner = styled.div`
   `
 
 export const Img = styled.img`
-  width: 190px;
-  height: 240px;
+  width: 320px;
+  height: 380px;
+  margin-top: 45px;
 `

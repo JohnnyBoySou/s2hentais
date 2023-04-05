@@ -39,10 +39,18 @@ export const Right = styled.div `
 
 export const Title = styled.span `
   font-size: 32px;
-  color: ${props => props.theme.color.primary};
+  color: ${props => props.theme.color.title};
   text-align: center;
   font-family: ${props => props.theme.font.bold};
 `;
+
+export const TitleName = styled.span `
+  font-size: 32px;
+  color: ${props => props.theme.color.primary};
+  text-align: center;
+  font-family: ${props => props.theme.font.book};
+`;
+
 
 
 
@@ -63,7 +71,7 @@ export const Hr = styled.div `
 
 
 export const Logo = styled.img`
-  width: 200px;
+  width: 60px;
   align-self: center;
   margin: 0px auto;
   margin-top: -30px;
@@ -72,7 +80,7 @@ export const Logo = styled.img`
 
 
 export const Input = styled.input `
-  font-size: 22px;
+  font-size: 20px;
   margin: 8px 0px;
   border-radius: 6px;
   border: 2px solid #00000020;
@@ -158,8 +166,10 @@ export const Side = styled.div `
 export const Login = styled.div `
   display: flex;
   flex-direction: column;
+  width: 460px;
 `
-export const Register = styled.div ``
+export const Register = styled.div `
+width: 460px;`
 
 
 

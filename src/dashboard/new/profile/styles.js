@@ -47,9 +47,9 @@ export const Title = styled.span `
 
 
 export const Label = styled.span `
-  font-size: 20px;
+  font-size: 18px;
   color: ${props => props.theme.color.title};
-  margin-top: 20px;
+  margin-top: 12px;
   font-family: ${props => props.theme.font.medium};
 `;
 
@@ -65,9 +65,8 @@ export const Card = styled.div`
     flex-direction: column;
     display: flex;
     padding: 20px 30px;
-    width: 260px;
+    width: 380px;
     border-radius: 12px;
-    align-items: center;
     justify-content: center;
 `
 
@@ -123,6 +122,7 @@ export const Icon = styled.span`
 export const UserImg = styled.img`
   width: 140px;
   height: 140px;
+  align-self: center;
   border-radius: 100px;
 `
 
@@ -151,7 +151,7 @@ export const CardInput = styled.div`
   display: flex;
   margin: 10px;
   border-radius: 6px;
-  margin-button: 15px;
+  margin-bottom: 15px;
   border: 2px solid #00000020;
 `
 
@@ -159,4 +159,113 @@ export const Line = styled.div`
     width: 100%;
     height: 2px;
     background: #00000020;
+`
+
+
+export const Input = styled.input `
+  font-size: 16px;
+  margin: 8px 0px;
+  border-radius: 6px;
+  border: 2px solid #00000020;
+  transition: .2s linear;
+  padding: 6px 8px;
+  &:focus {
+    outline: none; 
+    box-shadow: 0px 0px 0px 3px ${props => props.theme.color.primary}60;
+    border: 2px solid ${props => props.theme.color.primary};
+  }
+  color: ${props => props.theme.color.label};
+  font-family: ${props => props.theme.font.book};
+`
+
+
+
+
+
+export const BtIcon = styled.button`
+  border-radius: 100px;
+  justify-content: center;
+  border: 2px solid #fff;
+  width: 42px;
+  height: 42px;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  background: ${props => props.theme.color.primary};
+  color: ${props => props.theme.color.light};
+  font-size: 18px;
+  padding-top: 4px;
+  cursor: pointer;
+`;
+
+
+
+export const BtUpload = styled.button`
+  border-radius: 60px;
+  justify-content: center;
+  border: 2px solid #fff;
+  align-self: center;
+  background: ${props => props.theme.color.green};
+  color: ${props => props.theme.color.light};
+  font-family: ${props => props.theme.font.book};
+  font-size: 16px;
+  padding: 8px 12px;
+  cursor: pointer;
+  margin-top:-10px;
+  margin-bottom: 5px;
+`;
+
+
+
+export const Indicator = styled.div`
+  position: absolute;
+  bottom: 0;
+  width: ${props => props.style.width};
+  height: 2px;
+  background-color: ${props => props.theme.color.primary};
+  transition: linear 0.3s;
+  transform: translateX(${props => props.style.left});
+`;
+
+
+
+
+export const TabContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: row; 
+  width: 100%;
+  text-align: center;
+`;
+
+
+export const Tab = styled.button`
+  padding: 8px 10px;
+  border-bottom: 2px solid #ccc;
+  cursor: pointer;
+  font-size: 18px;
+  align-self: center;
+  text-align: center;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  transition: linear .2s;
+  background: none;
+  color: ${props => props.theme.color.label};
+  font-family: ${props => props.theme.font.book};
+  width: 50%;
+  &.active {
+    border-bottom: 2px solid ${props => props.theme.color.primary};
+    color: ${props => props.theme.color.primary};
+    font-family: ${props => props.theme.font.bold};
+  }
+`;
+
+export const TabContent = styled.div`
+padding: 0px;
+`;
+
+export const Spacing = styled.div`
+  width: 10px;
+  height: 15px;
 `

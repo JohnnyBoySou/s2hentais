@@ -137,10 +137,6 @@ const MapExplore = () => {
       handlePreferences()
     }, [mapView])
 
-    useEffect(() => {
-      searchBt()
-    },)
-
 
     const handlePreferences = () => {
       setLoad(true)
@@ -309,7 +305,7 @@ return (
         <div style={{flexDirection: 'column', marginTop: 50, display: 'flex', justifyItems: 'center', }}>
         <Title style={{textAlign: 'center'}}>Ajuste suas <Link style={{color: color.primary,}} to="/preferences">preferências</Link> de pesquisa para encontrar mais imóveis. </Title>
           
-          <img style={{width: 200, height: 130, objectFit: 'cover', borderRadius: 12, marginTop: 10, marginBottom: 20,alignSelf: 'center'}} src={ImgSidebar}/>
+          <img alt="" style={{width: 200, height: 130, objectFit: 'cover', borderRadius: 12, marginTop: 10, marginBottom: 20,alignSelf: 'center'}} src={ImgSidebar}/>
         </div>
       </Left>
 

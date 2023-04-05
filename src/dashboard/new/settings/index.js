@@ -20,13 +20,15 @@ import { ButtonOffColor, Back, ButtonBR } from '../../../theme/global'
 import { BiCheck } from 'react-icons/bi'
 import { BsPatchCheck } from 'react-icons/bs'
 import { useNavigate, useParams } from 'react-router-dom';
- 
+ import Profile from '../profile';
 
-const Settings = ( ) => {
+const Settings = ( props ) => {
 
   const { color, font } = useContext(ThemeContext)
   
   const navigate = useNavigate()
+
+  const user = props.userData
 
   const data = {
     name: "",
@@ -50,14 +52,13 @@ const Settings = ( ) => {
   return (
       <Container className='fadeUp'>
         <Menu>
-          <MenuItem on={true}>Profile</MenuItem>
+          <MenuItem on={true}>Perfil</MenuItem>
           <MenuItem on={false}>Chats</MenuItem>
         </Menu>
         
        <Section>
-        <Card>
-            <CardTitle>Profile Settings</CardTitle>
-        </Card>
+          <CardTitle>Profile Settings</CardTitle>
+          <Card></Card>
         </Section>
       </Container>
 

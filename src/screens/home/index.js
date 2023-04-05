@@ -286,29 +286,20 @@ return (
 
 
     <ActionButtons>
-      <div style={{flexDirection: 'row', display: 'flex'}}>
-     {forYou && <ButtonPR onClick={handleForYou} style={{borderRadius: 50, width: 160,  background: color.primary,}}>PARA VOCÊ</ButtonPR>}
-     {popular &&  <ButtonPR onClick={handlePopular} style={{borderRadius: 50, width: 160, background: color.primary,}}>POPULAR</ButtonPR>}
-     
-      <LineV/>
-      {!forYou && <ButtonPR onClick={handleForYou} style={{borderRadius: 50, width: 160, background: color.secundary,}}>PARA VOCÊ</ButtonPR>}
-      {!popular &&  <ButtonPR onClick={handlePopular} style={{borderRadius: 50, width: 160, background: color.secundary,}}>POPULAR</ButtonPR>}
-      <Spacing2/>
-      
-      </div>
-      <div>
-      <div style={{fontFamily: font.book, display: 'flex', marginTop: 6,}}>
-          <span style={{marginTop: 6, marginRight: 10, fontSize: 18}}>Ordernar por</span> 
-          <Select styles={customStyles} options={options} defaultValue={options[0]} />
-        </div>
-      </div>
+   
 
+    <div style={{fontFamily: font.book, display: 'flex', marginTop: 6,}}>
+        <span style={{marginTop: 6, marginRight: 10, fontSize: 18}}>Ordernar por</span> 
+        <Select styles={customStyles} options={options} defaultValue={options[0]} />
+      </div>
     </ActionButtons>
 
     <ActionButtons style={{borderBottom: '2px solid #00000020', justifyContent: 'flex-start'}}>
       <BtAction onClick={handlePopular} select={popular}>Popular</BtAction>
       <BtAction onClick={handleForYou} select={forYou}>Para você</BtAction>
 
+        
+      
     </ActionButtons>
 
 

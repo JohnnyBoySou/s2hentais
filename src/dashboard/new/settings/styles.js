@@ -66,7 +66,6 @@ export const Card = styled.div`
     display: flex;
     border: 2px solid #00000010;
     padding: 20px 30px;
-    width: 260px;
     border-radius: 12px;
     margin-top: 20px;
     margin-bottom: 20px;

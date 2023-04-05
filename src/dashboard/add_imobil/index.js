@@ -887,12 +887,12 @@ const AddImobiil = ( props ) => {
          
           <View className='row' style={{justifyContent: 'space-between'}}>
           
-          <View className='column'>
+          <View style={{width:"48%"}} className='column'>
           <Label>Qtd. de quartos</Label>
           <Input value={qtd1} name="qtd1"  onChange={e => setQtd1(e.target.value)} placeholder="Exemplo: 4" type="number"/>
           </View>
 
-          <View className='column'>
+          <View className='column' style={{width:"48%"}}>
           <Label>Qtd. de banheiros</Label>
           <Input value={qtd2} name="qtd2" onChange={e => setQtd2(e.target.value)} placeholder="Exemplo: 2" type="number"/>
           </View>

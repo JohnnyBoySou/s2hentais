@@ -326,8 +326,8 @@ export const IconBt = styled.button`
 
 
 export const SideBar = styled.aside`
-  width: 340px;
-  padding: 30px 0px;
+  width: 560px;
+  padding: 20px 0px;
 `
 
 

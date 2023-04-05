@@ -31,6 +31,8 @@ import DashboardHome from './dashboard/home';
 import AddImobiil from './dashboard/add_imobil';
 import New from './dashboard/new/index'
 
+//import { MuiThemeProvider } from '@material-ui/core/styles';
+//import { theme } from './theme/theme';
 //Components
 import Components from './screens/components';
 
@@ -56,6 +58,7 @@ const App = () => {
   
   return (
     <Router>
+     
       <ThemeProvider theme={theme}><div className="App">
       
       {a && <Header toggleTheme={toggleTheme}/>}

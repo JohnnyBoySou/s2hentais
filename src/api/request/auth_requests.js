@@ -74,11 +74,8 @@ export async function requestLogin( email, password ){
 
 
 
-  export async function requestNewImovel( params ){
-    
-    const data = params[0]
-    const token = params[0].token
-
+  export async function requestNewImovel( data, token ){
+  
     const headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer' + token,
@@ -86,7 +83,8 @@ export async function requestLogin( email, password ){
 
   return Axios.post(`${API_URL}/wp/v2/posts`,  data, {headers: headers}
   ).then(response => {
-    const finish = {"status": 200}
+    console.log(response.data)
+    const finish = {"status": 200, "ID": response?.data.id}
     return finish
   }).catch(error => {
    

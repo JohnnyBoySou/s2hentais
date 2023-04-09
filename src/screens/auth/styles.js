@@ -26,6 +26,7 @@ export const Left = styled.div `
   display: flex;
   flex-direction: column;  
   width: 40%;
+  justify-content: center;
   padding: 40px 80px;
 `
 
@@ -204,7 +205,7 @@ export const GreenAcess = styled.span `
   padding: 12px 16px;
   font-size: 24px;
   margin-top: 20px;
-  border-radius: 0px 4px 4px 0px;
+  border-radius: 0px 8px 8px 0px;
   border-left: 4px solid  ${props => props.theme.color.green};
 
 `

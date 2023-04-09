@@ -5,6 +5,7 @@ export const Container = styled.div `
   padding: 0px 0px;
   flex-direction: column;
   display: flex;
+  padding-top: 80px;
 `;
 
 export const View = styled.div `
@@ -122,13 +123,20 @@ export const Image = styled.img `
 `
 
 
-export const Nav = styled.nav`
-  justify-content: space-between;
+export const Nav = styled.div`
   flex-direction: row;
   display: flex;
-  padding-right: 70px;
-  padding-left: 70px;
-  padding-top:15px;
+  justify-content: center;
+  padding-bottom: 10px;
+  position: fixed;
+  padding-top: 10px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  z-index: 9999;
   `
 
 
@@ -137,11 +145,34 @@ export const NavBt = styled.button`
   border: none;
   padding: 10px;
   margin: 10px 20px;
-  cursor: pointer;
-  background: ${props => props.theme.background};
+  background: none;
   color: ${props => props.theme.color.label};
   margin-top: 10px;
   font-family: ${props => props.theme.font.book};
+  position: relative;
+  outline: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition: color 0.3s ease-in-out;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 3px;
+    bottom: 0;
+    background-color: ${props => props.theme.color.primary};
+    transition: all 0.3s ease-in-out;
+  }
+
+  &::before {left: 50%;}
+  &::after {right: 50%;}
+  &:hover::before {left: 0;width: 50%;}
+  &:hover::after {
+    right: 0;
+    width: 50%;
+  }
 `;
 
 export const LogoX1 = styled.img`
@@ -177,11 +208,10 @@ export const BtStart = styled.button`
 `;
 
 
-export const BigImg = styled.div`
-  width: 80%;
+export const BigImg = styled.img`
+  width: 90%;
   margin: auto;
   margin-top: 40px;
-  height: 560px;
   border-radius: 12px;
   background: #00000020;
 `

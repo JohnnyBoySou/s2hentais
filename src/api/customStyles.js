@@ -9,6 +9,7 @@ export const customStyles = {
   control: () => ({
     border: '2px solid #00000020',
     display: 'flex',
+    minWidth: 180,
     borderRadius: 5,  
     fontFamily: "Font_Medium, sans-serif",
     flexDirection: 'row',

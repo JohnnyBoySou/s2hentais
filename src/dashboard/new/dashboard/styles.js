@@ -1,4 +1,10 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+import back_create from '../../../assets/imgs/back_create.png';
+
+import back_stats from '../../../assets/imgs/back_stats.png';
+
+import most_like from '../../../assets/imgs/most_likes.png';
 
 export const Container = styled.div `
   background: ${props => props.theme.background};
@@ -37,10 +43,10 @@ export const Right = styled.div `
 
 
 export const Title = styled.span `
-  font-size: 32px;
-  color: ${props => props.theme.color.primary};
-  text-align: center;
-  font-family: ${props => props.theme.font.bold};
+  font-size: 28px;
+  color: ${props => props.theme.color.title};
+  margin-top: 10px;
+  font-family: ${props => props.theme.font.medium};
 `;
 
 
@@ -63,12 +69,12 @@ export const Hr = styled.div `
 export const Card = styled.div`
     flex-direction: column;
     display: flex;
-    border: 2px solid #00000010;
     padding: 10px 20px 20px 20px;
     width: 260px;
-    border-radius: 12px;
-
-`
+    border-radius: 12px;  
+    background-image: url(${back_create});
+    background-position: top-left;
+     `
 
 export const CardTitle = styled.span `
   font-size: 20px;
@@ -105,12 +111,6 @@ export const Item = styled.div`
 `
 
 
-export const ItemLabel = styled.span`
-    font-size: 18px;
-    color: ${props => props.theme.color.label};
-    font-family: ${props => props.theme.font.book};
-
-`
 export const Icon = styled.span`
     font-size: 26px;
     margin-top: -2px;
@@ -127,19 +127,20 @@ export const CardImg = styled.img`
   margin-bottom: 20px;
 `
 
-
 export const Chip = styled.div`
-    font-size: 17px;
-    color: ${props => props.theme.color.light};
+    font-size: 16px;
+    color: ${props => props.theme.color.primary};
     font-family: ${props => props.theme.font.medium};
-    padding: 2px 12px;
+    padding: 4px 10px;
     margin-left: 16px;
-    border-radius: 8px;
-    background: ${props => props.theme.color.primary};
+    border-radius: 100px;
+    background: ${props => props.theme.color.primary}20;
     justify-content: center;
     height: 26px;
+    margin-top: 8px;
     padding-top: 8px;
-    margin-top: -5px;
+    display: flex;
+    flex-direction: row;
 `
 
 export const Line = styled.div`
@@ -268,4 +269,123 @@ export const Img = styled.img`
   width: 320px;
   height: 380px;
   margin-top: 45px;
+`
+
+
+export const ItemImg = styled.img`
+  width: 140px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  `
+
+
+export const ItemCard = styled.div`
+    flex-direction: column;
+    display: flex;
+    border: 2px solid #00000010;
+    padding: 10px 0px 10px 0px;
+    border-radius: 12px;
+    margin-right: 20px;
+    width: 70%;
+     `
+
+
+export const ItemCard2 = styled.div`
+    flex-direction: column;
+    display: flex;
+    padding: 20px;
+    border-radius: 12px;
+    flex-grow: 1;
+    background-image: url(${back_stats});
+    background-position: bottom-left;
+    justify-content: center;
+     `
+     
+export const ItemCard3 = styled.div`
+    flex-direction: column;
+    display: flex;
+    padding: 20px;
+    border-radius: 12px;
+    flex-grow: 1;
+    background-image: url(${most_like});
+    background-position: right;
+    justify-content: center;
+     `
+
+export const ItemLabel = styled.span`
+     font-size: 18px;
+     color: ${props => props.theme.color.label};
+     font-family: ${props => props.theme.font.book};
+ 
+ `
+
+ 
+export const ItemTitle = styled.span`
+  font-size: 18px;
+  color: ${props => props.theme.color.title};
+  position: relative;
+  font-family: ${props => props.theme.font.medium};
+  padding: 5px;
+`
+export const B = styled.span`
+  font-family: ${props => props.theme.font.bold};
+
+`
+
+export const ViewCard = styled.div`
+  border: 2px solid #00000010;
+  padding: 6px;
+  border-radius: 8px;
+  flex-direction: column;
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+`
+
+
+
+export const SpecialTitle = styled.span`
+  font-size: 18px;
+  color: ${props => props.theme.color.title};
+  position: relative;
+  font-family: ${props => props.theme.font.medium};
+  padding: 5px;
+`
+export const SpecialView = styled.div`
+  position: relative;
+  font-size: 36px;
+  font-weight: bold;
+  text-align: center;
+  
+  ::before {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: linear-gradient(90deg, #5B72F2, #FE7359);
+    opacity: 0.5;
+    z-index: -1;
+    animation: ondular 2s ease-in-out infinite;
+  }
+  
+`
+
+
+export const NewImovel = styled.div`
+  background: #ffffff30; 
+  position: relative;
+  align-self: center; 
+  border-radius: 80px; 
+  width: 80px; 
+  height: 80px;
+  transition: transform 0.2s ease-in-out;
+  justify-content: center;
+  flex-direction: column;
+  display: flex;
+  &:hover {
+    transform: scale(1.2);
+  }
 `

@@ -70,7 +70,7 @@ export function requestFeed( ){
       const value = JSON.parse(jsonValue)
       console.log(value)
       if(value.alugar){
-        return Axios.get(`${API_URL}/feed/alugar?${value.item1}valor_max=${value.valor_max}`, {
+        return Axios.get(`${API_URL}/f/rent?${value.item1}valor_max=${value.valor_max}`, {
            headers: headers
        }).then(function (response) {
            return response.data
@@ -108,6 +108,35 @@ export async function requestSearch( identification ){
       headers: headers
     });
     return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function requestID( identification ){
+
+  const id = Number(identification)
+  try {
+    const response = await Axios.get(`${API_URL}/search/imovel?id=${id}`, {
+      headers: headers
+    });
+    const views = await Axios.post(`${API_URL}/views/post/${id}`, {
+      headers: headers
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function requestLike( identification ){
+  const id = Number(identification)
+  try {
+    const response = await Axios.post(`${API_URL}/like/post/${id}`, {
+      headers: headers
+    });
+
+    return response.data
   } catch (error) {
     console.log(error);
   }
@@ -335,9 +364,7 @@ return Axios.post(`https://s2hentais.com/novoimovel/wp-json/jwt-auth/v1/token`,
 ).then(response => {
   return response.data
 }).catch(error => {
-  console.log(error.response.data)
-  const response = "" 
-  return response
+  return error.response.data
 });
 
   }
@@ -385,6 +412,7 @@ return Axios.post(`https://s2hentais.com/novoimovel/wp-json/jwt-auth/v1/token`,
           }
         ).then(async response => {
           const user = response.data
+          console.log(response.data.token)
           const userValue = {email: user.email, password: valor.password, token: user.token, id: user.id, name: user.name}
           const jsonValue = JSON.stringify(userValue)
           localStorage.setItem('@user', jsonValue)  
@@ -392,7 +420,7 @@ return Axios.post(`https://s2hentais.com/novoimovel/wp-json/jwt-auth/v1/token`,
 
         }).catch(error => {
           console.log(error.response.data)
-          const response = "" 
+          const response = error.response 
           return response
         });
 
@@ -487,3 +515,21 @@ export async function requestUserEdit( params ){
     }
   }
 //s2hentais.com/novoimovel/wp-json/my/imoveis?user=1 
+
+
+export async function requestDeleteImovel( ID, token ){
+  const headers = {
+    'Content-Type': 'form/multipart',
+    'Authorization': 'Bearer' + token,
+  }
+
+  return Axios.put(`${API_URL}/delete/imovel?id=${ID}`, {headers: headers}).then(response => {
+    return response
+  }).catch(error => {
+    console.log('erro')
+    console.log(error)
+    return error
+  });
+
+  }
+

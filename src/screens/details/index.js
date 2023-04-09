@@ -76,13 +76,13 @@ import { ButtonPR,  Back, ButtonBR } from '../../theme/global'
 import { BsFillLightningChargeFill } from 'react-icons/bs'
 import { useParams, useNavigate } from 'react-router-dom';
  
-import { requestSearch, requestImobil , requestPreferences} from '../../api/request/index'
+import { requestID, requestImobil , requestLike, requestPreferences} from '../../api/request/index'
 
 import stylesModal from './stylesModal.js'
 import share from '../../assets/imgs/share.png'
 
 import { 
-  FiHeart, 
+  FiHeart, FiHearto,
   FiShare,
   FiArrowRight,
   FiX,
@@ -90,13 +90,13 @@ import {
   FiAlertCircle
 } from "react-icons/fi";
 
-import { HiOutlineReceiptTax } from 'react-icons/hi'
+import { AiFillHeart , AiOutlineHeart} from 'react-icons/ai'
 
 import QuickMap from '../../components/quick_map';
 
 import { FaMapMarkerAlt } from "react-icons/fa"
 import { MdKeyboardArrowRight } from 'react-icons/md'
-
+import { Row } from '../../theme/global';
 import { IoIosImages } from 'react-icons/io';
 import Header from '../../components/header';
 
@@ -119,8 +119,9 @@ const Details = ( ) => {
 
   function get(){
     setLoad(true)
-    requestSearch(id).then(
+    requestID(id).then(
       function(item) {
+        console.log(item)
         setItem(item[0])
         console.log(item)
         setLoad(false)
@@ -134,15 +135,12 @@ const Details = ( ) => {
 
     function getSimiliar(){
       setLoad(true)
-      requestPreferences().then(
-        function(item) {
+      requestPreferences().then(item => {
+        if(item){
           setItemSimilar(item)
           setLoad(false)
-        })}
+    }})}
 
-    useEffect(() => {
-      getSimiliar()
-    }, [])
 
   
   function getImobil( item ){
@@ -155,6 +153,23 @@ const Details = ( ) => {
       })
   }
 
+
+  const [likeLoad, setlikeLoad] = useState(false);
+  const [likeClick, setLikeClick] = useState(false);
+  const handleLike = () => { 
+    setlikeLoad(true)
+    setLikeClick(true)
+    requestLike(item.ID).then(response => {
+      if(response){
+        console.log(response)
+      setlikeLoad(true)
+      setLikeClick(true)
+      }else{
+      setlikeLoad(false)
+      setLikeClick(false)
+      }
+    })
+  }
 
 
 
@@ -184,33 +199,6 @@ const Details = ( ) => {
    const openGallery = () => {
     setModalImages(!modalImages)
    }
-
-  const modalShareStyles = {
-    overlay: {
-      position: 'fixed',
-      top: 10,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(255, 255, 255, 0.75)'
-    },
-    content: {
-      position: 'absolute',
-      top: '40px',
-      margin: 'auto',
-      width: '500px',
-      border: '2px solid #00000020',
-      background: '#fff',
-      overflow: 'auto',
-      WebkitOverflowScrolling: 'touch',
-      borderRadius: '12px',
-      outline: 'none',
-      transition: 'linear .2s',
-      padding: 0,
-      zIndex: 999,
-    }
-  }
-
   
   const modalGalleryStyles = {
     overlay: {
@@ -276,7 +264,6 @@ const Details = ( ) => {
 
   return (
     <div onScroll={() => setOffset(offset)}>
-    <Header/>
     <Container>
 
       <Nav>
@@ -304,7 +291,11 @@ const Details = ( ) => {
           </Routes>
 
 
-          <Like activity={like}><FiHeart size={18}/></Like>
+          <Like disabled={likeLoad} onClick={handleLike} activity={like}>
+           {likeClick && <AiFillHeart size={18} style={{color: 'red'}}/>}
+           {!likeClick && <AiOutlineHeart size={18} style={{color: "#00000090"}}/>}
+           <Route>{item?.like}</Route>
+          </Like>
           
           <Spacing/>
           
@@ -314,7 +305,7 @@ const Details = ( ) => {
       </Nav>
 
       {load && <div style={{ width: 400, height: 400 , alignSelf: 'center',}}>
-        <img src={vid} style={{ width: 400, height: 300 , alignSelf: 'center',}}/>
+        <img src={vid} alt="loading imovel" style={{ width: 400, height: 300 , alignSelf: 'center',}}/>
       </div>}
 
      {!load && <Section>
@@ -454,26 +445,24 @@ const Details = ( ) => {
         </Right>
 
       </Section> }
-
       {!load && <InfoSection>
       <Left>
-        <Title style={{marginLeft:0, fontSize: 32, marginBottom: 10,}}> {item?.categoria} com {item?.qtd1} {item?.item1}s, {item?.qtd2} {item?.item2} e {item?.area} m2</Title>
+        <Title style={{marginLeft:0, fontSize: 32, marginBottom: 10,}}> {item?.categoria} com {item?.qtd1} {item?.item1}s, {item?.qtd2} {item?.item2} e {item?.area}m&#178;</Title>
         <Address><FaMapMarkerAlt size={20} color={color.primary}/> {item?.bairro}, Rua {item?.rua}</Address>
+        
+        <Row>
+        <Address>{item?.views} visualizações</Address>
+        </Row>
         <Description>{item?.descricao}</Description>
-
-
         <div style={{flexDirection: 'row', justifyContent: 'space-between', display: 'flex'}}>
         <Infra>
-        
-              <TaxLabel style={{fontSize: 28,}}>Infraestrutura</TaxLabel>
+              <TaxLabel style={{fontSize: 28, color: color.title}}>Infraestrutura</TaxLabel>
              <div style={{marginLeft: 10, marginTop: 20,}}>
-
               {infra?.map((infra) => 
               <Lista>
                 <InfraBall><FiCheck style={{textAlign: 'center', marginTop: 4,}} size={22} color="#FFF" /></InfraBall>
                 <InfraLabel>{infra}</InfraLabel>
               </Lista> )}
-              
               </div>
       </Infra>
 
@@ -586,28 +575,6 @@ const Details = ( ) => {
 
 
 
-
-    <Modal isOpen={modalShare} closeTimeoutMS={300}
-        onRequestClose={() => setModalShare(false)}
-        style={modalShareStyles}>
-        <img src={share} style={{width: '100%' , }}/>
-        <Title style={{textAlign: 'center', marginTop: 20,}}>Compartilhar</Title>
-        <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap',
-      justifyContent: 'center'}}>
-         
-          <BtAction><FiShare size={18}/></BtAction>
-        <Spacing/>
-          <BtAction><FiShare size={18}/></BtAction>
-          <Spacing/>
-          <BtAction><FiShare size={18}/></BtAction>
-        
-         </div>
-
-
-
-
-
-      </Modal>
 
 
 

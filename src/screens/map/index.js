@@ -134,14 +134,13 @@ const MapExplore = () => {
     }else{console.log('error request')}}
 
     useEffect(() => {
-      handlePreferences()
+      //handlePreferences()
     }, [mapView])
 
 
     const handlePreferences = () => {
       setLoad(true)
-      requestPreferences().then(
-        function(item) {
+      requestPreferences().then(item => {
           setData(item)
           setLoad(false)
           addMap(item)

@@ -141,7 +141,6 @@ export const Button = styled.button`
 export const Like = styled.button`
   border-width: 2px;
   border-color: #00000020;
-  color: #00000080;
   border-radius: 100px;
   width: 46px;
   height: 46px;
@@ -265,14 +264,14 @@ export const TaxLabel = styled.span`
   font-size: 22px;
   margin-bottom: -10px;
   margin-left: 10px;
-  color: ${props => props.theme.color.title};
+  color: #963308;
   font-family: ${props => props.theme.font.medium};
 `;
 
 
 export const TaxLi = styled.li`
   font-size: 18px;
-  color: ${props => props.theme.color.title};
+  color:#963308;
   font-family: ${props => props.theme.font.book};
 `;
 

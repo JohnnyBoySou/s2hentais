@@ -222,7 +222,7 @@ const Search = ( ) => {
 
               <Select styles={customStyles} options={options} defaultValue={options[0]} />
       
-            </AnyColumn>
+            </AnyColumn> 
           </AnyButton>  
 
           
@@ -234,7 +234,19 @@ const Search = ( ) => {
             <AnyColumn>
               <AnyLabel>Quartos</AnyLabel>
               
-              <Select styles={customStyles} options={quartos} defaultValue={quartos[2]} />
+              <Input styles={customStyles} options={room} defaultValue={3} />
+      
+            </AnyColumn>
+          </AnyButton>  
+
+
+          
+          <AnyButton>
+            <AnyIcon><BiBath/></AnyIcon>
+            <AnyColumn>
+              <AnyLabel>Banheiros</AnyLabel>
+              
+              <Input styles={customStyles} onChangeValue323={setBath}    />
       
             </AnyColumn>
           </AnyButton>  

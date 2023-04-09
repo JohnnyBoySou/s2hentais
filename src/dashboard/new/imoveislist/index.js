@@ -6,6 +6,8 @@ import {
   Bold,
   Column,
   ColumnLabel,
+  Title,
+  Circle
 } from './styles';
 import { SelectLabel, SelectBt } from '../../../theme/global'
 import { FiCheck, FiX } from 'react-icons/fi'
@@ -23,7 +25,8 @@ function ImoveisList(props) {
 
   const { color, font } = useContext(ThemeContext);
   const categories = Categories;
-  const userID = props.userID.id;
+  const token = props.token;
+  const userID = props.userID.ID;
   const [data, setData] = useState([]);
   const [category, setCategory] = useState(categories[0]);
   const [loading, setLoading] = useState(true);
@@ -31,7 +34,8 @@ function ImoveisList(props) {
 
   const handleData = () => {
     setLoading(true);
-    requestAuthorImoveisByCategories(userID, category).then(
+    if(userID){
+      requestAuthorImoveisByCategories(userID, category).then(
       function (response, error) {
         if (response) {
           setData(response);
@@ -42,7 +46,7 @@ function ImoveisList(props) {
           setLoading(false);
         }
         return;
-      });
+      });}
   };
 
 
@@ -74,21 +78,22 @@ function ImoveisList(props) {
       <View style={{ marginBottom: 20, justifyContent: 'space-between' }} className='row'>
 
 
-        <SelectBt style={{ width: 140, }} on={publish} onClick={() => handlePublish(publish)}>
-
-          {publish && <SelectLabel on={publish}><FiCheck style={{ paddingTop: 4, marginBottom: -3, fontSize: 20, marginRight: 5, }} /> Publicados</SelectLabel>}
+        {a &&
+        <SelectBt style={{ width: 240, }} on={publish} >
+          {publish && <SelectLabel on={publish}><FiCheck style={{ paddingTop: 4, marginBottom: -3, fontSize: 20, marginRight: 5, }} /> Seus imóveis</SelectLabel>}
           {!publish && <SelectLabel on={publish}><FiX style={{ paddingTop: 4, marginBottom: -3, marginRight: 10, fontSize: 20, }} />Rascunhos</SelectLabel>}
         </SelectBt>
-
+          }
 
         <View className='row'>
-          <Label style={{ paddingRight: 20, }}><Bold>{value_total}</Bold> imóveis</Label>
           <Select styles={customStyles} onChange={(selectedOption) => setCategory(selectedOption)} options={categories} defaultValue={categories[0]} />
         </View>
+        <Label style={{ paddingRight: 20, }}><Bold>{value_total}</Bold> imóveis</Label>
+          
       </View>
 
 
-      <View style={{ flexDirection: 'row', display: 'flex', borderTop: '2px solid #00000020', borderTopLeftRadius: 12, borderTopRightRadius: 12, borderLeft: '2px solid #00000020', borderRight: '2px solid #00000020', }}>
+    {value_total >= 1 && <>  {!loading &&   <View style={{ flexDirection: 'row', display: 'flex', borderTop: '2px solid #00000020', borderTopLeftRadius: 12, borderTopRightRadius: 12, borderLeft: '2px solid #00000020', borderRight: '2px solid #00000020', }}>
         <Column style={{ width: 20 }}><ColumnLabel></ColumnLabel></Column>
         <Column style={{ width: 70, }}><ColumnLabel>Código (ID)</ColumnLabel></Column>
         <Column style={{ width: 100, }}><ColumnLabel>Categoria (Tipo)</ColumnLabel></Column>
@@ -97,19 +102,33 @@ function ImoveisList(props) {
         <Column style={{ width: 100, }}><ColumnLabel>Qtd. Banheiros</ColumnLabel></Column>
 
         <Column style={{ width: 80, }}><ColumnLabel>Área <br />total (m²) </ColumnLabel></Column>
-        <Column style={{ width: 180, textAlign: 'center' }}>
+
+        <Column style={{width: 60,}}><ColumnLabel>Acessos <br/>total</ColumnLabel></Column>
+        <Column style={{width: 60,}}><ColumnLabel>Curtidas <br/>total</ColumnLabel></Column>
+      
+
+        <Column style={{ width: 70, textAlign: 'center',  }}>
           <ColumnLabel style={{ margin: 'auto' }}>Açãoes <br /> rápidas</ColumnLabel>
         </Column>
 
-      </View>
+      </View>}
+      </>}
       
       {loading && <img alt='loader novo imovel' src={vid} style={{ width: 400, height: 300, alignSelf: 'center', }} />}
 
       {!loading && <ImoveisContainer>
-        {data.map((data, index) => <ListH7 key={index} data={data} />)}
+        {data.map((data, index) => <ListH7 key={index} token={token} data={data} />)}
       </ImoveisContainer>}
 
+      {!loading && <>
+        {value_total === 0 && 
+        <Column style={{flexDirection: 'column', display: 'flex'}}>
+        <div style={{position: 'relative'}}><Circle/></div>
+          <Title>Não encontramos nada!</Title>
+          <Label style={{marginTop: 0,width: 600, alignSelf: 'center'}}>Aparentemnte você não tem nenhum imóvel que corresponde a essa categoria, tente procurar por outra para obter resultados relevantes.</Label>
+        </Column>} ? <></>
 
+        </>}
     </View>
   );
 }

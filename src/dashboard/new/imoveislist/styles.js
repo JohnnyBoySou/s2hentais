@@ -39,16 +39,16 @@ export const Right = styled.div `
 
 export const Title = styled.span `
   font-size: 24px;
-  color: ${props => props.theme.color.primary};
+  color: ${props => props.theme.color.title};
   text-align: center;
-  font-family: ${props => props.theme.font.bold};
+  font-family: ${props => props.theme.font.medium};
 `;
 
 
 
 export const Label = styled.span `
   font-size: 20px;
-  color: ${props => props.theme.color.title};
+  color: ${props => props.theme.color.label};
   margin-top: 20px;
   font-family: ${props => props.theme.font.book};
 `;
@@ -168,3 +168,31 @@ export const ImoveisContainer = styled.div`
   border: 2px solid #00000020;
   border-bottom: none;
 ` 
+
+export const Circle = styled.div`
+width: 100px;
+height: 100px;
+background: linear-gradient(to bottom right, #5B72F2, #FE7359);
+border-radius: 50%;
+display: flex;
+margin: auto;
+align-items: center;
+justify-content: center;=
+color: #FFF;
+margin-bottom: 10px;
+margin-top: 30px;
+align-self: center;
+
+&::before {
+  content: "notfound";
+  position: absolute;
+  text-align: center;
+  line-height: 1;
+  color: #FFF;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  -webkit-text-stroke: 2px #5B72F2;
+  text-stroke: 2px #5B72F2;
+}
+`;

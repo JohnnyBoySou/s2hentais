@@ -40,6 +40,12 @@ export const ButtonPR = styled.button`
     background: ${props => props.off ? "#d1d1d1" : "#5B72F220"};
     color:${props => props.off ? "#fff" : "#5B72F2"};
   }
+  
+   &:disabled {
+    background: #FE7359;
+    color: white;
+    pointer-events: none;
+  }
 `;
 
 

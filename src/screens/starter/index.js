@@ -40,7 +40,7 @@ import {
   Planos,
 } from './styles';
 
-import { ButtonPR, Back, ButtonBR } from '../../theme/global'
+import { ButtonPR, Back, ButtonBR, Row, Column } from '../../theme/global'
 
 import axios from 'axios'
 
@@ -63,6 +63,7 @@ import { requestLogin, requestRegister } from '../../api/request/auth_requests';
 import {API_URL} from '../../api/index'
 
 import DocumentMeta from 'react-document-meta'
+import back_starter from '../../assets/imgs/back_starter2.png'
 
 import logox1 from '../../assets/imgs/logo_blue.png'
 import Phone2 from '../../assets/imgs/phone2.png'
@@ -112,20 +113,29 @@ const Starter = ( ) => {
       <DocumentMeta title="Starter" />
      
       <Nav className='fadeUp'>
-        <LogoX1 src={logox1}/>
-        <View className='row ' style={{marginLeft: 120, marginRight: -100,}}>
+        <Column style={{background: 'none', justifyContent: 'center', marginLeft: -100, marginRight: 100,}} >
+          <LogoX1 src={logox1}/>
+        </Column>
+        <Row style={{justifyContent: 'center', background: 'none', marginLeft: 50, marginRight: 50,}}>
           <NavBt>Visão Geral</NavBt>
           <NavBt>Recursos</NavBt>
           <NavBt>Planos</NavBt>
-        </View>
-        <View className='row'>
-          <NavBt onClick={() => navigate('/auth')} style={{border: '1.4px solid #00000020', paddingTop: 6, paddingBottom: 6, paddingLeft: 25, paddingRight: 25, borderRadius: 5,}}>Entrar</NavBt>
-          <NavBt style={{color: color.primary,}}>Começar de graça </NavBt>
+        </Row>
+        
+        <Row style={{background: 'none', marginRight: -200,}}>
+          <NavBt onClick={() => navigate('/auth')} style={{border: '1.4px solid #00000020', background: color.light, paddingTop: 6, paddingBottom: 6, paddingLeft: 25, paddingRight: 25, borderRadius: 5,}}>Entrar</NavBt>
+          <NavBt style={{color: color.primary, }}>Começar de graça </NavBt>
           <BsArrowRight style={{marginTop: 20, marginLeft: -20, fontSize: 22, color: color.primary,}}/>
-        </View>
+        </Row>
+      
       </Nav>
 
-      <Section className='fadeUp'>
+
+
+
+
+
+      <Section className='fadeUp' style={{background: "#f1f1f1"}}>
         <HeadTitle>
         A nova maneira de negociar imóveis
         </HeadTitle>
@@ -134,7 +144,7 @@ Simples. Prático. Confiavél. Deixa que a parte complicada a gente cuida, divul
         </HeadLabel>
 
         <BtStart style={{width: 220, margin:'auto'}}>Começar de graça</BtStart>
-        <BigImg/>
+        <BigImg src={back_starter}/>
      
       </Section>
 

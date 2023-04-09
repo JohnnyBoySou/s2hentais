@@ -66,7 +66,7 @@ import Profile from './profile/index'
 import DocumentMeta from 'react-document-meta'
 import ImoveisList from './imoveislist';  
 
-import { requestUserEndpoint } from '../../api/request/index'
+import { requestUserEndpoint, revalidateToken } from '../../api/request/index'
 
 const Auth = ( ) => {
 
@@ -212,6 +212,7 @@ const Auth = ( ) => {
 
   const a = false;
 
+  const [avatar, setAvatar] = useState(Suff);
   const handleClick = () => {
     setAddImovel(true)
     setDashboard(false)
@@ -220,10 +221,13 @@ const Auth = ( ) => {
   async function getUserData () {
     try{
       const user = JSON.parse(localStorage.getItem('@user'))
-      requestUserEndpoint(user.id).then(response => {
-        setUserData(response)
+     if(user.id) {
+        requestUserEndpoint(user.id).then(response => {
+          setUserData(response)
+          setAvatar(response?.avatar)
+          console.log(response)
       })
-     
+    }
       return    
     }
     catch(e){
@@ -232,9 +236,10 @@ const Auth = ( ) => {
   }
 
 
-
+  const [token, setToken] = useState();
   useEffect(() => {
     getUserData()
+    revalidateToken().then(token => {setToken(token)})
   }, [])
 
   const [dark, setDark] = useState(false)
@@ -269,7 +274,7 @@ const Auth = ( ) => {
 
             <LineBar onClick={ () => handleScreen('imoveis')}>
                 <BsHouseDoor style={{marginBottom: -4,}}/>
-                <LineSpan>Imoveis</LineSpan>
+                <LineSpan>Imóveis</LineSpan>
             </LineBar>
 
             <LineBar onClick={ () => handleScreen('statistics')}>
@@ -294,7 +299,7 @@ const Auth = ( ) => {
 
             <LineBar onClick={ () => handleScreen('settings')}>
                 <FiSettings style={{marginBottom: -4,}}/>
-                <LineSpan>Configurações</LineSpan>
+                <LineSpan>Ajustes</LineSpan>
             </LineBar>
 
         </Bar>
@@ -327,7 +332,7 @@ const Auth = ( ) => {
           </IconBt>
 
           <ProfileContainer onClick={toggleProfile('right', true)}>
-            <ProfileImg src={Suff}/>
+            <ProfileImg src={avatar}/>
             <View className='column' style={{}}>
             <CardTitle style={{fontSize: 18, marginTop:10,}}>{userData?.display_name}</CardTitle>
             <CardLabel style={{fontSize:14,}}>Gerenciar perfil</CardLabel>
@@ -338,11 +343,13 @@ const Auth = ( ) => {
         </Head>
         
         {dashboard && <View>
-          <Dashboard user={userData} click={handleClick} className="fadeUp" 
+
+
+          {userData.ID && <Dashboard user={userData} click={handleClick} className="fadeUp" 
             views={views} 
             popular={popular}
             interaction={interaction} 
-            likes={likes}/> 
+            likes={likes}/> }
         </View> }
         {addimovel && <AddImobil userData={userData} />}
       
@@ -351,7 +358,7 @@ const Auth = ( ) => {
 
        {imoveis &&  <View>
 
-        <ImoveisList userID={userData} />
+        <ImoveisList userID={userData} token={token}/>
 
         
         </View>}

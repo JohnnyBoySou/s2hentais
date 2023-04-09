@@ -2,9 +2,8 @@ import React, { useContext , useState, } from 'react';
 import { Link } from 'react-router-dom';
 import { API_URL } from '../../api/index.js';
 import { MdKeyboardArrowRight } from 'react-icons/md'
-
 import Geocode from "react-geocode";
-import Axios from 'react-axios'
+import Axios from 'axios';
 
 import {
   Upload,
@@ -77,97 +76,36 @@ import Modal from 'react-modal';
 import Select from 'react-select' 
 import makeAnimated from 'react-select/animated';
 
+import categorias  from '../../api/categorias' 
+import taxas  from '../../api/taxas' 
+import infraestrutura from './../../api/infraestrutura';
+import bairros from './../../api/bairros';
+
 import Item from '../../components/item';
 
-import Switch from 'react-switch';
 import { MdOutlineArrowForwardIos } from 'react-icons/md'
 import { FiX, FiCheck, FiAlertCircle } from 'react-icons/fi';
 import { requestNewImovel } from '../../api/request/auth_requests';
 
-import { AiOutlineCloudUpload, AiOutlineEye } from 'react-icons/ai'
+import { useNavigate } from 'react-router-dom';
+import { AiOutlineCloudUpload } from 'react-icons/ai'
 import Loader from  '../../components/loader'
-import { requestCEP } from '../../api/request';
+import { requestCEP, revalidateToken } from '../../api/request';
 import { maskValueBR } from '../../utils/masks';
+import { customStyles } from './../../api/customStyles';
 
 const AddImobiil = ( props ) => {
 
     const { color, font } = useContext(ThemeContext)
 
+    const Navigate = useNavigate()
     const userData = props.userData
     const [index, setIndex] = useState(1)
-
-    
-    const [imgs, setImgs] = useState()
-
-    const parentProps = ( value ) => {
-      console.log(value);
-      setImgs(value)
-   }
-
-   const [data, setData] = useState('');
   
-   const pull_data = (data) => {
-    console.log(data); // LOGS DATA FROM CHILD (My name is Dean Winchester... &)
-  }
-  
-  
-  
-
-  const tipos = [
-    { value: 'valor_mensal', label: 'Por mês' },
-    { value: 'valor_unico', label: 'Valor Único' },
-  ]
-
-  const taxas = [
-    {value: "Taxa de lixo", label:"Taxa de lixo", },
-    {value: "Seguro contra incêndio", label: "Seguro contra incêndio" },
-    {value: "IPTU", label: "IPTU",  },
-    {value: "Condomínio", label: "Condomínio" }
-  ]
-
-  const categorias = [
-    {value: "Casa", label: "Casa"}, 
-    {value: "Apartamento", label: "Apartamento"},
-    {value: "Casa Comercial", label: "Casa Comercial"},
-    {value: "Chácara", label: "Chácara"},
-    {value: "Cobertura", label: "Cobertura"},
-    {value: "Galpão", label: "Galpão"},
-    {value: "Geminado", label: "Geminado"},
-    {value: "Prédio Comercial", label: "Prédio Comercial"},
-    {value: "Sala Comercial", label: "Sala Comercial"},
-    {value: "Sítio", label: "Sítio"},
-    {value: "Sobrado", label: "Sobrado"},
-    {value: "Terreno", label: "Terreno"},
-    {value: "Kitnet", label: "Kitnet"}
-  ]
-
-  const infraestrutura = [
-  {value: "Bicicletário", label: "Bicicletário"
-  }, 
-  {value: "Circuito de TV", label: "Circuito de TV"
-  }, 
-  {value: "Zelador", label: "Zelador"
-  }, {value: "Elevador", label: "Elevador"
-  }, {value: "Estacionamento", label: "Estacionamento"
-  }, {value: "Jardim", label: "Jardim"
-  }, {value: "Playground", label: "Playground"
-  }, {value:  "Piscina Coletiva", label: "Piscina Coletiva"
-  }, {value: "Piscina", label: "Piscina"
-  }, {value: "Área de Serviço", label: "Área de Serviço"
-  }, {value:  "Banheiro Social", label: "Banheiro Social"
-  }, {value: "Churrasqueira", label: "Churrasqueira"
-  }, {value: "Escritório", label: "Escritório"
-  }, {value: "Lavabo", label: "Lavabo"
-  }, {value: "Sala de Jantar", label: "Sala de Jantar"
-  }, {value: "Sala de TV", label: "Sala de TV"
-  }, {value: "Espaço Gourmet", label: "Espaço Gourmet"
-  }, {value: "Hidromassagem", label: "Hidromassagem"
-  }, {value: "Terreno" , label: "Terreno" }
-  ]
- 
-
-
-
+    const tipos = [
+      { value: 'valor_mensal', label: 'Por mês' },
+      { value: 'valor_unico', label: 'Valor Único' },
+    ]
 
     const animatedComponents = makeAnimated();
     const [step1, setStep1] = useState(true)
@@ -196,15 +134,9 @@ const AddImobiil = ( props ) => {
     const [CEP, setCEP] = useState('89251300')
 
     const [conservacao, setConservacao] = useState('')
-    
-
-
-
-
-
-
   
-  const sendRequest = [
+  
+  const sendRequest = 
     {
       "ID": newID,
       "title": nome,
@@ -252,38 +184,9 @@ const AddImobiil = ( props ) => {
         "slug": "",
         "format": "standard"
     }
-  ]
+  
 
 
-    const customStyles = {
-      option: (provided, state) => ({
-        ...provided,
-        color: state.isSelected ? color.off : color.title,
-       fontFamily: font.medium,
-       fontSize: 18,
-      }),
-      control: () => ({
-        border: '2px solid #00000020',
-        display: 'flex',
-        borderRadius: 5,  
-        fontFamily: font.medium,
-        flexDirection: 'row',
-        fontSize: 18,
-        marginTop: 10,
-        marginBottom: 10,
-      }),
-      indicatorSeparator: () => ({
-        width: 0,
-        display: 'none'
-      }),
-
-      dropdownIndicator : () => ({
-        color: "#000",
-        fontSize: 28,
-        marginRight: 5,
-        marginLeft: -5,
-      })
-    }
     const stylesModal = {
       content: {
         top: '50%',
@@ -366,31 +269,21 @@ const AddImobiil = ( props ) => {
       }
     }
 
+  const a = false;
 
-    const [hideLocation, setHideLocation] = useState(false)
-
-    const handleVisibilityLocation = () => {
-      setHideLocation(!hideLocation)
-    } 
-
-      const a = false;
-
-
-
-  const [newImovelData, setNewImovelData] = useState([])
   const [loadingNewImovel, setLoadingNewImovel] = useState(false)
 
   function newImovel (){
     setLoadingNewImovel(true)
-    requestNewImovel( sendRequest ).then(
-      function(finish, error) {
-        if(finish){
+    requestNewImovel( sendRequest, token ).then(
+      function(response, error) {
+        if(response){
+          console.log(response)
           setLoadingNewImovel(false)
-          return
-        }else if(
+          Navigate(`/details/${response.ID}`) 
+        }else{
           console.log(error)
-        )
-        return
+        }
     })
   }
 
@@ -402,7 +295,6 @@ const AddImobiil = ( props ) => {
     setLoadingCEP(true)
     requestCEP( CEP ).then(
       function(response, error) {
-        console.log(response.logradouro)
         if(response){
           
           setLoadingCEP(false)
@@ -447,8 +339,8 @@ const AddImobiil = ( props ) => {
  
 }
   const [modalIsOpen2, setIsOpen2] = useState(false);
-  const handleImovel = () => {
-    setIsOpen2(true)
+  const handleNewImovel = () => {
+    setLoadingNewImovel(!loadingNewImovel)
     newImovel()
   }
 
@@ -504,21 +396,24 @@ const AddImobiil = ( props ) => {
   
   
 
+  const [token, setToken] = useState();
+
+
   async function newMedia( picture, path ){
     setPictureLoad(true)
-    const formData = new FormData();
+    const formData = new FormData()
+
   
     formData.append("file", picture);
     formData.append("title", 'idImg');
   
-    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3MyaGVudGFpcy5jb20vbm92b2ltb3ZlbCIsImlhdCI6MTY2ODYwMzI4MCwibmJmIjoxNjY4NjAzMjgwLCJleHAiOjE2NjkyMDgwODAsImRhdGEiOnsidXNlciI6eyJpZCI6IjEifX19.aAE180UQEvsLw-lqt7GAxsebMvJZJ8ptbkZyTbLBEk4"
-   
+  
     const headers = {
       'Content-Type': 'form/multipart',
       'Authorization': 'Bearer' + token,
     }
 
-   Axios.post(`${API_URL}/wp/v2/media`,  
+    Axios.post(`${API_URL}/wp/v2/media`,  
     formData, {headers: headers}
   ).then(response => {
     if(path === 1){setPicID1(response.data.id)}
@@ -529,10 +424,10 @@ const AddImobiil = ( props ) => {
     else if(path === 6){setPicID6(response.data.id)}
     else if(path === 7){setPicID7(response.data.id)}
     else if(path === 8){setPicID8(response.data.id)}
-    console.log(response.data.id)
     setPictureLoad(false)
   
   }).catch(error => {
+    setPictureLoad(false)
     console.log(error)
   });
   }
@@ -600,13 +495,18 @@ const AddImobiil = ( props ) => {
       }
      }
 
-   
-    
+  
     const a = false
+
+
+
+    React.useEffect(() => {
+      revalidateToken().then(token => {setToken(token)})
+    }, [])
+    
+
     return(
       <View style={{paddingLeft:16, paddingRight: 16,}}>
-      
-
       <View className='row'>
       <UpBt >
       <InputImageUpload onClick={handleClick1}>
@@ -963,7 +863,12 @@ const AddImobiil = ( props ) => {
                   <UploadText style={{fontSize: 16, marginTop: 10, marginBottom: 20,}}>Tamanho recomendado: 1024 x 1920 (9:16)</UploadText>
               
                   <UploadComponent/>
-                  <ButtonPR onClick={handleSave} style={{marginLeft: 30, marginRight: 30, marginTop: 20,}}>ENVIAR</ButtonPR>
+                  <ButtonPR onClick={handleSave} disalbed={pictureLoad}  style={{marginLeft: 30, marginRight: 30, marginTop: 20,}}>
+                    
+                    {!pictureLoad && <span>ENVIAR</span>}
+                    {pictureLoad &&  <View style={{marginTop: 6,}} ><Loader className='fadeUp' type="spin" size={20} color={color.light}/></View>}
+             
+                    </ButtonPR>
                   <UploadLabel style={{marginTop: 20,}}>Máximo de <UploadLabel style={{fontFamily: font.bold,}}>4 MB </UploadLabel> por imagem.</UploadLabel>
 
               </Upload>
@@ -985,7 +890,7 @@ const AddImobiil = ( props ) => {
               
 
               <View className='row' style={{justifyContent: 'space-between',}}>
-                <PublishBt onClick={() => setLoadingNewImovel(!loadingNewImovel)}>
+                <PublishBt onClick={handleNewImovel} disabled={loadingNewImovel}>
                 <PublishBtIcon>
                  {!loadingNewImovel && <AiOutlineCloudUpload style={{fontSize: 28, marginBottom: -6, }}/>}
                   {loadingNewImovel &&  <View style={{marginTop: 6,}} ><Loader className='fadeUp' type="spin" size={20} color={color.light}/></View>}

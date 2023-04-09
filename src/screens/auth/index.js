@@ -107,20 +107,22 @@ const handlePWT = () => {
 
  function handleLogin(){
   setLoadLogin(true)
-  console.log(password)
+  setLoginFinish(false)
+  setErrorLogin(false)
   requestLogin(email, password).then(
     function(response) {
-      if(response){
+      
+      if(response?.token){
+        setLoginFinish(true)
         const userValue = {email: response.email, password: password, token: response.token, id: response.id, username: response.name}
         requestSaveUser(userValue).then(function(response){
           setLoadLogin(false)
           navigate('/dashboard/new')
         })
       }
-      else if(response?.status){
-        setFinishRegister(false)
-        setErrorRegister(true)
-      }
+      else if(response?.data.status === 403){
+        setErrorLogin(true)
+      }  
       setLoadLogin(false)
       })
 }
@@ -139,12 +141,15 @@ const changeMethod = () => {
     useEffect(() => {
       requestUser().then(
         function(response) {
-          if(response){
+          console.log(response)
+          if(response.email){
             setEmail(response.email)
             setPassword(response.password)
             setFirstName(response.name)
             setChecked(true)
             setBack(true)
+          }else{
+            setFirstName('Visitante')
           }
         }
       )
@@ -169,14 +174,14 @@ const changeMethod = () => {
         <View style={{flexDirection: 'column', display: 'flex'}}>
 
         {errorLogin && <RedAcess className='fadeUp'>Credênciais inválidas</RedAcess>}
-        {finishLogin && <GreenAcess className='fadeUp'>Autenticação concluída</GreenAcess>}
+        {loginFinish && <GreenAcess className='fadeUp'>Autenticação concluída</GreenAcess>}
 
         <Label>E-mail</Label>
         <Input placeholder='E-mail' onChange={e => setEmail(e.target.value)} 
         value={email}
         
         />
-        <Label> Senha</Label>
+        <Label>Senha</Label>
         <View style={{flexDirection: 'row', display: 'flex'}}>
         <Input 
           style={{width: '100%', marginRight: 5,}}
@@ -192,18 +197,12 @@ const changeMethod = () => {
         </View>
         
         <View style={{justifyContent: 'space-between', display: 'flex'}}>
-          <Label style={{marginTop: 14}}><Checkbox checked={checked} readOnly/> Manter conectado</Label>
+          {a && <Label style={{marginTop: 14}}><Checkbox checked={checked} readOnly/> Manter conectado</Label>}
           <Label style={{textDecoration: 'underline'}}>Esqueci a senha</Label>
         </View>
         </View>
         
-        {loginFinish && 
-        <View style={{marginTop: 20, marginBottom: 20, flexDirection: 'column', display: 'flex'}}>
-          <GreenAcess>Autenticação concluída</GreenAcess>
-          <br/>
-        </View>
-        }
-
+        
         <ButtonPR onClick={handleLogin} disabled={loadLogin} style={{marginTop: 30,borderRadius: 100, fontSize: 20, padding: 18, }}> 
         {!loadLogin && <span>Entrar</span> } 
         {loadLogin && <Loader className='fadeUp' type="spin" size={24} color={color.light}/>}

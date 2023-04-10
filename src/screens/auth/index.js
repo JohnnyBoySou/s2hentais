@@ -37,7 +37,7 @@ import DocumentMeta from 'react-document-meta'
 import { Column, } from './../../theme/global';
 import { TitleName } from './styles';
 
-const Auth = ( ) => {
+const Auth = ( props ) => {
 
   const { color, font } = useContext(ThemeContext)
 
@@ -45,7 +45,7 @@ const Auth = ( ) => {
 
 
 
-  const { qr } = useParams();
+  const { param } = useParams();
   const [register, setRegister] = useState(false)
   const [login, setLogin] = useState(true)
   const [first_name, setFirstName] = useState();
@@ -117,7 +117,7 @@ const handlePWT = () => {
         const userValue = {email: response.email, password: password, token: response.token, id: response.id, username: response.name}
         requestSaveUser(userValue).then(function(response){
           setLoadLogin(false)
-          navigate('/dashboard/new')
+          navigate('/dashboard/')
         })
       }
       else if(response?.data.status === 403){
@@ -136,11 +136,17 @@ const changeMethod = () => {
     setRegister(false)
   }
 }
-  
+
+
 
     useEffect(() => {
+      if (param === "getstarted") {
+        changeMethod()
+      }if (param === "register") {
+        changeMethod()
+      }
       requestUser().then(
-        function(response) {
+        function(response) {  
           console.log(response)
           if(response.email){
             setEmail(response.email)

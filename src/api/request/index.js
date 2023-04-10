@@ -519,15 +519,15 @@ export async function requestUserEdit( params ){
 
 export async function requestDeleteImovel( ID, token ){
   const headers = {
-    'Content-Type': 'form/multipart',
+    'Content-Type': 'application/json',
     'Authorization': 'Bearer' + token,
   }
 
-  return Axios.put(`${API_URL}/delete/imovel?id=${ID}`, {headers: headers}).then(response => {
-    return response
+  return Axios.delete(`${API_URL}/wp/v2/posts/${ID}?force=false`, {headers: headers}).then(response => {
+    return response.data.status
   }).catch(error => {
     console.log('erro')
-    console.log(error)
+    console.log(error)  
     return error
   });
 

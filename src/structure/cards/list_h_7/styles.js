@@ -28,16 +28,24 @@ export const Description = styled.div`
 
 export const Title = styled.span`
   color: ${props => props.theme.color.title};   
-  display: flex;
+  font-size: 20px;
+  text-align: center;
+  font-family: ${props => props.theme.font.medium};
+`;
+
+
+export const Label = styled.span`
+  color: ${props => props.theme.color.label};   
   font-size: 16px;
   margin-top: 10px;
-  margin-bottom: 10px;
-  margin-left: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+  line-height: 20px;
   font-family: ${props => props.theme.font.book};
 `;
 
 export const Spacing = styled.div`
-  width: 6px;
+  width: 10px;
   height: 10px;
 `
 
@@ -146,3 +154,24 @@ export const QuickBt = styled.button`
   }
   `
 
+
+export const Circle = styled.div`
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  background:  ${props => props.theme.color.red}30;
+  color:${props => props.theme.color.red};
+  justify-content: center;
+  margin: 20px auto;
+  font-size: 42px;
+  display: flex;
+  flex-direction: column;
+  `
+
+  export const EditImg = styled.img`
+    width: 100px;
+    height: 100px;
+    border-radius: 6px;
+    justify-content: center;
+    margin: 20px auto;
+    ` 

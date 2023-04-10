@@ -70,7 +70,7 @@ export const Card = styled.div`
     flex-direction: column;
     display: flex;
     padding: 10px 20px 20px 20px;
-    width: 260px;
+    flex-grow: 1;
     border-radius: 12px;  
     background-image: url(${back_create});
     background-position: top-left;

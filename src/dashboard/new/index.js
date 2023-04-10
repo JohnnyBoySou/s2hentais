@@ -351,14 +351,14 @@ const Auth = ( ) => {
             interaction={interaction} 
             likes={likes}/> }
         </View> }
-        {addimovel && <AddImobil userData={userData} />}
+        {addimovel && <AddImobil user={userData} />}
       
 
 
 
        {imoveis &&  <View>
 
-        <ImoveisList userID={userData} token={token}/>
+        <ImoveisList userID={userData} user={userData} token={token}/>
 
         
         </View>}

@@ -37,7 +37,6 @@ export async function requestMostPopular( identification ){
         const response = await Axios.get(`${API_URL}/user/most_popular/${id}`, {
         headers: headers
     });
-    console.log(response)
         return response.data
     } catch (error) {
         console.log(error);

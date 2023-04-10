@@ -453,4 +453,7 @@ export const NotificationLabel = styled.span`
 export const ImoveisContainer = styled.div`
   border: 2px solid #00000020;
   border-bottom: none;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 ` 

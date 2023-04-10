@@ -26,6 +26,7 @@ function ImoveisList(props) {
   const { color, font } = useContext(ThemeContext);
   const categories = Categories;
   const token = props.token;
+  const user = props.user;
   const userID = props.userID.ID;
   const [data, setData] = useState([]);
   const [category, setCategory] = useState(categories[0]);
@@ -97,16 +98,14 @@ function ImoveisList(props) {
         <Column style={{ width: 20 }}><ColumnLabel></ColumnLabel></Column>
         <Column style={{ width: 70, }}><ColumnLabel>Código (ID)</ColumnLabel></Column>
         <Column style={{ width: 100, }}><ColumnLabel>Categoria (Tipo)</ColumnLabel></Column>
-        <Column style={{ width: 70, }}><ColumnLabel>Valor (R$)</ColumnLabel></Column>
-        <Column style={{ width: 100, }}><ColumnLabel>Qtd. Quartos</ColumnLabel></Column>
-        <Column style={{ width: 100, }}><ColumnLabel>Qtd. Banheiros</ColumnLabel></Column>
+        <Column style={{ width: 80, }}><ColumnLabel>Valor (R$)</ColumnLabel></Column>
+        <Column style={{ width: 80, }}><ColumnLabel>Qtd. Quartos</ColumnLabel></Column>
+        <Column style={{ width: 80, }}><ColumnLabel>Qtd. Banheiros</ColumnLabel></Column>
 
-        <Column style={{ width: 80, }}><ColumnLabel>Área <br />total (m²) </ColumnLabel></Column>
+        <Column style={{ width: 90, }}><ColumnLabel>Área <br />total (m²) </ColumnLabel></Column>
 
-        <Column style={{width: 60,}}><ColumnLabel>Acessos <br/>total</ColumnLabel></Column>
-        <Column style={{width: 60,}}><ColumnLabel>Curtidas <br/>total</ColumnLabel></Column>
-      
-
+        <Column style={{width: 60,}}><ColumnLabel>Acessos Curtidas</ColumnLabel></Column>
+        
         <Column style={{ width: 70, textAlign: 'center',  }}>
           <ColumnLabel style={{ margin: 'auto' }}>Açãoes <br /> rápidas</ColumnLabel>
         </Column>
@@ -117,7 +116,7 @@ function ImoveisList(props) {
       {loading && <img alt='loader novo imovel' src={vid} style={{ width: 400, height: 300, alignSelf: 'center', }} />}
 
       {!loading && <ImoveisContainer>
-        {data.map((data, index) => <ListH7 key={index} token={token} data={data} />)}
+        {data.map((data, index) => <ListH7 user={user} key={index} token={token} data={data} />)}
       </ImoveisContainer>}
 
       {!loading && <>

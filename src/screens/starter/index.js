@@ -104,9 +104,12 @@ const Starter = ( ) => {
   const language = [
     { value: 'portugues', label: 'Português BR' },
     { value: 'english', label: 'English' },
-
-
   ]
+
+  function scrollToElement(element, behavior = 'smooth') {
+    element.scrollIntoView({ behavior });
+  }
+  
   return (
   
     <Container> 
@@ -117,14 +120,14 @@ const Starter = ( ) => {
           <LogoX1 src={logox1}/>
         </Column>
         <Row style={{justifyContent: 'center', background: 'none', marginLeft: 50, marginRight: 50,}}>
-          <NavBt>Visão Geral</NavBt>
-          <NavBt>Recursos</NavBt>
-          <NavBt>Planos</NavBt>
+          <a href="#planos" onClick={() => scrollToElement(document.getElementById('visao'))}><NavBt>Visão Geral</NavBt></a>
+          <a href="#planos" onClick={() => scrollToElement(document.getElementById('recursos'))}><NavBt>Recursos</NavBt></a>
+          <a href="#planos" onClick={() => scrollToElement(document.getElementById('planos'))}> <NavBt>Planos</NavBt></a>
         </Row>
         
         <Row style={{background: 'none', marginRight: -200,}}>
-          <NavBt onClick={() => navigate('/auth')} style={{border: '1.4px solid #00000020', background: color.light, paddingTop: 6, paddingBottom: 6, paddingLeft: 25, paddingRight: 25, borderRadius: 5,}}>Entrar</NavBt>
-          <NavBt style={{color: color.primary, }}>Começar de graça </NavBt>
+          <NavBt onClick={() => navigate('/auth/login')} style={{border: '1.4px solid #00000020', background: color.light, paddingTop: 6, paddingBottom: 6, paddingLeft: 25, paddingRight: 25, borderRadius: 5,}}>Entrar</NavBt>
+         <NavBt onClick={() => navigate('/auth/register')} style={{color: color.primary, }}>Começar de graça </NavBt>
           <BsArrowRight style={{marginTop: 20, marginLeft: -20, fontSize: 22, color: color.primary,}}/>
         </Row>
       
@@ -143,7 +146,7 @@ const Starter = ( ) => {
 Simples. Prático. Confiavél. Deixa que a parte complicada a gente cuida, divulgue seu imóvel na nossa plataforma e veja seus clientes aumentando. Comece hoje mesmo de graça!
         </HeadLabel>
 
-        <BtStart style={{width: 220, margin:'auto'}}>Começar de graça</BtStart>
+        <BtStart onClick={() => navigate('/auth/register')}  style={{width: 220, margin:'auto'}}>Começar de graça</BtStart>
         <BigImg src={back_starter}/>
      
       </Section>
@@ -193,7 +196,7 @@ Simples. Prático. Confiavél. Deixa que a parte complicada a gente cuida, divul
 
       </Banner>
 
-      <Title style={{color: color.title, fontSize: 28, marginBottom: 10,}}>Escolha um de nossos Planos disponíveis!</Title>
+      <Title id="planos" style={{color: color.title, fontSize: 28, marginBottom: 10,}}>Escolha um de nossos Planos disponíveis!</Title>
       <Label style={{textAlign: 'center', width: 700, margin: 'auto'}}>Decida o que melhor se encaixa com sua perspectiva de negócio, faça um <i>"upgrade"</i> de plano a qualquer momento.</Label>
       <Planos>
           <Plans type="normal"/>

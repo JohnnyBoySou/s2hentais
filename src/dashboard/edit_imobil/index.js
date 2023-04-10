@@ -1,4 +1,4 @@
-import React, { useContext , useState, } from 'react';
+import React, { useContext , useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { API_URL } from '../../api/index.js';
 import { MdKeyboardArrowRight } from 'react-icons/md'
@@ -15,7 +15,7 @@ import {
   ImageUpload,
   UploadLabel,
   UploadText,
-} from './stylesUpload';
+} from './stylesUpload.js';
 
 
 import { IoIosImages } from 'react-icons/io';
@@ -66,9 +66,9 @@ import {
   PublishTipLabel,
   PublishValue,
   
-} from './styles';
+} from './styles.js';
 
-import { ButtonBR, ButtonPR, Back } from '../../theme/global';
+import { ButtonBR, ButtonPR, } from '../../theme/global.js';
 import '../animation.css'
 
 
@@ -76,25 +76,25 @@ import Modal from 'react-modal';
 import Select from 'react-select' 
 import makeAnimated from 'react-select/animated';
 
-import categorias  from '../../api/categorias' 
-import taxas  from '../../api/taxas' 
-import infraestrutura from './../../api/infraestrutura';
-import bairros from './../../api/bairros';
+import categorias  from '../../api/categorias.js' 
+import taxas  from '../../api/taxas.js' 
+import infraestrutura from '../../api/infraestrutura.js';
+import bairros from '../../api/bairros.js';
 
-import Item from '../../components/item';
+import Item from '../../components/item/index.js';
 
 import { MdOutlineArrowForwardIos } from 'react-icons/md'
 import { FiX, FiCheck, FiAlertCircle } from 'react-icons/fi';
-import { requestNewImovel } from '../../api/request/auth_requests';
+import { requestEditImovel } from '../../api/request/auth_requests.js';
 
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineCloudUpload } from 'react-icons/ai'
-import Loader from  '../../components/loader'
-import { requestCEP, revalidateToken } from '../../api/request';
-import { maskValueBR } from '../../utils/masks';
-import { customStyles } from './../../api/customStyles';
+import Loader from  '../../components/loader/index.js'
+import { requestCEP, revalidateToken } from '../../api/request/index.js';
+import { maskValueBR } from '../../utils/masks.js';
+import { customStyles } from '../../api/customStyles.js';
 
-const AddImobiil = ( props ) => {
+const EditImobiil = ( props ) => {
 
     const { color, font } = useContext(ThemeContext)
 
@@ -116,36 +116,58 @@ const AddImobiil = ( props ) => {
     const [step4, setStep4] = useState(false)
     const [step5, setStep5] = useState(false)
 
-    const newID = Number(Math.floor(Math.random() * (9999 - 1) + 9999))
-    const [nome, setNome] = useState('Residência Anahara')
+    const [ID, setID] = useState();
+    const [nome, setNome] = useState()
     const [descricao, setDescricao] = useState('')
     const [categoria, setCategoria] = useState(categorias[0])
     const [tipo, setTipo] = useState(tipos[0])
-    const [valor_mensal, setValorMensal] = useState('1.200,00')
-    const [valor_unico, setValorUnico] = useState('200.000,00')
+    const [valor_mensal, setValorMensal] = useState(200)
+    const [valor_unico, setValorUnico] = useState()
     const [cidade, setCidade] = useState('Jaraguá do Sul')
     const [bairro, setBairro] = useState('')
     const [rua, setRua] = useState('')
-    const [numero, setNumero] = useState('32')
+    const [numero, setNumero] = useState('')
     const [latitude, setLatitude] = useState('')
     const [longitude, setLongitude] = useState('')
-    const [qtd1, setQtd1] = useState('3')
-    const [qtd2, setQtd2] = useState('1')
-    const [area, setArea] = useState('56')
-    const [CEP, setCEP] = useState('89251300')
-
-    const [conservacao, setConservacao] = useState('')
+    const [qtd1, setQtd1] = useState('')
+    const [qtd2, setQtd2] = useState('')
+    const [area, setArea] = useState('')
+    const [CEP, setCEP] = useState('')
+    const [tax, setTax] = useState(['']);
+    
+    useEffect(() => {
+      setID(item.ID)
+      setNome(item.post_title);
+      setDescricao(item.descricao);
+      setCategoria(item.categoria);
+      if(item.tipo === "Por mês"){setTipo(tipos[0])} else{setTipo(tipos[1])}
+      setValorMensal(item.valor_mensal);
+      setValorUnico(item.valor_unico);
+      setCidade(item.cidade);
+      setBairro(item.bairro);
+      setRua(item.rua);
+      setNumero(item.numero);
+      setLatitude(item.latitude);
+      setLongitude(item.longitude);
+      setQtd1(item.qtd1);
+      setQtd2(item.qtd2);
+      setArea(item.area);
+      setCEP(item.cep);
+      setTax(item.tax)
+      revalidateToken().then(token => {setToken(token)})
+  
+    }, [])
+    
   
   
   const sendRequest = 
     {
-      "ID": newID,
       "title": nome,
       "author": userData.id,
       "token": userData.token,
       
       "acf": {
-        "codigo": newID,
+        "codigo": ID,
         "nome": nome,
         "descricao": descricao,
         "area": area,
@@ -165,10 +187,10 @@ const AddImobiil = ( props ) => {
 
         "latitude": latitude,
         "longitude": longitude,
-        "taxas": taxas,
+        "taxas": tax,
         "categoria": categoria.label,
         "infraestrutura": infraestrutura.label,
-        "conservacao": conservacao,
+        "conservacao": 2,
         },
 
         //obrigatorio tratar no back-end
@@ -276,7 +298,7 @@ const AddImobiil = ( props ) => {
 
   function newImovel (){
     setLoadingNewImovel(true)
-    requestNewImovel( sendRequest, token ).then(
+    requestEditImovel( sendRequest, token ).then(
       function(response, error) {
         if(response){
           console.log(response)
@@ -347,7 +369,7 @@ const AddImobiil = ( props ) => {
 
   
   function handleChangeMaskMensal(e) {
-    const { value } = e.target; setValorMensal(maskValueBR(value))
+    const { value } = e.target; setValorMensal(value)
   }
 
   function handleChangeMaskUnico(e) {
@@ -499,12 +521,6 @@ const AddImobiil = ( props ) => {
   
     const a = false
 
-
-
-    React.useEffect(() => {
-      revalidateToken().then(token => {setToken(token)})
-    }, [])
-    
 
     return(
       <View style={{paddingLeft:16, paddingRight: 16,}}>
@@ -997,4 +1013,4 @@ const AddImobiil = ( props ) => {
   );
 };
 
-export default AddImobiil;
+export default EditImobiil;

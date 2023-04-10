@@ -103,6 +103,35 @@ export async function requestLogin( email, password ){
 
   }
 
+  export async function requestEditImovel( data, token ){
+  
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer' + token,
+    }
+
+  return Axios.put(`${API_URL}/wp/v2/posts/${data.acf.codigo}`,  data, {headers: headers}
+  ).then(response => {
+    console.log(response.data)
+    const finish = {"status": 200, "ID": response?.data.id}
+    return finish
+  }).catch(error => {
+   
+    if (error.response){
+      console.log(error.response)
+    }else if(error.request){
+      console.log(error.request)
+    }else if(error.message){
+      console.log(error.message)
+    }
+
+
+    const response = "" 
+    return response
+  });
+
+  }
+
 
   
   export async function requestNewMedia( params ){

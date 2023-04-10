@@ -96,10 +96,9 @@ const App = () => {
         <Route path="/dashboard/add-imovel" exact element={<AddImobiil/>}/>
         <Route path="/dashboard/add/imovel" exact element={<AddImobiil/>}/>
         
-        <Route path="/dashboard/new" exact element={<New/>}/>
+        <Route path="/dashboard" exact element={<New/>}/>
 
         <Route path="/dashboard/home" exact element={<DashboardHome/>}/>
-        <Route path="/dashboard" exact element={<DashboardHome/>}/>
         <Route path="/dashboard/:path" exact element={<DashboardHome/>}/>
        
 
@@ -107,7 +106,7 @@ const App = () => {
         
         <Route path="/starter" exact element={<Starter/>}/>
   
-        <Route path="/auth" exact element={<Auth/>}/>
+        <Route path="/auth/:param" exact element={<Auth/>}/>
       </Routes>
       </div></ThemeProvider>
     </Router>

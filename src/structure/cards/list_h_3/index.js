@@ -83,10 +83,10 @@ export default function ListH( props ){
       </div>
       <Description>
         <Codigo>#{item?.ID}</Codigo>
-        <Title>{item?.categoria} com {item?.qtd1} {item?.item1}s, {item?.qtd2} {item?.item2} e {item?.area} m2</Title>
+        <Title>{item?.categoria} com {item?.qtd1} {item?.item1}s, {item?.qtd2} {item?.item2} e {item?.area}m&#178;</Title>
         <div style={{flexDirection: 'row', display: 'flex'}}>
           <FaMapMarkerAlt size={14} color="#5B72F2" style={{marginTop: 5, marginRight: 5, display: 'flex'}}/>
-          <Address>{item.bairro}</Address>
+          <Address>{item.bairro}, {item.rua}</Address>
         </div>
 
         <Input>

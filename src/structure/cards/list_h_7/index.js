@@ -34,6 +34,7 @@ export default function ListH7( props ){
   const dashboard = props.route
   const token = props.token
   const user = props.user
+  const a = false
 
   const [imgUrl, setImgUrl] = useState(item?.imagem1)
   const [modalOpen, setModalOpen] = useState(false);
@@ -114,18 +115,18 @@ export default function ListH7( props ){
 
       <Modal isOpen={modalEdit} onRequestClose={() => setModalEdit(false)} style={{
           content: {
-            width: 980,  
+            width: 900,  
             padding: 20,
             margin: 'auto',
             borderRadius: 12,},
           overlay: { backgroundColor: 'rgba(0, 0, 0, 0.5)' },
         }}>
           <Row style={{ width: '100%', marginBottom: 10,}}>
-            <Column style={{background: color.primary+20, borderRadius: 12, flexGrow: 1,}}>
+            <Column style={{background: color.primary, borderRadius: 12, flexGrow: 1,}}>
               <ListH3 data={item} />
             </Column>
             <Spacing/>
-
+{a &&
             <Column style={{background: color.green+20, width: 400, borderRadius: 12, flexGrow: 1,}}>
               <Circle style={{background: color.green+40, color: color.green, width: 74, height: 74, fontSize: 32, marginBottom: -30, marginTop: 0,}}><AiOutlineEdit style={{margin: 'auto'}}/></Circle>
               
@@ -136,6 +137,7 @@ export default function ListH7( props ){
                 </Label>
               </Column>
             </Column>
+}
             </Row>
         <EditImobil data={item} user={user}/>
       </Modal>

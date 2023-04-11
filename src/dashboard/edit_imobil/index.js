@@ -71,6 +71,7 @@ import {
 import { ButtonBR, ButtonPR, } from '../../theme/global.js';
 import '../animation.css'
 
+import { Row } from '../../theme/global.js';
 
 import Modal from 'react-modal';
 import Select from 'react-select' 
@@ -171,7 +172,7 @@ const EditImobiil = ( props ) => {
         "nome": nome,
         "descricao": descricao,
         "area": area,
-
+        "cep": CEP,
         "tipo": tipo.label,
         "valor_mensal": Number(valor_mensal),
         "valor_unico": Number(valor_unico),
@@ -239,25 +240,8 @@ const EditImobiil = ( props ) => {
         setStep1(false)
         setStep2(false)
         setStep3(true)
-        setStep4(false)
-        setStep5(false)
         setIndex(3)
-      }else if(index === 3){
-        setStep1(false)
-        setStep2(false)
-        setStep3(false)
-        setStep4(true)
-        setStep5(false)
-        setIndex(4)
-      }else if(index === 4){
-        setStep1(false)
-        setStep2(false)
-        setStep3(false)
-        setStep4(false)
-        setStep5(true)
-        setIndex(5)
       }
-
     }
 
     const previusStep = () => {
@@ -275,20 +259,6 @@ const EditImobiil = ( props ) => {
         setStep4(false)
         setStep5(false)
         setIndex(2)
-      }else if(index === 4){
-        setStep1(false)
-        setStep2(false)
-        setStep3(true)
-        setStep4(false)
-        setStep5(false)
-        setIndex(3)
-      }else if(index === 5){
-        setStep1(false)
-        setStep2(false)
-        setStep3(false)
-        setStep4(true)
-        setStep5(false)
-        setIndex(3)
       }
     }
 
@@ -319,12 +289,11 @@ const EditImobiil = ( props ) => {
     requestCEP( CEP ).then(
       function(response, error) {
         if(response){
-          
           setLoadingCEP(false)
           setRua(response.logradouro)
           setBairro(response.bairro)
           setCidade(response.localidade)
-          handleLatLong()
+          //handleLatLong()
         }else if(
           console.log(error)
         )
@@ -338,8 +307,7 @@ const EditImobiil = ( props ) => {
       handleCEP()
     }
   }
- 
-
+ /*
   Geocode.setApiKey("AIzaSyBaT9Nia9XOvVt7BvFVRTtof0ujGMr56rE");
   Geocode.setLanguage("pt-br");
   Geocode.setRegion("br");
@@ -361,6 +329,9 @@ const EditImobiil = ( props ) => {
 
  
 }
+
+*/
+
   const [modalIsOpen2, setIsOpen2] = useState(false);
   const handleNewImovel = () => {
     setLoadingNewImovel(!loadingNewImovel)
@@ -738,13 +709,6 @@ const EditImobiil = ( props ) => {
         </StepLine>
 
         
-        <Arrow>
-          <MdOutlineArrowForwardIos/>
-        </Arrow>
-        <StepLine>
-          <StepIcon on={step4}><StepLabel>4</StepLabel></StepIcon>
-          <StepTitle>Publicar</StepTitle>
-        </StepLine>
       </Step>
 
 
@@ -773,7 +737,9 @@ const EditImobiil = ( props ) => {
 
 
         {step1 &&  <FirstStep className='fadeUp'>
-          <Column style={{width: '50%'}}>
+          
+          <Row style={{width: '100%', justifyContent: 'center',}}>
+          <Column style={{width: '50%', flexrow: 1}}>
 
 
           <Label>Nome para o imóvel</Label>
@@ -799,7 +765,7 @@ const EditImobiil = ( props ) => {
           
           
           </Column>
-          <Column style={{width: '50%'}}>
+          <Column style={{width: '50%', flexGrow: 1,}}>
           
          
           <View className='row' style={{justifyContent: 'space-between'}}>
@@ -827,6 +793,11 @@ const EditImobiil = ( props ) => {
          
 
           </Column>
+          </Row>
+
+            <Label>Descrição</Label>
+            <TextArea style={{height: 140,}}  rows={8} cols={6} value={descricao} onChange={e => setDescricao(e.target.value)} placeholder="Exemplo: O imóvel possuí área para churrasco." name="numero" type="textarea"/>
+
           </FirstStep>}
           
 
@@ -968,7 +939,8 @@ const EditImobiil = ( props ) => {
             <ButtonBR  disabled={step1} onClick={previusStep}>ANTERIOR</ButtonBR>
             <View>
             
-          {!step4 &&  <ButtonPR onClick={nextStep}>PRÓXIMO</ButtonPR>}
+          {!step3 &&  <ButtonPR onClick={nextStep}>PRÓXIMO</ButtonPR>}
+          {step3 &&  <ButtonPR onClick={handleNewImovel}>SALVAR</ButtonPR>}
             </View>
           </View>
 

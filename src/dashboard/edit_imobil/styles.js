@@ -143,8 +143,9 @@ export const Step = styled.div`
   flex-direction: row;
   border-radius: 6px; 
   text-align: center;
-  margin-bottom: 10px;
-  margin-top: 10px;
+  justify-content: center;
+  margin-bottom: 0px;
+  margin-top: 20px;
   margin-left: -20px;
   transition: linear .2s;
   `;
@@ -227,7 +228,7 @@ export const Select = styled.select`
 
 export const FirstStep = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 
 `
 export const SecondStep = styled.div`
@@ -491,6 +492,7 @@ export const TextArea = styled.textarea`
   transition: .2s linear;
   resize: vertical;
   padding: 6px 8px;
+  width: 96%;
   &:focus {
     outline: none; 
     box-shadow: 0px 0px 0px 3px ${props => props.theme.color.primary}60;

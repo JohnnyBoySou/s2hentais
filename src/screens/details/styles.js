@@ -337,9 +337,9 @@ export const InfraLi = styled.span`
 `;
 
 export const InfraLabel = styled.span`
-  font-size: 22px;
-  color: ${props => props.theme.color.title};
-  font-family: ${props => props.theme.font.medium};
+  font-size: 18px;
+  color: ${props => props.theme.color.label};
+  font-family: ${props => props.theme.font.book};
 `;
 
 
@@ -616,8 +616,10 @@ export const ListaLabel = styled.span`
 
 
 export const InfraBall = styled.div`
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
+  font-size: 18px;
+  color: ${props => props.theme.color.light};
   border-radius: 52px;
   margin-right: 10px;
   align-self: center;

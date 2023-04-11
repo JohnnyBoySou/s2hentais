@@ -450,9 +450,6 @@ const Details = ( ) => {
         <Title style={{marginLeft:0, fontSize: 32, marginBottom: 10,}}> {item?.categoria} com {item?.qtd1} {item?.item1}s, {item?.qtd2} {item?.item2} e {item?.area}m&#178;</Title>
         <Address><FaMapMarkerAlt size={20} color={color.primary}/> {item?.bairro}, Rua {item?.rua}</Address>
         
-        <Row>
-        <Address>{item?.views} visualizações</Address>
-        </Row>
         <Description>{item?.descricao}</Description>
         <div style={{flexDirection: 'row', justifyContent: 'space-between', display: 'flex'}}>
         <Infra>
@@ -460,26 +457,12 @@ const Details = ( ) => {
              <div style={{marginLeft: 10, marginTop: 20,}}>
               {infra?.map((infra) => 
               <Lista>
-                <InfraBall><FiCheck style={{textAlign: 'center', marginTop: 4,}} size={22} color="#FFF" /></InfraBall>
+                <InfraBall><FiCheck style={{textAlign: 'center', marginTop: 4,}} /></InfraBall>
                 <InfraLabel>{infra}</InfraLabel>
               </Lista> )}
               </div>
       </Infra>
 
-      <Conservation>
-
-
-        <AnyTitle>Estado de Conservação</AnyTitle>
-      <div style={{display: 'flex', marginLeft: -5, flexDirection: 'row'}}>
-
-        <BarOn/>
-        <BarOn/>
-        <BarOff/>
-
-
-      </div>
-
-      </Conservation>
       </div>
 
 
@@ -510,8 +493,15 @@ const Details = ( ) => {
       </Right>
     </InfoSection>   }
 
+    
+    <Row>
+        <Address>{item?.views} visualizações</Address>
+        <Address>{item?.like} curtidas</Address>
+    </Row>
+
     {!load &&  <Hr style={{marginTop: 50, marginLeft: 0, marginRight: 10, marginBottom:50,}}/>}
         
+
 
     {!load && <AdPoster/>}
     

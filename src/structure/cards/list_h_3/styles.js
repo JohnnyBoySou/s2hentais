@@ -14,6 +14,7 @@ export const Card = styled.div`
     margin-bottom: 25px;
     text-align: left;
     cursor: pointer;
+    height: 234px;
 
 `
 
@@ -114,7 +115,7 @@ export const Codigo = styled.span`
 
 
 export const Img = styled.img`
-  height: 240px;
+  height: 234px;
   width: 100%;
   border-radius: 6px;
   object-fit: cover;

@@ -58,6 +58,7 @@ const Profile = ( props ) => {
   const [facebook, setFacebook] = useState(user?.facebook)
   const [imgLink, setImgLink] = useState(user?.avatar);
   const [emailComercial, setEmailComercial] = useState(user?.emailComercial);
+  const [descricao, setDescricao] = useState();
 
   const a = false;
 
@@ -75,6 +76,7 @@ const Profile = ( props ) => {
       setInstagram(response?.instagram)
       setFacebook(response?.facebook)
       setEmailComercial(response?.email_comercial)
+      setDescricao(response?.descricao)
       setloadingUser(false)
     })
    }
@@ -120,6 +122,7 @@ const Profile = ( props ) => {
      "instagram": instagram, "whatsapp": whatsApp, 
      "email_comercial": emailComercial,
      "facebook": facebook,
+     "descricao": descricao,
   }
     requestUserEdit( userData ).then(response => {getUser();})
 
@@ -189,6 +192,10 @@ const Profile = ( props ) => {
               <Label>Código Postal (CEP)</Label>
               <Input placeholder='Ex: 89251901 * apenas números' onChange={e => setCEP(e.target.value)} 
               value={cep}/>
+
+              <Label>Descrição</Label>
+              <Input placeholder='Ex: Escreva uma descrição sobre você' onChange={e => setDescricao(e.target.value)} 
+              value={descricao}/>
 
               
             </Column>

@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   background: ${props => props.theme.background};
-  
-  padding: 12px 80px;
+  padding-top: 0px;
+  padding: 12px 40px;
   flex-direction: column;
   display: flex;
 `;
@@ -458,7 +458,7 @@ export const ProfileDescription = styled.p`
   line-height: 22px;
   color: ${props => props.theme.color.label};
   font-family: ${props => props.theme.font.book};
-  margin-top: 16px;
+  margin-top: -5px;
 `
 
 
@@ -475,6 +475,29 @@ export const ItemBt = styled.button`
   border-radius: 6px;
   padding: 8px 16px;
 `;
+
+
+export const IconBt = styled.button`
+  font-size: 26px;
+  color: ${props => props.theme.color.primary};
+  font-family: ${props => props.theme.font.medium};
+  cursor: pointer;
+  border: none;
+  background: ${props => props.theme.color.primary}40;
+  text-align: center;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  width: 54px;
+  height: 54px;
+  transition: .2s linear;
+  &:hover{
+    color: ${props => props.theme.color.light};
+    background: ${props => props.theme.color.primary};
+  }
+  `;
 
 
 

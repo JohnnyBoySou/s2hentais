@@ -277,10 +277,10 @@ const Auth = ( ) => {
                 <LineSpan>Imóveis</LineSpan>
             </LineBar>
 
-            <LineBar onClick={ () => handleScreen('statistics')}>
+         {a &&  <LineBar onClick={ () => handleScreen('statistics')}>
                 <TfiStatsUp style={{marginBottom: -4,}}/>
                 <LineSpan>Estatísticas</LineSpan>
-            </LineBar>
+            </LineBar>}
 
 
             <LineBar onClick={ () => handleScreen('plans')}>
@@ -297,7 +297,7 @@ const Auth = ( ) => {
                 <LineSpan>Suporte</LineSpan>
             </LineBar>
 
-            <LineBar onClick={ () => handleScreen('settings')}>
+            <LineBar >
                 <FiSettings style={{marginBottom: -4,}}/>
                 <LineSpan>Ajustes</LineSpan>
             </LineBar>

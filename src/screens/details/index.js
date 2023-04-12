@@ -2,6 +2,7 @@ import React, { useContext , useState, useEffect, useRef} from 'react';
 
 import Modal from 'react-modal';
 
+import DocumentMeta from 'react-document-meta'
 import './animation.css'
 import AdPoster from '../../components/adposter';
 import Similar from '../../components/similar'
@@ -66,23 +67,24 @@ import {
 
   Lista,
   InfraBall,
+  IconBt,
 } from './styles';
 import vid from '../../assets/imgs/loader.gif'
 
 
 import GalleryFull from '../gallery';
 import { ButtonPR,  Back, ButtonBR } from '../../theme/global'
-
+import { AiOutlineInstagram, AiOutlineWhatsApp, AiOutlinePhone, AiOutlineMail} from 'react-icons/ai'
 import { BsFillLightningChargeFill } from 'react-icons/bs'
 import { useParams, useNavigate } from 'react-router-dom';
  
-import { requestID, requestImobil , requestLike, requestPreferences} from '../../api/request/index'
+import { requestID, requestImobil , requestLike, requestPreferences, requestUserEndpoint} from '../../api/request/index'
 
 import stylesModal from './stylesModal.js'
 import share from '../../assets/imgs/share.png'
 
 import { 
-  FiHeart, FiHearto,
+  FiHeart, FiExternalLink,
   FiShare,
   FiArrowRight,
   FiX,
@@ -90,15 +92,16 @@ import {
   FiAlertCircle
 } from "react-icons/fi";
 
-import { AiFillHeart , AiOutlineHeart} from 'react-icons/ai'
+import { AiFillHeart , AiOutlineHeart, AiOutlineEye} from 'react-icons/ai'
 
 import QuickMap from '../../components/quick_map';
 
 import { FaMapMarkerAlt } from "react-icons/fa"
 import { MdKeyboardArrowRight } from 'react-icons/md'
-import { Row } from '../../theme/global';
+import { Row, Column} from '../../theme/global';
 import { IoIosImages } from 'react-icons/io';
 import Header from '../../components/header';
+import infraestrutura from './../../api/infraestrutura';
 
 const Details = ( ) => {
 
@@ -107,9 +110,10 @@ const Details = ( ) => {
   const { color, font } = useContext(ThemeContext)
   const { id } = useParams();
   const [item, setItem] = useState([])
-  const [imobil, setImobil] = useState([])
+  const [author, setAuthor] = useState([])
   const [load, setLoad] = useState(true)
-  const [loadImobil, setLoadImobil] = useState(false)
+  const [loadImobil, setLoadImobil] = useState(true)
+  const [loadSimiliar, setLoadSimiliar] = useState(true);
   const [like, setLike] = useState(false)
   const [firstStep, setFS] = useState(true)
   const [secondStep, setSS] = useState(false)
@@ -117,15 +121,14 @@ const Details = ( ) => {
   const [modalImages, setModalImages] = useState(false);
   const [modalShare, setModalShare] = useState(false);
 
-  function get(){
+  function getData(){
     setLoad(true)
-    requestID(id).then(
-      function(item) {
-        console.log(item)
-        setItem(item[0])
-        console.log(item)
-        setLoad(false)
-        getImobil(item)
+    requestID(id).then(item => {
+        if(item){
+          setItem(item[0])
+          getAuthor(item[0].post_author)
+          setLoad(false)
+      }
       })
   }
 
@@ -133,25 +136,27 @@ const Details = ( ) => {
     const [itemSimilar, setItemSimilar] = useState([])
     const quickItem = [item[1] , item[2] , item[3]]
 
-    function getSimiliar(){
-      setLoad(true)
-      requestPreferences().then(item => {
-        if(item){
-          setItemSimilar(item)
-          setLoad(false)
-    }})}
 
 
   
-  function getImobil( item ){
-    const id = item.post_author
+  function getAuthor( id ){
     setLoadImobil(true)
-    requestImobil(id).then(
-      function(item) {
-        setImobil(item)
+    requestUserEndpoint(id).then(item => {
+        setAuthor(item)
+        console.log(item)
+        //getSimiliar()
         setLoadImobil(false)
       })
   }
+
+
+  function getSimiliar(){
+    setLoadSimiliar(true)
+    requestPreferences().then(item => {
+      if(item){
+        setItemSimilar(item)
+        setLoadSimiliar(false)
+  }})}
 
 
   const [likeLoad, setlikeLoad] = useState(false);
@@ -179,14 +184,8 @@ const Details = ( ) => {
 
   }
 
-  const vidRef = useRef(null)
-  const handlePlayVideo = () => {
-    vidRef.current?.play();
-  }
-
   useEffect(() => {
-    get()
-    handlePlayVideo()
+    getData()
    }, [])
 
    const a = false;
@@ -194,11 +193,7 @@ const Details = ( ) => {
 
    const tax = item?.taxas
    const infra = item?.infraestrutura
-   const imobilFoto = imobil?.foto
 
-   const openGallery = () => {
-    setModalImages(!modalImages)
-   }
   
   const modalGalleryStyles = {
     overlay: {
@@ -229,80 +224,68 @@ const Details = ( ) => {
     }
   }
 
-  const [offset, setOffset] = useState(0);
 
-  const [index, setIndex] = useState(true);
-
-  const onScroll = () => setOffset(window.pageYOffset);
-     
-  useEffect(() => {
-  
-      window.removeEventListener('scroll', onScroll);
-      window.addEventListener('scroll', onScroll, { passive: true });
-      return () => window.removeEventListener('scroll', onScroll);
-     }, []);
-
-
-     useEffect(() => {
-        if(offset > 200){
-          setIndex(false)
-}})
-
-
-  const [taxView, setTaxView] = useState(false)
-  const [canView, setCanView] = useState(false)
-  const handleTax = () => {
-    setCanView(!canView)
-    setTimeout(() => {
-      setTaxView(!taxView)
-    
-    }, 300);
-    }
       
   const [popupview, setPopupView] = useState(false)
   const imagesFull = [ item?.imagem1, item?.imagem2, item?.imagem3,item?.imagem4, item?.imagem5, item?.imagem6, item?.imagem7, item?.imagem8, item?.imagem9, item?.imagem10, item?.imagem11, item?.imagem12, item?.imagem13, item?.imagem14, item?.imagem15, ]
 
+  const headerTitle = `Imóvel ${item?.ID} | Detalhes`
   return (
-    <div onScroll={() => setOffset(offset)}>
+    <div>
+      
+      <DocumentMeta title={headerTitle} />
+    <Header />
     <Container>
 
-      <Nav>
-        <div style={{flexDirection: 'row', display: 'flex'}}>
-        <Back onClick={() => navigate(-1)}>VOLTAR</Back>
-        <PopularBt className='br'>
+        <Row style={{justifyContent: 'space-between', padding: "20px 0px",}}>
+        
+        <Back style={{borderRadius: 100, width: 120, height: 46, }} onClick={() => navigate(-1)}>VOLTAR</Back>
+        
+
+
+       {a && <PopularBt className='br'>
           <BsFillLightningChargeFill size={12} color={color.secundary} 
           style={{background: "#fff", padding: 4, marginBottom: -3, marginRight: 8, borderRadius: 12,}}/>
-          POPULAR</PopularBt>
-          </div>
-        <div style={{display: 'flex', }}>
+          POPULAR</PopularBt>}
 
 
-          <Routes>
-          <Route>Início</Route>
-          <MdKeyboardArrowRight/>
+          <Routes style={{marginTop: -20,}}>
+            <Route>Início</Route>
+            <MdKeyboardArrowRight/>
 
-           
-          <Route>Jaraguá do Sul</Route>
-          
-          <MdKeyboardArrowRight/>
-          <Route>Imóveis</Route>
-          <MdKeyboardArrowRight/>
-          <Route style={{textDecoration: 'underline', color: color.title,}}>Detalhes</Route>
+            
+            <Route>Jaraguá do Sul</Route>
+            
+            <MdKeyboardArrowRight/>
+            <Route>Imóveis</Route>
+            <MdKeyboardArrowRight/>
+            <Route style={{textDecoration: 'underline', color: color.title,}}>Detalhes</Route>
           </Routes>
 
+        <Row>
+            <Column>
+              <BtAction><AiOutlineEye style={{color: color.primary}} size={18}/></BtAction>
+              <Route style={{margin: 'auto', marginTop: 6, }}>{item?.views}</Route>
+            </Column>
 
-          <Like disabled={likeLoad} onClick={handleLike} activity={like}>
-           {likeClick && <AiFillHeart size={18} style={{color: 'red'}}/>}
-           {!likeClick && <AiOutlineHeart size={18} style={{color: "#00000090"}}/>}
-           <Route>{item?.like}</Route>
-          </Like>
+            <Spacing/>
+            <Column>
+              <Like disabled={likeLoad} onClick={handleLike} activity={like}>
+              {likeClick && <AiFillHeart size={18} style={{color: 'red'}}/>}
+              {!likeClick && <AiOutlineHeart size={18} style={{color: "#00000090"}}/>}
+            
+              </Like>
+              <Route style={{margin: 'auto', marginTop: 6, }}>{item?.like}</Route>
+            </Column>
           
-          <Spacing/>
+            <Spacing/>
           
-          <BtAction><FiShare size={18}/></BtAction>
-        
-        </div>
-      </Nav>
+            <Column> 
+              <BtAction><FiShare size={18}/></BtAction>
+            </Column>
+
+          </Row>
+          </Row>
 
       {load && <div style={{ width: 400, height: 400 , alignSelf: 'center',}}>
         <img src={vid} alt="loading imovel" style={{ width: 400, height: 300 , alignSelf: 'center',}}/>
@@ -325,7 +308,7 @@ const Details = ( ) => {
             <Spacing/>
             <ImgSmall src={ item?.imagem3 }/>
             <Spacing/>
-            <BtSmall onClick={openGallery}>
+            <BtSmall onClick={() => setModalImages(!modalImages)}>
               <IoIosImages size={52}/><br/>
               Ver fotos</BtSmall>
           </div>
@@ -333,7 +316,7 @@ const Details = ( ) => {
         </Gallery>
         </Left>
 
-        <Right style={{marginRight: 25,}}>
+        <Right >
           {firstStep &&
         <CardInfo>
           <div style={{flexDirection: 'row', display: 'flex', justifyContent: 'space-between', }}>
@@ -390,10 +373,10 @@ const Details = ( ) => {
              
           <Profile style={{border: 'none', marginLeft: 10, marginRight: 10, marginTop: 20, backgroundColor: color.light,}}>
           <div style={{display: 'flex', flexDirection: 'row'}}>
-            <ProfileImg src={ imobil?.foto }/>
+            <ProfileImg src={ author?.avatar }/>
             <div style={{display: 'flex', flexDirection: 'column', marginLeft: 10,}}>
-              <ProfileTitle>{imobil?.nome}</ProfileTitle>
-              <ProfileAddress >{imobil?.endereco}</ProfileAddress>
+              <ProfileTitle>{author?.display_name}</ProfileTitle>
+              <ProfileAddress >{author?.cep}</ProfileAddress>
             </div>
             </div>
         
@@ -465,42 +448,57 @@ const Details = ( ) => {
 
       </div>
 
-
-
-
-
-
         <Hr style={{marginTop: 50, marginLeft: 0, marginRight: 10, marginBottom:30,}}/>
       
         {a && <QuickMap item={item}/> }
 
       </Left>
 
-      <Right style={{width: "34%"}}>
+      <Right style={{width: "31%"}}>
         <Profile>
           <div style={{display: 'flex', flexDirection: 'row'}}>
-            <ProfileImg src={imobil?.foto}/>
+            <ProfileImg src={author?.avatar}/>
             <div style={{display: 'flex', flexDirection: 'column', marginLeft: 10,}}>
-              <ProfileTitle>{imobil?.nome}</ProfileTitle>
-              <ProfileAddress>{imobil?.endereco}</ProfileAddress>
+
+              <ProfileTitle>{author?.nome} {author?.sobrenome}</ProfileTitle>
+              <ProfileAddress>{author?.user_email}</ProfileAddress>
             </div>
             </div>
-          <ProfileDescription>{imobil?.descricao  }</ProfileDescription>
-          
-        <ButtonPR>VER MAIS</ButtonPR>
+            <Row style={{justifyContent: 'space-between', marginTop: 20, marginBottom: 20,}}>
+              <IconBt>
+                <AiOutlineInstagram/>
+              </IconBt>
+              
+              <IconBt>
+                <AiOutlinePhone/>
+              </IconBt>
+              
+              <IconBt>
+                <AiOutlineWhatsApp/>
+              </IconBt>
+
+              <IconBt>
+                <AiOutlineMail/>
+              </IconBt> 
+
+              <IconBt>
+                <FiExternalLink/>
+              </IconBt> 
+            
+            </Row>
+            <ProfileDescription>{author?.descricao}</ProfileDescription>
+        <ButtonPR>VER PERFIL</ButtonPR>
 
         </Profile>
+        
+
       </Right>
+
+
+      
     </InfoSection>   }
 
     
-    <Row>
-        <Address>{item?.views} visualizações</Address>
-        <Address>{item?.like} curtidas</Address>
-    </Row>
-
-    {!load &&  <Hr style={{marginTop: 50, marginLeft: 0, marginRight: 10, marginBottom:50,}}/>}
-        
 
 
     {!load && <AdPoster/>}

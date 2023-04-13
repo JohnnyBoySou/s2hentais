@@ -53,11 +53,11 @@ const Profile = ( props ) => {
   const [cep, setCEP] = useState(user?.cep)
   const [picture, setPicture] = useState();
   const [telefone, setTelefone] = useState(user?.telefone)
-  const [whatsApp, setWhatsApp] = useState(user?.whatsApp)
+  const [whatsapp, setWhatsapp] = useState(user?.whatsapp)
   const [instagram, setInstagram] = useState(user?.instagram)
   const [facebook, setFacebook] = useState(user?.facebook)
   const [imgLink, setImgLink] = useState(user?.avatar);
-  const [emailComercial, setEmailComercial] = useState(user?.emailComercial);
+  const [emailComercial, setEmailComercial] = useState(user?.email_comercial);
   const [descricao, setDescricao] = useState();
 
   const a = false;
@@ -72,7 +72,7 @@ const Profile = ( props ) => {
       setCEP(response?.cep)
       setImgLink(response?.avatar)
       setTelefone(response?.telefone)
-      setWhatsApp(response?.whatsapp)
+      setWhatsapp(response?.whatsapp)
       setInstagram(response?.instagram)
       setFacebook(response?.facebook)
       setEmailComercial(response?.email_comercial)
@@ -116,13 +116,16 @@ const Profile = ( props ) => {
     setloadingUser(true)
     const userData = {
     "token": token, "id":id,  
-    "first_name": first_name, "last_name": last_name, 
+    "first_name": first_name, 
+    "last_name": last_name, 
     "avatar": imgLink,
-     "cep": cep, "telefone": telefone, 
-     "instagram": instagram, "whatsapp": whatsApp, 
-     "email_comercial": emailComercial,
-     "facebook": facebook,
-     "descricao": descricao,
+    "cep": cep, 
+    "telefone": telefone,  
+    "instagram": instagram, 
+    "whatsapp": whatsapp, 
+    "email_comercial": emailComercial,
+    "facebook": facebook,
+    "descricao": descricao,
   }
     requestUserEdit( userData ).then(response => {getUser();})
 
@@ -207,7 +210,7 @@ const Profile = ( props ) => {
 
       
       <Label>WhatsApp</Label>
-      <PhoneInput onChange={setWhatsApp}  value={whatsApp}/>
+      <PhoneInput onChange={setWhatsapp}  value={whatsapp}/>
 
       <Label>E-mail comercial</Label>
       <EmailInput onChange={setEmailComercial} value={emailComercial}/>

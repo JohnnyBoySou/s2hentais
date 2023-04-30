@@ -1,9 +1,5 @@
 import React, { useState, useEffect , useRef, useContext, } from 'react';
-
-
-
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
- 
 import Marker from './components/Marker';
 
 import { Container,
@@ -45,6 +41,7 @@ import { MdKeyboardArrowRight } from 'react-icons/md'
 import Bairro from '../../new_components/bairro'
 
 import useScrollPosition from '../../utils/scrollPosition'
+import { Sidebar } from '../../components/sidebar';
 
 const MapExplore = () => {
 
@@ -218,6 +215,8 @@ return (
 
 
     <Container style={{height: heightMax}}>
+
+      <Sidebar/>
       <Left id="scroll" style={{height: 0.94 * heightMax, width: mapView ? '40%' : '100%' }} >  
 
       {searchButton &&  <BtSearch type="submit" onClick={handleGetSearch} focus={focused}>

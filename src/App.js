@@ -12,6 +12,7 @@ import {
 
 import Header from './components/header';
 import Home from './screens/home'
+import Feed from './screens/feed'
 
 import Preferences from './screens/preferences'
 import Map from './screens/map/index'
@@ -29,7 +30,7 @@ import Starter from './screens/starter'
 //Dashboard 
 import DashboardHome from './dashboard/home';
 import AddImobiil from './dashboard/add_imobil';
-import New from './dashboard/new/index'
+import DashMain from './dashboard/new/index'
 
 //import { MuiThemeProvider } from '@material-ui/core/styles';
 //import { theme } from './theme/theme';
@@ -70,6 +71,7 @@ const App = () => {
 
         <Route path="/app" exact element={<Home/>}/>
         <Route path="/home" exact element={<Home/>}/>
+        <Route path="/feed" exact element={<Feed/>}/>
         <Route path="/components" exact element={<Components/>}/>
 
 
@@ -96,7 +98,7 @@ const App = () => {
         <Route path="/dashboard/add-imovel" exact element={<AddImobiil/>}/>
         <Route path="/dashboard/add/imovel" exact element={<AddImobiil/>}/>
         
-        <Route path="/dashboard" exact element={<New/>}/>
+        <Route path="/dashboard" exact element={<DashMain/>}/>
 
         <Route path="/dashboard/home" exact element={<DashboardHome/>}/>
         <Route path="/dashboard/:path" exact element={<DashboardHome/>}/>

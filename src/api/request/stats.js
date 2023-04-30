@@ -24,7 +24,6 @@ export async function requestViewsForUser( identification ){
         const response = await Axios.get(`${API_URL}/views/total/${id}`, {
         headers: headers
     });
-    console.log(response)
         return response.data
     } catch (error) {
         console.log(error);

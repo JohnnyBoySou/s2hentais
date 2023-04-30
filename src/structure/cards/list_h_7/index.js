@@ -10,12 +10,17 @@ Title,
 QuickBt,
 Label,
 Circle, 
-Spacing
+Spacing,
+CheckboxWrapper,
+CheckboxInput,
+CheckboxCheckmark,
+Check,
  } from './styles'
 
  import { ThemeContext } from 'styled-components';
 import { BsPen , BsTrash3, BsTrash, BsBarChartLine, BsShare, BsCheck } from 'react-icons/bs'
 import { AiOutlineEdit }  from 'react-icons/ai'
+import {FiCheck } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom';
 import { requestDeleteImovel } from '../../../api/request';
 
@@ -24,7 +29,6 @@ import Loader from '../../../components/loader';
 import Modal from 'react-modal';
 import { ButtonBR, ButtonPR, Row } from '../../../theme/global';
 import EditImobil from '../../../dashboard/edit_imobil';
-import ListH2 from '../list_h_2';
 import ListH3 from './../list_h_3/index';
 
 export default function ListH7( props ){
@@ -39,10 +43,11 @@ export default function ListH7( props ){
   const [imgUrl, setImgUrl] = useState(item?.imagem1)
   const [modalOpen, setModalOpen] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
+  const [checked, setChecked] = useState(false);
+
   const navigate = useNavigate()
 
   const getDetails = ( params ) => {
-    console.log(params)
     if(params){
       navigate(`/dashboard/details/${item.ID}`)
     }
@@ -63,13 +68,22 @@ export default function ListH7( props ){
           setLoading(false)
         }
       })
-    }
+      }
 
-  
+      const handleChange = () => {
+        props.onIdClick(item?.ID);
+        setChecked(!checked)
+      };
+
   return(
 <>
   <Card >
      <View style={{flexDirection: 'row', display: 'flex', }}>
+        <Column style={{width: 20,}}>  
+        <Check checked={checked} onClick={handleChange}>
+          {checked && <FiCheck/>}
+          </Check>
+        </Column>
         <Column style={{padding: 0,}}><Img onClick={() => getDetails(dashboard)} src={imgUrl} /></Column>
         <Column style={{width: 70,}}><ColumnLabel>#{item?.ID}</ColumnLabel></Column>
         <Column style={{width: 100,}}><ColumnLabel>{item?.categoria}</ColumnLabel></Column>

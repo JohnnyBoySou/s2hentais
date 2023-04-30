@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 
 import { API_URL } from "../index"
+import Geocode from "react-geocode";
 import Axios from 'axios';
 import { Navigate } from 'react-router-dom';
 const headers = {'Accept': "application/json"}
@@ -160,6 +161,21 @@ export function requestCEP( value ){
   else{
     return
   }
+}
+
+
+export function requestLatLong( value ) {
+  Geocode.setApiKey("AIzaSyBaT9Nia9XOvVt7BvFVRTtof0ujGMr56rE");
+  Geocode.setLanguage("pt-br");
+  Geocode.setRegion("br");
+  Geocode.setLocationType("ROOFTOP");
+  Geocode.enableDebug();
+  Geocode.fromAddress(value).then(response => {
+      return response.results[0].geometry.location
+    },(error) => {
+    console.error(error);
+    }
+  );
 }
 
 
@@ -436,12 +452,12 @@ return Axios.post(`https://s2hentais.com/novoimovel/wp-json/jwt-auth/v1/token`,
 
 export async function requestUserEdit( params ){
 
-  const {id, first_name, last_name, avatar, cep, token, telefone, whatsapp, email_comercial, facebook, instagram} = params
+  const {id, first_name, last_name, avatar, cep, token, telefone, whatsapp, email_comercial, facebook, instagram, descricao} = params
   const headers = {
     'Content-Type': 'form/multipart',
     'Authorization': 'Bearer' + token,
   }
-  return Axios.put(`${API_URL}/user/edit?id=${id}&first_name=${first_name}&last_name=${last_name}&cep=${cep}&avatar=${avatar}&telefone=${telefone}&whatsapp=${whatsapp}&email_comercial=${email_comercial}&instagram=${instagram}&facebook=${facebook}`,  
+  return Axios.put(`${API_URL}/user/edit?id=${id}&first_name=${first_name}&last_name=${last_name}&cep=${cep}&avatar=${avatar}&telefone=${telefone}&whatsapp=${whatsapp}&email_comercial=${email_comercial}&instagram=${instagram}&facebook=${facebook}&descricao=${descricao}`,  
 {headers: headers}
   ).then(response => {
     return response.data
@@ -498,6 +514,19 @@ export async function requestUserEdit( params ){
   
     }
 
+    
+
+    export async function requestUserEmail( params ){
+      return Axios.get(`${API_URL}/user/data/email?email=${params}`).then(response => {
+        return response.data[0]
+      }).catch(error => {
+        console.log('erro')
+        console.log(error)
+        return error
+      });
+    
+      }
+  
 
 
 
@@ -533,3 +562,15 @@ export async function requestDeleteImovel( ID, token ){
 
   }
 
+
+    
+
+  export async function requestMediaForAuthor( params ){
+    return Axios.get(`${API_URL}/user/media/${params}`).then(response => {
+      return response.data
+    }).catch(error => {
+      console.log(error)
+      return error
+    });
+  
+    }

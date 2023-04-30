@@ -112,7 +112,7 @@ const EditImobiil = ( props ) => {
     const animatedComponents = makeAnimated();
     const [step1, setStep1] = useState(true)
     const [step2, setStep2] = useState(false)
-    
+    const [loading, setLoading] = useState();
     const [step3, setStep3] = useState(false)
     const [step4, setStep4] = useState(false)
     const [step5, setStep5] = useState(false)
@@ -144,7 +144,7 @@ const EditImobiil = ( props ) => {
       if(item.tipo === "Por mês"){setTipo(tipos[0])} else{setTipo(tipos[1])}
       setValorMensal(item.valor_mensal);
       setValorUnico(item.valor_unico);
-      setCidade(item.cidade);
+      if(item.cidade){setCidade(item.cidade);}
       setBairro(item.bairro);
       setRua(item.rua);
       setNumero(item.numero);
@@ -940,7 +940,10 @@ const EditImobiil = ( props ) => {
             <View>
             
           {!step3 &&  <ButtonPR onClick={nextStep}>PRÓXIMO</ButtonPR>}
-          {step3 &&  <ButtonPR onClick={handleNewImovel}>SALVAR</ButtonPR>}
+          {step3 &&  <ButtonPR onClick={handleNewImovel} disabled={loadingNewImovel}>
+          {loadingNewImovel ? <View style={{marginTop: 6,}} ><Loader className='fadeUp' type="spin" size={20} color={color.light}/></View> : <PublishValue>SALVAR</PublishValue>}
+           
+          </ButtonPR>}
             </View>
           </View>
 

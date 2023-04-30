@@ -4,40 +4,28 @@ import React, { useContext , useState, useEffect} from 'react';
 
 import { FiSearch, FiHelpCircle, FiBell , FiSettings} from 'react-icons/fi'
 import { MdOutlineSpaceDashboard } from 'react-icons/md'
-import { BsHouseDoor , BsCreditCard , BsLightbulb, BsLightbulbOff} from 'react-icons/bs'
+import { BsHouseDoor , BsCreditCard } from 'react-icons/bs'
 import { TfiStatsUp } from 'react-icons/tfi'
 
 
 import Drawer from '@mui/material/Drawer';
-import Settings from './settings';
   
 import { ThemeContext } from 'styled-components';
 import {
   View, 
   Container, 
-  
   Left, 
   Right,
-  
-  
-  
-  
-
-
   Bar,
   LineBar,
   LineSpan,
-
   Img,
   SpanSeparetator,
   Line,
   Head,
   HeadTitle,
   HeadLabel,
-
   IconBt,
-
-  
   ProfileContainer,
   ProfileImg,
   CardLabel,
@@ -53,12 +41,11 @@ import logo from '../../assets/imgs/logo_h_light.png'
 import imovel from '../../api/imovel.json'
 import '../animation.css'
 import Plans from './plans/index'
-import Stats from './stats/index'
-import Box from './box/index'
 import Inovice from './inovice'
 
 import Suff from '../../assets/imgs/suff.png'
 
+import Settings from './settings';
 import Notify from './notifications';
 import Dashboard from './dashboard/index'
 import AddImobil from '../add_imobil/index'
@@ -66,60 +53,39 @@ import Profile from './profile/index'
 import DocumentMeta from 'react-document-meta'
 import ImoveisList from './imoveislist';  
 
-import { requestUserEndpoint, revalidateToken } from '../../api/request/index'
+import { requestUserEndpoint, revalidateToken, requestFeed , requestID} from '../../api/request/index'
+import { Sk3 } from '../../structure/skeleton';
+import { requestLikesForUser, requestViewsForUser, requestMostPopular} from '../../api/request/stats';
+import Team from './team';
+import Search from './search';
 
-const Auth = ( ) => {
+const DashMain = ( ) => {
 
   const { color, font } = useContext(ThemeContext)
   const navigate = useNavigate()
   const [userData, setUserData] = useState([])
+  const [avatar, setAvatar] = useState(Suff);
+  const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState();
+  const [feed, setFeed] = useState([]);
+  const [profile, setProfile] = useState();
+  const [notify, setNotify] = useState();
   
-    
+  const [vllike, setVllike] = useState();
+  const [vlview, setVlview] = useState();
+  const [mostView, setMostView] = useState();
+  const [mostLike, setMostLike] = useState();
+
+
+
   const [state, setState] = React.useState({top: false, left: false, bottom: false, right: false,});
 
-  const [state2, setState2] = React.useState({top: false, left: false, bottom: false, right: false,});
-
-  const [profileState, setProfileState] = React.useState({top: false, left: false, bottom: false, right: false,});
-
-  const toggleDrawer = (anchor, open) => (event) => {
+  const toggleDrawer = (anchor, open, path) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {return;}
-  setState({ ...state, [anchor]: open });};
-
-
-  const toggleDrawer2 = (anchor, open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {return;}
-  setState2({ ...state2, [anchor]: open });};
-
-
-  const toggleProfile = (anchor, open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {return;}
-  setProfileState({ ...profileState, [anchor]: open });};
-
-
-
-    const views = {
-      name: 'Visualizações',
-      value1: '12.323',
-      value2: '8.214',
-    }
-
-    const likes = {
-      name: 'Curtidas',
-      value1: '4.885',
-      value2: '2.664',
-    }
-
-    const interaction = {
-      name: 'Interações',
-      value1: '8.989',
-      value2: '6.332',
-    }
-
-    const popular = {
-      name: 'Popularidade',
-      value1: '22.332',
-      value2: '9.877',
-    }
+      setState({ ...state, [anchor]: open });
+      if(path === "notify"){setNotify(true);setProfile(false);
+      }else if(path === "profile"){setNotify(false);setProfile(true);}
+};
 
 
 
@@ -127,92 +93,67 @@ const Auth = ( ) => {
       name: 'Dashboard',
       desc: "Visão geral de seus imóveis"
     })
+
     const [dashboard, setDashboard] = useState(true)
     const [plans, setPlans] = useState(false)
     const [statistics, setStatistics] = useState(false)
     const [imoveis, setImoveis] = useState(false)
     const [settings, setSettings] = useState(false)
     const [support, setSupport] = useState(false)
+    const [team, setTeam] = useState(false)
+    const [search, setSearch] = useState(false)
     const [addimovel, setAddImovel] = useState(false)
 
-    const handleScreen = ( course ) => {
-      if(course === undefined){
-        return
+    const pages = {
+      dashboard: {
+        name: 'Dashboard',
+        desc: 'Visão geral de seus imóveis'
+      },
+      plans: {
+        name: 'Planos',
+        desc: 'Escolha um plano e tenha vários beneficios.'
+      },
+      statistics: {
+        name: 'Estatísticas',
+        desc: 'Veja suas estatísticas e tenha insights.'
+      },
+      settings: {
+        name: 'Configurações',
+        desc: 'Ajuste a plataforma a suas preferências.'
+      },
+      imoveis: {
+        name: 'Imóveis',
+        desc: 'Seus imóveis estão por aqui.'
+      },
+      team: {
+        name: 'Equipe',
+        desc: 'Sua equipe e colaboradores.'
+      },
+      search: {
+        name: 'Pesquisar',
+        desc: 'Encontre seus imóveis mais facilmente'
       }
-      if(course === "dashboard"){
-        setDashboard(true)
-        setPlans(false)
-        setStatistics(false)
-        setImoveis(false)
-        setSettings(false)
-        setSupport(false)
-        setAddImovel(false)
-        setPage({
-          name: 'Dashboard',
-          desc: 'Visão geral de seus imóveis'
-        })
+    };
+    
+    const handleScreen = (course) => {
+      const page = pages[course];
+      if (!page) {
+        return;
       }
-      else if(course === "plans"){
-        setDashboard(false)
-        setPlans(true)
-        setStatistics(false)
-        setImoveis(false)
-        setSettings(false)
-        setAddImovel(false)
-        setSupport(false)
-        setPage({
-          name: 'Planos',
-          desc: 'Escolha um plano e tenha vários beneficios.'
-        })
-      }
-      else if(course === "statistics"){
-        setDashboard(false)
-        setPlans(false)
-        setStatistics(true)
-        setImoveis(false)
-        setAddImovel(false)
-        setSettings(false)
-        setSupport(false)
-        setPage({
-          name: 'Estatísticas',
-          desc: 'Veja suas estatísticas e tenha insights.'
-        })
-      }
-
-      else if(course === "settings"){
-        setDashboard(false)
-        setPlans(false)
-        setStatistics(false)
-        setImoveis(false)
-        setAddImovel(false)
-        setSettings(true)
-        setSupport(false)
-        setPage({
-          name: 'Configurações',
-          desc: 'Ajuste a plataforma a suas preferências.'
-        })
-      }
-
-      else if(course === "imoveis"){
-        setDashboard(false)
-        setPlans(false)
-        setStatistics(false)
-        setAddImovel(false)
-        setImoveis(true)
-        setSettings(false)
-        setSupport(false)
-        setPage({
-          name: 'Imóveis',
-          desc: 'Seus imóveis estão por aqui.'
-        })
-      }
+      const { name, desc } = page;
+      setDashboard(course === 'dashboard');
+      setPlans(course === 'plans');
+      setStatistics(course === 'statistics');
+      setImoveis(course === 'imoveis');
+      setSettings(course === 'settings');
+      setTeam(course === 'team');
+      setSearch(course === 'search')
+      setSupport(false);
+      setAddImovel(false);
+      setPage({ name, desc });
     }
 
 
-
-  const a = false;
-
-  const [avatar, setAvatar] = useState(Suff);
   const handleClick = () => {
     setAddImovel(true)
     setDashboard(false)
@@ -221,40 +162,46 @@ const Auth = ( ) => {
   async function getUserData () {
     try{
       const user = JSON.parse(localStorage.getItem('@user'))
-     if(user.id) {
-        requestUserEndpoint(user.id).then(response => {
+      if(user.id) {
+          requestLikesForUser(user.id).then(
+            response => {setVllike(response?.total_likes);}
+          )
+          requestViewsForUser(user.id).then(
+            response => {setVlview(response?.total_views);}
+          ) 
+          requestMostPopular(user.id).then(
+            response => {
+              requestID(response.most_viewed_id).then(item => setMostView(item[0]))
+              requestID(response.most_liked_id).then(item => setMostLike(item[0]))
+            }
+          )
+
+          requestUserEndpoint(user.id).then(response => {
           setUserData(response)
           setAvatar(response?.avatar)
-          console.log(response)
-      })
+          setLoading(false)
+      })}return    
     }
-      return    
-    }
-    catch(e){
-      console.log(e)
-    }
+    catch(e){console.log(e)}
   }
 
 
-  const [token, setToken] = useState();
   useEffect(() => {
-    getUserData()
     revalidateToken().then(token => {setToken(token)})
+    requestFeed().then(response => {
+      setFeed(response)
+    })
+    getUserData()
+    
   }, [])
 
-  const [dark, setDark] = useState(false)
-  const [light, setLight] = useState(true) 
 
-  const handleTheme = () => {
-    if(light){
-      setDark(true)
-      setLight(false)
-    }else{
-      setLight(true)
-      setDark(false)
-    }
+  const [usersEmails, setUsersEmails] = useState([]);
+
+  function handleUsersEmails(usersEmails) {
+    console.log(usersEmails)
+    setUsersEmails(usersEmails);
   }
-    
 
 
   return (
@@ -266,24 +213,28 @@ const Auth = ( ) => {
             <Img src={logo}/>
             <SpanSeparetator>Geral</SpanSeparetator>
            
-            <LineBar onClick={ () => handleScreen('dashboard')}>
+            <LineBar checked={dashboard} disabled={dashboard} onClick={ () => handleScreen('dashboard')}>
                 <MdOutlineSpaceDashboard style={{marginBottom: -4,}}/>
                 <LineSpan>Dashboard</LineSpan>
             </LineBar>
 
 
-            <LineBar onClick={ () => handleScreen('imoveis')}>
+            <LineBar checked={imoveis} disabled={imoveis} onClick={ () => handleScreen('imoveis')}>
                 <BsHouseDoor style={{marginBottom: -4,}}/>
                 <LineSpan>Imóveis</LineSpan>
             </LineBar>
 
-         {a &&  <LineBar onClick={ () => handleScreen('statistics')}>
+          <LineBar checked={statistics} disabled={statistics} onClick={ () => handleScreen('statistics')}>
                 <TfiStatsUp style={{marginBottom: -4,}}/>
                 <LineSpan>Estatísticas</LineSpan>
-            </LineBar>}
+            </LineBar>
 
+            <LineBar checked={team} disabled={team}  onClick={ () => handleScreen('team')}>
+                <FiSettings style={{marginBottom: -4,}}/>
+                <LineSpan>Equipe</LineSpan>
+            </LineBar>
 
-            <LineBar onClick={ () => handleScreen('plans')}>
+            <LineBar checked={plans} disabled={plans} onClick={ () => handleScreen('plans')}>
                 <BsCreditCard style={{marginBottom: -4,}}/>
                 <LineSpan>Planos</LineSpan>
             </LineBar>
@@ -292,12 +243,12 @@ const Auth = ( ) => {
 
             <SpanSeparetator style={{marginTop: 20,}}>Outros</SpanSeparetator>
             
-            <LineBar onClick={ () => handleScreen('support')}>
+            <LineBar checked={support} disabled={support} onClick={ () => handleScreen('support')}>
                 <FiHelpCircle style={{marginBottom: -4,}}/>
                 <LineSpan>Suporte</LineSpan>
             </LineBar>
 
-            <LineBar >
+            <LineBar checked={settings} disabled={settings} >
                 <FiSettings style={{marginBottom: -4,}}/>
                 <LineSpan>Ajustes</LineSpan>
             </LineBar>
@@ -313,25 +264,16 @@ const Auth = ( ) => {
             <HeadLabel>{page.desc}</HeadLabel>
           </View>
 
-    
-
-
-
         <View className='row'>
-          <IconBt>
+          <IconBt onClick={ () => handleScreen('search')}>
             <FiSearch/>
           </IconBt>
 
-          <IconBt  onClick={handleTheme}>
-           {light && < BsLightbulb className='fadeUp'/> }
-           {dark && <BsLightbulbOff className='fadeUp'/> }
-          </IconBt>
-
-          <IconBt onClick={toggleDrawer('right', true)}>
+          <IconBt onClick={toggleDrawer('right', true, 'notify')}>
             <FiBell/>
           </IconBt>
 
-          <ProfileContainer onClick={toggleProfile('right', true)}>
+          <ProfileContainer onClick={toggleDrawer('right', true, 'profile')}>
             <ProfileImg src={avatar}/>
             <View className='column' style={{}}>
             <CardTitle style={{fontSize: 18, marginTop:10,}}>{userData?.display_name}</CardTitle>
@@ -339,86 +281,36 @@ const Auth = ( ) => {
             </View>
           </ProfileContainer>
 
-          </View>
+        </View>
         </Head>
+      <View>
+
+        {loading && <Sk3/>}
         
-        {dashboard && <View>
-
-
-          {userData.ID && <Dashboard user={userData} click={handleClick} className="fadeUp" 
-            views={views} 
-            popular={popular}
-            interaction={interaction} 
-            likes={likes}/> }
-        </View> }
-        {addimovel && <AddImobil user={userData} />}
-      
-
-
-
-       {imoveis &&  <View>
-
-        <ImoveisList userID={userData} user={userData} token={token}/>
-
-        
-        </View>}
+        {dashboard && <Dashboard user={userData} item={feed} onUsersEmails={handleUsersEmails} click={handleClick} className="fadeUp" vllike={vllike} vlview={vlview} mostView={mostView} mostLike={mostLike} /> }
+        {addimovel && <AddImobil user={userData} authores={usersEmails}  token={token}/>}
+    
+        {imoveis &&  <ImoveisList userID={userData} user={userData} token={token}/> }
        
+        {settings && <Settings userData={userData}/>}
 
+        {statistics && <View></View>}
+        {plans && <Plans />}
+        {search && <Search/> }
+        
+        {team && <Team token={token} />}
 
-       {settings && <Settings userData={userData}/>}
-
-       {statistics &&
-       <View>
-        <View style={{flexDirection: 'row', marginBottom: 20, justifyContent: 'space-between', display: 'flex'}}>
-          <Stats item={views}/>
         </View>
-
-        <View style={{flexDirection: 'row', marginBottom: 20, justifyContent: 'space-between', display: 'flex'}}>
-          <Box item={views}/>
-          <Box item={likes}/>
-          <Box item={imoveis}/>
-        </View></View>}
-
-
-      {plans &&
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', display: 'flex'}}>
-          <Plans type="normal"/>
-          <Plans type="premium"/>
-          <Plans type="imobil"/>
-        </View>
-        }
-
       </Right>
 
       
-      <Drawer
-      disableEnforceFocus 
-            anchor="right"
-            open={state['right']}
-            onClose={toggleDrawer('right', false)}
-          >
-            <Notify/>
-          </Drawer>
-
-          <Drawer
-          disableEnforceFocus 
-            anchor="right"
-            open={state2['right']}
-            onClose={toggleDrawer2('right', false)}
-          >
-            <Inovice item={imovel}/>
-          </Drawer>
-
-          <Drawer
-            anchor="right" variant="temporary"
-            open={profileState['right']}
-            onClose={toggleProfile('right', false)}
-          >
-            <Profile user={userData}/>
-          </Drawer>
-
+      <Drawer disableEnforceFocus anchor="right" open={state['right']} onClose={toggleDrawer('right', false)}>
+        {notify && <Notify/>}
+        {profile && <Profile user={userData} token={token}/>}
+      </Drawer>
+     
     </Container>
   );
 };
 
-export default Auth;
+export default DashMain

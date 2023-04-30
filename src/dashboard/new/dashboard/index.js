@@ -18,9 +18,7 @@ import {
   BtSettings,
   Input,
   Spacing,
-  Banner,
   Title,
-  Img,
   Row,
   ItemImg,
   ItemCard,
@@ -29,80 +27,59 @@ import {
   ViewCard,
   Chip,
   ItemCard2,
-  SpecialView,
-  SpecialTitle,
-  onda1,
-  onda2,
-  Onda1,
-  Onda2,
   ItemCard3,
   NewImovel,
-  Background,
-  Ripple,
-  LiquidEffect,
+  BtAdd,
+  Route,
+  Routes,
+  BtIcon,
+  SpacingX1,
+  InputSearch,
+  Image,
+  ImgWrapper,
+  ImgBt,
 } from './styles';
 
 
 
 import Carousel from 'react-grid-carousel'
-import { ButtonBR, ButtonPR, ButtonLight } from '../../../theme/global'
-import { AiOutlineSetting, AiOutlineUsergroupAdd} from 'react-icons/ai'
+import { ButtonBR, ButtonPR,  } from '../../../theme/global'
+import { CiGrid2H, CiGrid41 } from 'react-icons/ci'
+import { AiOutlineCrown, AiOutlineUsergroupAdd, AiOutlineClose} from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom';
-import { BsHouseAdd } from 'react-icons/bs'
+import { BsHouseAdd, BsSearch } from 'react-icons/bs'
 import { TfiStatsUp } from 'react-icons/tfi'
 import { TbHandClick } from 'react-icons/tb'
-
+import { GrClose } from 'react-icons/gr'
 import Select from 'react-select' 
-import newImovel from '../../../assets/imgs/new_imovel.png'
+import { MdKeyboardArrowRight } from 'react-icons/md'
 import Modal from 'react-modal';
 
-import vid from '../../../assets/imgs/loader.gif'
 import Suff from '../../../assets/imgs/suff.png'
 import Box from '../box'
 import RowFlow from './../../../components/cards/row_flow/index';
 import { customStyles } from '../../../api/customStyles';
-import { requestFeed, requestID, } from '../../../api/request';
+import { requestMediaForAuthor, requestUserEmail, } from '../../../api/request';
 import { Column } from './../../../theme/global';
-import { requestViewsForUser , requestLikesForUser, requestMostPopular } from '../../../api/request/stats'
-import ListH6 from '../../../structure/cards/list_h_6';
 import { FiEye, FiHeart } from 'react-icons/fi';
-import { style } from '@mui/system';
+import Loader from '../../../components/loader';
+import ImageWithBorder from './../../components/itemMedia';
+
 
 const Dashboard = ( props ) => {
-
   const { color, font } = useContext(ThemeContext)
-
-  const [item, setFeed] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingStats, setLoadingStats] = useState(true);
-  const navigate = useNavigate()
 
-  const [vllike, setVllike] = useState();
-  const [vlview, setVlview] = useState();
-  const [mostView, setMostView] = useState();
-  const [mostLike, setMostLike] = useState();
+  const navigate = useNavigate()
+  const vllike = props.vllike
+  const vlview  = props.vlview
+  const mostView = props.mostView
+  const mostLike = props.mostLike
   const click = props.click
   const user = props.user
-
-
-  const handleStats = ( ) => { 
-    setLoadingStats(true)
-    if(user.ID){
-    requestLikesForUser(user.ID).then(
-      response => {setVllike(response?.total_likes);setLoadingStats(false)}
-    )
-    requestViewsForUser(user.ID).then(
-      response => {setVlview(response?.total_views);setLoadingStats(false)}
-    ) 
-    requestMostPopular(user.ID).then(
-      response => {
-        console.log(response)
-        requestID(response.most_viewed_id).then(item => setMostView(item[0]))
-        requestID(response.most_liked_id).then(item => setMostLike(item[0]))
-      }
-    )
-
-    setLoadingStats(false)}}
+  const item = props.item
+  const [modalGallery, setModalGallery] = useState(false);
 
 
   const views = {
@@ -121,29 +98,17 @@ const Dashboard = ( props ) => {
     value2: '34',
   }
 
-  
-
-
   const [modalIsOpen, setIsOpen] = useState(false);
   const [modalIsOpen2, setIsOpen2] = useState(false);
-
-
-  const handleFeed = () => { 
-    setLoading(true)
-    requestFeed().then(response => {
-      setFeed(response)
-      setLoading(false)
-    })
-   }
   
   const a = false;
 
   const [imovelNome, setNomeImovel] = useState('meunovoimovel')
   const [next, setNext] = useState(false)
+  
   useEffect(() => {
-    handleFeed()
-    handleStats()
-    if(imovelNome === "meunovoimovel"){setNext(true)}}, 
+    if(imovelNome === "meunovoimovel"){setNext(true)
+    }}, 
   [])
 
   const handleKeyDown = (event) => {if (event.key === 'Enter') {if(imovelNome === "meunovoimovel"){click()}else{return}}}
@@ -159,7 +124,6 @@ const Dashboard = ( props ) => {
         </Carousel>
       )
   }
-
 
   
   const options = [
@@ -177,7 +141,7 @@ const Dashboard = ( props ) => {
     const interactions = Number(item?.views) + Number(item?.like)
     const FormtTitle = () => (<ItemTitle style={{fontFamily: font.book, fontSize: 20}}><B>{item?.categoria}</B> com <B>{item?.qtd1} {item?.item1}s, {item?.qtd2} {item?.item2}s</B> e <B>{item?.area}m&#178;</B>, localizada no bairro <B>{item?.bairro}</B> na <B>{item?.rua}</B> no número <B>{item?.numero}</B>, por <B>R$ {item?.valor_mensal},00</B> ao mês. </ItemTitle>)
     return(
-      <Row>
+      <Row style={{marginTop: 20,}}>
       <ItemCard>
         <Column>
           <Row style={{justifyContent: 'space-between', paddingLeft: 20, paddingRight: 20,}}>
@@ -243,9 +207,8 @@ const Dashboard = ( props ) => {
       </ItemCard2>
       </Row>
     )
-   }
+  }
 
-   
   const ItemMostLike = ({ item }) => { 
     const item1 = Number(vllike);
     const item2 = Number(item?.like); 
@@ -321,32 +284,76 @@ const Dashboard = ( props ) => {
       </ItemCard3>
       </Row>
     )
+  }
+   const Insights = () => (
+      <Row>
+        <Box item={views}/>
+        <Spacing/>   
+        <Box style={{flexGrow: 1,}} item={likes}/>
+        <Spacing/>
+        <Box item={interaction}/>
+        <Spacing />
+
+        <Card style={{justifyContent: 'center'}}>
+          <NewImovel onClick={() => setIsOpen(true)}> 
+          <BsHouseAdd style={{color: "#fff", margin: 'auto'}} size={32}/></NewImovel>
+        </Card>
+      </Row>
+  )
+    
+
+  const [colaborador1, setColaborador1] = useState('dev.joaosousa@gmail.com');
+  const [colaborador2, setColaborador2] = useState();
+  const [colaborador3, setColaborador3] = useState();
+  const [dataCol1, setdataCol1] = useState();
+  const [dataCol2, setdataCol2] = useState();
+  const [dataCol3, setdataCol3] = useState();
+  const [loadingColaborador, setLoadingColaborador] = useState(false);
+
+  const handleColaborador = (index,  param ) => { 
+      if(param === "add"){
+        setLoadingColaborador(true)
+        if(index===1){if(colaborador1){requestUserEmail(colaborador1).then(user => {setdataCol1(user);setLoadingColaborador(false)})}}
+        else if(index===2){if(colaborador2){ requestUserEmail(colaborador2).then(user => {setdataCol2(user); setLoadingColaborador(false)})}}
+        else if(index===3){if(colaborador3){requestUserEmail(colaborador3).then(user => {setdataCol3(user); setLoadingColaborador(false)})}}
+      }else if(param === "remove"){
+        if(index===1){setColaborador1();setdataCol1()}
+        else if(index===2){setColaborador2();setdataCol2()}
+        else if(index===3){setColaborador3();setdataCol3()}}}
+  const usersEmails = [user?.ID, dataCol1?.ID, dataCol2?.ID, dataCol3?.ID];
+  function handleUsersEmails( emails ) {const param = emails?.filter(Boolean);props.onUsersEmails(param);}
+      
+  const handleClick = () => {handleUsersEmails(usersEmails);click()}
+
+  
+  const [media, setMedia] = useState([]);
+  const handleMedia = () => { 
+    requestMediaForAuthor(6).then(response => {
+      setMedia(response)
+    })
    }
 
-  return (
+  useEffect(() => {
+    handleMedia()
+  }, [])
+  const [selectedImages, setSelectedImages] = useState([]);
+  const handleSelectImage = (imageUrl) => {
+    const isImageSelected = selectedImages.includes(imageUrl);
+    if (!isImageSelected && selectedImages.length < 8) {
+      setSelectedImages([...selectedImages, imageUrl]);
+    } else if (isImageSelected) {
+      setSelectedImages(selectedImages.filter((url) => url !== imageUrl));
+    }
+  };
+
+  const [search, setSearch] = useState();
+      return (
+
       <Main className='fadeUp'>
         <Column>
-      {!loading &&
-        <Row>
-          <Box item={views}/>
-          <Spacing/>   
-          <Box style={{flexGrow: 1,}} item={likes}/>
-          <Spacing/>
-          <Box item={interaction}/>
-          <Spacing />
-
-          <Card style={{justifyContent: 'center'}}>
-            <NewImovel onClick={() => setIsOpen(true)}> 
-            <BsHouseAdd style={{color: "#fff", margin: 'auto'}} size={32}/></NewImovel>
-           </Card>
-          </Row>}
-
-          {loading && <img alt='loader novo imovel' src={vid} style={{ width: 400, height: 300, alignSelf: 'center', }} />}
-
-
+        {mostLike && <Insights/>}
         <Column style={{ marginBottom: 20, marginTop: 20, }}>
         {mostLike && <ItemMostLike item={mostLike} />}
-        <Spacing/><Spacing/>
         {mostView && <ItemMostView item={mostView} />}
         
         {a && <>
@@ -361,6 +368,62 @@ const Dashboard = ( props ) => {
 
       </Column>
 
+
+      
+      <Modal isOpen={modalGallery} onRequestClose={() => setModalGallery(false)} style={{
+          content: {
+            width: 810,   
+            height: 586,
+            margin: 'auto',
+            padding: "10px 20px",
+            zIndex: 99,
+            borderRadius: 12,
+          },
+        }}>
+
+          <Row>
+            <Column style={{width: "100%", }}>
+              <Title style={{marginLeft: 10, fontSize: 24,}}>Minha Galeria</Title>
+            
+              <Row style={{justifyContent: 'space-between', marginLeft: 10, marginTop: 10, marginBottom: 10,}}>
+                <Row>
+                  <InputSearch value={search} onChange={e => setSearch(e.target.value)} placeholder="Pesquise o termo " type="text"/>
+                  <SpacingX1/>
+                  <BtIcon onClick={handleMedia}><BsSearch/></BtIcon>
+                </Row>
+
+                <Row>
+                  <BtIcon><CiGrid2H/></BtIcon>
+                  <SpacingX1/>
+                  <BtIcon><CiGrid41/></BtIcon>
+                  <SpacingX1/>
+                  <ButtonPR style={{height: 38, paddingTop: 6,}}>SALVAR</ButtonPR>
+                </Row>
+              </Row>
+              <View style={{background: "#00000020", marginLeft: 10, marginRight: 10, width: "98%", height: 2, marginBottom: 10,}} />
+
+              {media?.length > 1 && <View style={{ display: "flex", flexWrap: "wrap" }}>
+              {media.map(({ img }, index) => {
+                const isSelected = selectedImages.includes(img);
+                const circleNumber =
+                  selectedImages.indexOf(img) !== -1 ? selectedImages.indexOf(img) + 1 : "+";
+                return (
+                  <ImageWithBorder
+                    key={index}
+                    imageUrl={img}
+                    onSelect={handleSelectImage}
+                    isSelected={isSelected}
+                    index={circleNumber}
+                  />
+                  );
+                })}
+              </View>}
+ <CardLabel>{selectedImages}</CardLabel>
+            </Column>
+          </Row>
+          
+      </Modal>
+
       
         <Modal isOpen={modalIsOpen} onRequestClose={() => setIsOpen(false)} style={{
           content: {
@@ -372,44 +435,115 @@ const Dashboard = ( props ) => {
         }}>
             
           <View className='column' >
-           <CardImg src={newImovel}/>
  
-            <View className="column" style={{padding: 20,}}>
-            <CardTitle style={{textAlign: 'center', fontSize: 24,}}>Adicionar novo imóvel</CardTitle>
-            <CardLabel style={{textAlign: 'center', fontSize:18,}}>Ao adicionar, seu imóvel aparecerá na plataforma e pessoas irão vê-lo!
-            </CardLabel>
-            </View>
+            <Row style={{paddingLeft: 20, paddingBottom: 10,}}>
+              <BtSettings><BsHouseAdd/></BtSettings>
+              <Column style={{flexGrow: 1, marginLeft: 10,}}>
+                <CardTitle style={{fontSize: 20, marginBottom: -5, marginTop: 4,}}>Adicionar novo imóvel</CardTitle>
+                <CardLabel>Crie seu imóvel na nossa plataforma.</CardLabel>
+              </Column>
+            </Row>
 
             <Line/>
 
-
-          {a &&
-            <View className="column" style={{padding: 20,}}>
-              <CardTitle style={{fontSize: 18,}}>Colaboradores</CardTitle>
-              <CardLabel style={{fontSize:14,}}>Adicione colaboraderes ao seu imóvel, eles poderão editar e modificar. <Premium>Premium</Premium>
+            <View className="column" style={{padding: 20, paddingBottom: 0,}}>
+              <CardTitle style={{fontSize: 18,}}>Trabalho em equipe</CardTitle>
+              <CardLabel style={{fontSize:14,}}>Adicione colaboradores ao seu imóvel para que possam editar e modificar informações. <Premium>Premium</Premium>
               </CardLabel>
-            </View>  }
+            </View>  
 
          
-         {a &&
+            <CardTitle style={{fontSize: 18, marginLeft: 20, marginBottom: 10,}}>Autor</CardTitle>
+         
             <Profile>
-              <ProfileImg src={Suff}/>
+              <ProfileImg src={user?.avatar}/>
               <View className='column' style={{marginLeft: -30,}}>
-              <CardTitle style={{fontSize: 18, marginTop: 10,}}>{user.name}</CardTitle>
+              <CardTitle style={{fontSize: 18, marginTop: 10,}}>{user.display_name}</CardTitle>
               <CardLabel style={{fontSize:14,}}>Criador, edita, modifica e pública.</CardLabel>
               </View>
-              <BtSettings><AiOutlineSetting/></BtSettings>
-            </Profile>}
+              <BtSettings><AiOutlineCrown/></BtSettings>
+            </Profile>
+            <Line/>
+            
+            <CardTitle style={{fontSize: 18, marginLeft: 20, marginBottom: 0, marginTop: 15,}}>Colaboradores</CardTitle>
 
-          {a && <ButtonBR style={{margin: 20,}}><AiOutlineUsergroupAdd/></ButtonBR>}
-          
+          {dataCol1 &&
+             <Profile style={{marginTop: 10,}}>
+             <ProfileImg src={dataCol1?.avatar}/>
+             <Column style={{marginLeft: -80,}}>
+              <CardTitle style={{fontSize: 18, marginTop: 10,}}>{dataCol1?.display_name}</CardTitle>
+              <CardLabel style={{fontSize:14,}}>{dataCol1?.user_email}</CardLabel>
+             </Column>
+             <BtSettings onClick={() => handleColaborador(1, 'remove',)}><GrClose style={{color: color.red}}/></BtSettings>
+           </Profile>
+          }
 
-            <View className="column" style={{padding: 20,}}>
+            {dataCol2 &&
+             <Profile>
+             <ProfileImg src={dataCol2?.avatar}/>
+             <Column style={{marginLeft: -80,}}>
+              <CardTitle style={{fontSize: 18, marginTop: 10,}}>{dataCol2?.display_name}</CardTitle>
+              <CardLabel style={{fontSize:14,}}>{dataCol2?.user_email}</CardLabel>
+             </Column>
+             <BtSettings onClick={() => handleColaborador(2, 'remove',)}><GrClose style={{color: color.red}}/></BtSettings>
+           </Profile>
+          }
+          {dataCol3 &&
+           <Profile>
+           <ProfileImg src={dataCol3?.avatar}/>
+           <Column style={{marginLeft: -80,}}>
+            <CardTitle style={{fontSize: 18, marginTop: 10,}}>{dataCol3?.display_name}</CardTitle>
+            <CardLabel style={{fontSize:14,}}>{dataCol3?.user_email}</CardLabel>
+           </Column>
+           <BtSettings onClick={() => handleColaborador(3, 'remove',)}><GrClose style={{color: color.red}}/></BtSettings>
+         </Profile>
+        }
+            <Column style={{padding:'0px 20px', marginBottom: 10,}}>
+            
+
+            {!dataCol1 && <Row>
+              <Input style={{flexGrow: 1,}} type="email" value={colaborador1}
+                onChange={(event) => setColaborador1(event.target.value)}
+                placeholder="Email do 1º colaborador"/>
+              <BtAdd onClick={() => handleColaborador(1, 'add')}>
+                {loadingColaborador && <Loader className='fadeUp' type="spin" size={16} color={color.primary}/>}
+                {!loadingColaborador && <AiOutlineUsergroupAdd/>}
+              </BtAdd>
+              </Row>}
+
+           {colaborador1 && <> 
+           {!dataCol2 && <Row> <Input  style={{flexGrow: 1,}} type="email" value={colaborador2}
+              onChange={(event) => setColaborador2(event.target.value)}
+              placeholder="Email do 2º colaborador"/>
+              <BtAdd onClick={() => handleColaborador(2, 'add')}>
+                {loadingColaborador && <Loader className='fadeUp' type="spin" size={16} color={color.primary}/>}
+                {!loadingColaborador && <AiOutlineUsergroupAdd/>}
+              </BtAdd>
+              </Row>}
+            </>}
+
+
+            {colaborador2 && <>  {!dataCol3 && <Row><Input  style={{flexGrow: 1,}} type="email" value={colaborador3}
+              onChange={(event) => setColaborador3(event.target.value)}
+              placeholder="Email do 3º colaborador"/>
+              <BtAdd onClick={() => handleColaborador(3, 'add')}>
+                {loadingColaborador && <Loader className='fadeUp' type="spin" size={16} color={color.primary}/>}
+                {!loadingColaborador && <AiOutlineUsergroupAdd/>}
+              </BtAdd>
+              </Row>} 
+            </>}
+            </Column>
+
+
+
+            
+
+            <View className="column" style={{padding: '10px 20px',}}>
               <CardTitle style={{fontSize: 18,}}>Você é um robo?</CardTitle>
               <CardLabel style={{fontSize:14,}}>Esperamos que não, digite abaixo <CardLabel style={{fontFamily: font.bold, color: color.primary,}}>meunovoimovel</CardLabel>, para confirmar.</CardLabel>
               <Input onKeyDown={handleKeyDown} value={imovelNome} style={{marginBottom: 20,}} onChange={e => setNomeImovel(e.target.value)}  placeholder="Digite o que está escrito acima" type="text"/>
 
-              <ButtonPR off={!next} disabled={!next} onClick={click}>PRÓXIMO</ButtonPR>
+              <ButtonPR off={!next} disabled={!next} onClick={handleClick}>PRÓXIMO</ButtonPR>
             </View>  
             
           

@@ -13,7 +13,7 @@ export const Container = styled.div `
 
 
 export const Upload = styled.div`
-  width: 70%;
+  width: 90%;
   align-self: center;
   padding-top: 30px;
   padding-bottom: 30px;

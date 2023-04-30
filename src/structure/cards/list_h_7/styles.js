@@ -175,3 +175,26 @@ export const Circle = styled.div`
     justify-content: center;
     margin: 20px auto;
     ` 
+
+
+export const CheckboxWrapper = styled.label`
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+`;
+
+export const Check = styled.div`
+  border: 2px solid #00000020;
+  position: relative;
+  width: 24px;
+  border-radius: 4px;
+  height: 24px;
+  transition: linear .2s;
+  color: #fff;
+  text-align: center;
+  font-size: 20px;
+  justify-content: center;  
+  cursor: pointer;
+  background: ${props => props.checked ? '#5B72F2' : '#fff'};
+  box-sizing: border-box;
+`;

@@ -22,8 +22,8 @@ import { API_URL } from '../../../api';
 import { ButtonOffColor, Text } from '../../../theme/global'
 import { BsCamera} from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom';
-import { revalidateToken , requestUserEdit, requestUserEndpoint} from '../../../api/request';
-import { useEffect } from 'react';
+import {  requestUserEdit, requestUserEndpoint} from '../../../api/request';
+import { uploadMedia } from '../../../api/request/auth_requests';
 
 import avatar from '../../../assets/imgs/suff.png'
 import { Column} from './../../../theme/global';
@@ -39,13 +39,12 @@ const Profile = ( props ) => {
   const navigate = useNavigate()  
 
   const user = props.user
-
-  const [profileID, setProfileID] = useState();
+  const token = props.token
+  
 
   const [loadingUser, setloadingUser] = useState(false);
 
   const [imagem, setImagem] = useState(user.avatar);
-  const [token, setToken] = useState();
   const id = user.ID
   const email = user.user_email
   const [first_name, setFirstName] = useState(user?.nome)
@@ -58,14 +57,13 @@ const Profile = ( props ) => {
   const [facebook, setFacebook] = useState(user?.facebook)
   const [imgLink, setImgLink] = useState(user?.avatar);
   const [emailComercial, setEmailComercial] = useState(user?.email_comercial);
-  const [descricao, setDescricao] = useState();
+  const [descricao, setDescricao] = useState(user?.descricao);
 
   const a = false;
 
   const getUser = () => { 
     setloadingUser(true)
     requestUserEndpoint(user.ID).then(response => {
-      console.log(response)
       setImagem(response?.avatar)
       setFirstName(response?.nome)
       setLastName(response?.sobrenome)
@@ -81,36 +79,24 @@ const Profile = ( props ) => {
     })
    }
 
-  useEffect(() => {
-    revalidateToken().then(response => {
-      setToken(response)
-    })
-  },[])
-
   const [loadingImg, setLoadingImg] = useState(false);
 
-  async function newMedia( img,){
-    setLoadingImg(true)
-    const formData = new FormData();
-    formData.append("file", img);
-    formData.append("title", `avatar ${id}_${first_name}`);
-    
-    const headers = {
-      'Content-Type': 'form/multipart',
-      'Authorization': 'Bearer' + token,
-    }
-
-   Axios.post(`${API_URL}/wp/v2/media`,  formData, {headers: headers}).then(response => {
-    console.log(response)
-    setImgLink(response.data.source_url)
-    setImagem(response.data.source_url)
-    setLoadingImg(false)
-    }).catch(error => {console.log(error)});}
 
   const hiddenFileInput = React.useRef(null);
-  const onChangePicture = e => {setPicture(e.target.files[0]); setImagem(URL.createObjectURL(e.target.files[0]));
-  
-  };
+  const onChangePicture = e => {setPicture(e.target.files[0]); setImagem(URL.createObjectURL(e.target.files[0]));}
+ 
+async function handlePictureUpload(img) {
+  setLoadingImg(true);
+  const formData = new FormData();
+  formData.append("file", img);
+  formData.append("title", `avatar ${id}_${first_name}`);
+  const uploadedImageUrl = await uploadMedia(formData, token);
+  if (uploadedImageUrl) {
+    setImgLink(uploadedImageUrl);
+    setImagem(uploadedImageUrl);
+  }
+  setLoadingImg(false);
+   };
 
   const handleEditUser = () => { 
     setloadingUser(true)
@@ -128,7 +114,6 @@ const Profile = ( props ) => {
     "descricao": descricao,
   }
     requestUserEdit( userData ).then(response => {getUser();})
-
   }
  
   const [dados, setDados] = useState(true);
@@ -144,22 +129,24 @@ const Profile = ( props ) => {
     }
    }
 
-    
   return (
-  
-        <Card>
-          
+        <Card>          
           <View style={{position: 'relative', alignSelf: 'center', marginBottom: 20,}}>
             <UserImg src={imagem} onClick={() => hiddenFileInput.current.click()} />
+
             <BtIcon disabled={loadingImg} onClick={() => hiddenFileInput.current.click()}>
               {loadingImg && <Loader  type="spin" size={12} color={color.light}/>}
               {!loadingImg && <BsCamera/>}
             </BtIcon>
+
             <input type="file" ref={hiddenFileInput} style={{display: 'none'}} onChange={onChangePicture} />
 
             </View>
-      {imagem !== undefined && 
-      <BtUpload onClick={() => newMedia(picture)}> 
+
+
+
+      {user.avatar !== imagem && 
+      <BtUpload onClick={() => handlePictureUpload(picture)}> 
         {loadingImg && <Loader  type="spin" size={12} color={color.light}/>}  
         {!loadingImg && <Text>Enviar Imagem</Text>}
       </BtUpload>}
@@ -227,15 +214,6 @@ const Profile = ( props ) => {
     
     }
     </View>}
-
-
-
-
-
-
-
-
-
 
 
          {loadingUser && 

@@ -233,14 +233,15 @@ export const Bar = styled.div`
 `
 
 export const LineBar = styled.div`
-  color: ${props => props.theme.color.label};
+  color: ${props => props.checked ? '#5B72F2' : '#70779C'};
   padding: 12px 16px;
   border-radius: 8px;
   font-size: 20px;
   margin-left: 10px;
   transition: linear .2s;
+  cursor: pointer;
   justify-content: center;
-  background: ${props => props.theme.color.background};
+  background: ${props => props.checked ? '#F1F3FF' : "#FFF"};
     &:hover{
         background: ${props => props.theme.color.off};
         color: ${props => props.theme.color.primary};

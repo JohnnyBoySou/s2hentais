@@ -13,3 +13,11 @@ export const maskValueBR = (value) => {
         return null
     }
 }
+
+
+export const maskCEP = ( value ) => {
+    const regex = /(\d{5})[-]?(\d{3})/;
+    const cepValue = value.replace(regex, "$1-$2");
+    return cepValue
+};
+

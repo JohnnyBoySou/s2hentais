@@ -63,13 +63,16 @@ function ImoveisList(props) {
 
   const [publish, setPublish] = useState(true);
 
-  const handlePublish = (value) => {
-    if (value) {
-      setPublish(false);
-    } else if (!value) {
-      setPublish(true);
+
+  const [selectedIds, setSelectedIds] = useState([]);
+
+  const handleIdClick = (id) => {
+    if (selectedIds.includes(id)) {
+      setSelectedIds(selectedIds.filter((item) => item !== id))
+    } else {
+      setSelectedIds([...selectedIds, id])
     }
-  };
+  }
 
   return (
 
@@ -87,14 +90,16 @@ function ImoveisList(props) {
           }
 
         <View className='row'>
+        <Label style={{ paddingRight: 10, }}>Filtrar por</Label>
           <Select styles={customStyles} onChange={(selectedOption) => setCategory(selectedOption)} options={categories} defaultValue={categories[0]} />
         </View>
-        <Label style={{ paddingRight: 20, }}><Bold>{value_total}</Bold> imóveis</Label>
+        <Label style={{ paddingRight: 20, }}>Encontramos <Bold>{value_total}</Bold> imóveis</Label>
           
       </View>
 
 
     {value_total >= 1 && <>  {!loading &&   <View style={{ flexDirection: 'row', display: 'flex', borderTop: '2px solid #00000020', borderTopLeftRadius: 12, borderTopRightRadius: 12, borderLeft: '2px solid #00000020', borderRight: '2px solid #00000020', }}>
+       <Column style={{ width: 20 }}><ColumnLabel></ColumnLabel></Column>
         <Column style={{ width: 20 }}><ColumnLabel></ColumnLabel></Column>
         <Column style={{ width: 70, }}><ColumnLabel>Código (ID)</ColumnLabel></Column>
         <Column style={{ width: 100, }}><ColumnLabel>Categoria (Tipo)</ColumnLabel></Column>
@@ -116,7 +121,7 @@ function ImoveisList(props) {
       {loading && <img alt='loader novo imovel' src={vid} style={{ width: 400, height: 300, alignSelf: 'center', }} />}
 
       {!loading && <ImoveisContainer>
-        {data.map((data, index) => <ListH7 user={user} key={index} token={token} data={data} />)}
+        {data.map((data, index) => <ListH7 user={user} key={index} token={token} data={data}  onIdClick={handleIdClick} isSelected={selectedIds.includes(data.ID)} />)}
       </ImoveisContainer>}
 
       {!loading && <>
@@ -125,8 +130,7 @@ function ImoveisList(props) {
         <div style={{position: 'relative'}}><Circle/></div>
           <Title>Não encontramos nada!</Title>
           <Label style={{marginTop: 0,width: 600, alignSelf: 'center'}}>Aparentemnte você não tem nenhum imóvel que corresponde a essa categoria, tente procurar por outra para obter resultados relevantes.</Label>
-        </Column>} ? <></>
-
+        </Column>} 
         </>}
     </View>
   );

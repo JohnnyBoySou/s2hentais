@@ -19,7 +19,6 @@ export const View = styled.div `
 
 
 export const Row = styled.div `
-  justify-content: space-between;
   flex-direction: row;
   display: flex;
 `;
@@ -74,6 +73,7 @@ export const Card = styled.div`
     border-radius: 12px;  
     background-image: url(${back_create});
     background-position: top-left;
+    cursor: pointer;
      `
 
 export const CardTitle = styled.span `
@@ -199,7 +199,6 @@ export const Profile = styled.div`
   margin: 0px 20px;
   justify-content: space-between;
   align-items: center;
-  margin-top: -10px;
   margin-bottom: 20px;
 `
 
@@ -217,9 +216,14 @@ export const BtSettings = styled.button`
   font-size: 24px;
   padding-top: 6px;
   border: none;
+  cursor: pointer;
   border-radius: 100px;
   color: ${props => props.theme.color.primary};
   background: ${props => props.theme.color.primary}20;
+  &:hover{
+    
+  background: ${props => props.theme.color.primary}40;
+  }
 `
 
 
@@ -240,8 +244,54 @@ export const Input = styled.input `
   font-family: ${props => props.theme.font.book};
 `
 
+
+export const InputSearch = styled.input `
+  font-size: 17px;
+  border-radius: 6px;
+  border: 2px solid #00000020;
+  height: 34px;
+  transition: .2s linear;
+  padding: 0px 6px;
+  &:focus {
+    outline: none; 
+    box-shadow: 0px 0px 0px 3px ${props => props.theme.color.primary}60;
+    border: 2px solid ${props => props.theme.color.primary};
+  }
+  color: ${props => props.theme.color.label};
+  font-family: ${props => props.theme.font.book};
+`
+
+export const ImgBt = styled.button`
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 2px solid ${({ isSelected }) => (isSelected ? 'blue' : 'transparent')};
+  background-color: transparent;
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+`;
+
+
+export const ImgWrapper = styled.div`
+  position: relative;
+`;
+
+export const Image = styled.img`
+  width: 150px;
+  border-radius: 12px;
+  margin: 6px;
+  height: 150px;
+  object-fit: cover;
+`
+
 export const Spacing = styled.div`
   width: 20px;
+  height: 10px;
+`
+
+export const SpacingX1 = styled.div`
+  width: 10px;
   height: 10px;
 `
 
@@ -389,3 +439,84 @@ export const NewImovel = styled.div`
     transform: scale(1.2);
   }
 `
+
+export const BtAdd = styled.button`
+  border: 2px solid #00000020;
+  border-radius: 10px;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-top: 8px;
+  margin-left: 10px;
+  background: ${props => props.theme.color.light};
+  color: ${props => props.theme.color.title};
+  font-size: 18px;
+  font-family: ${props => props.theme.font.medium};
+  text-transform: uppercase;
+  cursor: pointer;
+`
+
+
+export const Route = styled.span`
+  font-size: 16px;
+  margin-top: -2px;
+  margin-right: 5px;
+  margin-left: 10px;
+   color: ${props => props.theme.color.label};
+  font-family: ${props => props.theme.font.medium};
+`;
+
+
+export const Routes = styled.span`
+  display: flex;
+  flex-direction: row;
+  margin-right: 50px;
+`;
+
+
+export const BtIcon = styled.button`
+  border-radius: 10px;
+  justify-content: center;
+  border: none;
+  width: 38px;
+  padding-top: 5px;
+  height: 38px;
+  background: #5B72F230;
+  color: #5B72F2;
+  font-size: 18px;
+  font-family: ${props => props.theme.font.medium};
+  text-align: center;
+  cursor: pointer;
+  transition: .2s linear;
+  &:hover{
+    background: #5B72F2;
+    color: #fff;
+  }
+  
+`;
+
+
+
+export const BtRow = styled.button`
+  border-radius: 10px;
+  justify-content: center;
+  border: none;
+  padding: 10px 20px;
+  background: ${props => props.off ? "#d1d1d1" : "#5B72F2"};
+  color:${props => props.off ? "#fff" : "#fff"};
+  font-size: 18px;
+  font-family: ${props => props.theme.font.medium};
+  text-transform: uppercase;
+  cursor:  ${props => props.off ? "default" : "pointer"};
+  transition: .2s linear;
+  &:hover{
+    background: ${props => props.off ? "#d1d1d1" : "#5B72F220"};
+    color:${props => props.off ? "#fff" : "#5B72F2"};
+  }
+  
+   &:disabled {
+    background: #FE7359;
+    color: white;
+    pointer-events: none;
+  }
+`;

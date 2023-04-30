@@ -14,7 +14,7 @@ export const customStyles = {
     fontFamily: "Font_Medium, sans-serif",
     flexDirection: 'row',
     fontSize: 18,
-    marginTop: 10,
+    marginTop: 15,
     marginBottom: 10,
   }),
   indicatorSeparator: () => ({

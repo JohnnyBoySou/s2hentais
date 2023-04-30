@@ -1,6 +1,6 @@
 import React from "react";
 
-
+import { Row, Column } from "../../theme/global";
 import Skeleton  from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
@@ -31,5 +31,24 @@ export function Sk2() {
           
             </div>
            </div>
+    )
+}
+
+
+
+export function Sk3() {
+    return(
+        <Column>
+            <Row>
+                <Skeleton height={180} width={260} style={{borderRadius: 12, marginRight: 15, marginBottom: 20,}}/>
+                <Skeleton height={180} width={260} style={{borderRadius: 12, marginRight: 15, marginBottom: 20,}}/>
+                <Skeleton height={180} width={260} style={{borderRadius: 12, marginRight: 15, marginBottom: 20,}}/>
+                <Skeleton height={180} width={220} style={{borderRadius: 12, marginRight: 15, marginBottom: 20,}}/>
+            </Row>
+          <Row>
+            <Skeleton height={340} width={722} style={{marginBottom: 10, borderRadius: 16,}}/>
+            <Skeleton height={340} width={300} style={{marginBottom: 10, borderRadius: 16, marginLeft: 20,}}/>
+          </Row>  
+        </Column>
     )
 }

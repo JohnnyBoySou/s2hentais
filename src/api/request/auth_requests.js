@@ -175,3 +175,22 @@ export async function requestLogin( email, password ){
 
 
   */
+
+const MEDIA_API_URL = `${API_URL}/wp/v2/media`;
+
+
+export async function uploadMedia(formData, token) {
+  
+const mediaHeaders = {
+  'Content-Type': 'form/multipart',
+  'Authorization': 'Bearer' + token,
+}
+  try {
+    const response = await Axios.post(MEDIA_API_URL, formData, { headers: mediaHeaders });
+    console.log(response);
+    return response.data.source_url;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}

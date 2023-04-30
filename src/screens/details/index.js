@@ -126,6 +126,7 @@ const Details = ( ) => {
     requestID(id).then(item => {
         if(item){
           setItem(item[0])
+          console.log(item)
           getAuthor(item[0].post_author)
           setLoad(false)
       }
@@ -504,7 +505,6 @@ const Details = ( ) => {
     {!load && <AdPoster/>}
     
     {!load &&  <Hr style={{marginTop: 50, marginLeft: 0, marginRight: 10, marginBottom:20,}}/>}
-    {!load && <Similar data={itemSimilar}/>}
     
     {popupview && <QuickPoup className='fade'> 
         

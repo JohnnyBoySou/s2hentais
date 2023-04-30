@@ -64,12 +64,17 @@ export const Hr = styled.div `
 export const Card = styled.div`
     flex-direction: column;
     display: flex;
-    border: 2px solid #00000010;
+    border: 2px solid ${props => props.theme.title === 'dark' ? 'transparent' : props.theme.color.border};
     padding: 20px;
     flex-grow: 1;
     border-radius: 12px;
-    background: ${props => props.theme.background};
+    background: ${props => props.theme.color.off};
 
+    transition: transform .2s ease-in-out;
+    cursor: pointer;
+    &:hover {
+      transform: scaleX(1.1);
+    }
 `
 
 export const CardTitle = styled.span `

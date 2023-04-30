@@ -80,8 +80,8 @@ export default function ListH7( props ){
   <Card >
      <View style={{flexDirection: 'row', display: 'flex', }}>
         <Column style={{width: 20,}}>  
-        <Check checked={checked} onClick={handleChange}>
-          {checked && <FiCheck/>}
+          <Check checked={checked} onClick={handleChange}>
+            {checked && <FiCheck/>}
           </Check>
         </Column>
         <Column style={{padding: 0,}}><Img onClick={() => getDetails(dashboard)} src={imgUrl} /></Column>

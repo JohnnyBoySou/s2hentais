@@ -148,7 +148,7 @@ export const Column = styled.div`
   padding: 12px 20px;
   display: flex:
   justify-content: center;
-  border-right: 0.5px solid #00000010;
+  border-right: 0.5px solid ${props => props.theme.color.border};
 `
 
 
@@ -196,3 +196,22 @@ align-self: center;
   text-stroke: 2px #5B72F2;
 }
 `;
+
+export const GridRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  border: 2px solid ${props => props.theme.color.border};
+  border-bottom: 0px;
+`
+
+export const GridRow2 = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 2px solid ${props => props.theme.color.border};
+  border-bottom: 0px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+`

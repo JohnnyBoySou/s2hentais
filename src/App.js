@@ -2,9 +2,9 @@ import React from 'react';
 import { ThemeProvider, } from 'styled-components';
 import usePeristedState from './utils/usePersistedState'
 
-import light from './theme/light';
-import dark from './theme/dark';   
-import {
+import lightTheme from './theme/light';
+import darkTheme from './theme/dark';   
+import { 
   BrowserRouter as Router,
   Route,
   Routes,
@@ -47,22 +47,25 @@ import './fonts/Circular_Black.ttf'
 
 import Auth from './screens/auth';
 import Profile from './screens/auth/profile';
+import { useTheme } from './utils/useTheme';
 
 const App = () => {
-  const [theme, setTheme] = usePeristedState('theme', light);
+ // const [theme, setTheme] = usePeristedState('theme', light);
 
-  const toggleTheme = () => {
-    setTheme(theme.title === 'light' ? dark : light);
-  };
-
-  const a = false
-  
+//  const toggleTheme = () => {
+//  setTheme(theme.title === 'light' ? dark : light);
+//  };
+  const { theme, toggleTheme } = useTheme();
+  React.useEffect(() => {
+    const body = document.querySelector('body');
+    body.className = theme;
+  }, [theme]);
   return (
     <Router>
      
-      <ThemeProvider theme={theme}><div className="App">
+      <ThemeProvider  theme={theme === 'light' ? lightTheme : darkTheme}>
+        <div className="App">
       
-      {a && <Header toggleTheme={toggleTheme}/>}
       <Routes>
         <Route path="/" exact element={<Starter/>}/>
         

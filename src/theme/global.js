@@ -29,7 +29,7 @@ export const ButtonPR = styled.button`
   justify-content: center;
   border: 0px;
   padding: 10px 20px;
-  background: ${props => props.off ? "#d1d1d1" : "#5B72F2"};
+  background: ${props => props.off ? "#d1d1d1" : "#ED274A"};
   color:${props => props.off ? "#fff" : "#fff"};
   font-size: 18px;
   font-family: ${props => props.theme.font.medium};
@@ -37,12 +37,12 @@ export const ButtonPR = styled.button`
   cursor:  ${props => props.off ? "default" : "pointer"};
   transition: .2s linear;
   &:hover{
-    background: ${props => props.off ? "#d1d1d1" : "#5B72F220"};
-    color:${props => props.off ? "#fff" : "#5B72F2"};
+    background: ${props => props.off ? "#d1d1d1" : "#ED274A20"};
+    color:${props => props.off ? "#fff" : "#ED274A"};
   }
   
    &:disabled {
-    background: #FE7359;
+    background: #1F1F1F;
     color: white;
     pointer-events: none;
   }

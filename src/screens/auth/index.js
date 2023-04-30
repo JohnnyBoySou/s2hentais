@@ -28,9 +28,9 @@ import {
 
 import { ButtonPR, Back, Row } from '../../theme/global'
 import { useNavigate, useParams } from 'react-router-dom';
-import logo from '../../assets/imgs/logo_s.png'
+import logo from '../../assets/imgs2/logo.png'
 import './animation.css'
-import Suff from '../../assets/imgs/auth_img.png'
+import Suff from '../../assets/imgs2/img_splash.png'
 import Loader from  '../../components/loader'
 import { requestLogin, requestRegister, requestUser, requestSaveUser } from '../../api/request/index';
 import DocumentMeta from 'react-document-meta'
@@ -168,14 +168,11 @@ const changeMethod = () => {
       <DocumentMeta title="Login" />
       <Left>
 
-        <View style={{justifyContent: 'space-between', marginBottom: 20, display: 'flex', flexDirection: 'row'}}>
-          {a &&<Back onClick={() => navigate('/starter')} style={{width: 52, height: 52, padding: 0, fontSize: 24, borderRadius: 100, marginBottom: 20,}}><FiArrowLeft style={{marginTop: 6,}}/></Back>}
-          <Logo src={logo} onClick={() => navigate('/app')}/>
-           </View>
-      {login && 
+        <Logo src={logo} onClick={() => navigate('/app')}/>
+         {login && 
       <Login className='fadeUp'>
 
-        <Title style={{marginBottom: -10,}}>Olá, <TitleName>{first_name}!</TitleName></Title>
+        <Title style={{marginBottom: -10, alignSelf: 'center'}}>Olá, <TitleName>{first_name}!</TitleName></Title>
 
         <View style={{flexDirection: 'column', display: 'flex'}}>
 

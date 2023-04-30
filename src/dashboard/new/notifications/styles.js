@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const SideBar = styled.aside`
   width: 460px;
   padding: 20px 0px;
+  background: ${props => props.theme.color.background};
 `
 
 

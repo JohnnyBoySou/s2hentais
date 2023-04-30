@@ -146,7 +146,7 @@ export const Chip = styled.div`
 export const Line = styled.div`
   height: 2px;
   width: 100%;
-  background: #00000010;
+  background: ${props => props.theme.color.border};
 `
 
 export const Header  = styled.div`
@@ -193,8 +193,9 @@ export const Premium  = styled.span`
 export const Profile = styled.div`
   flex-direction: row;
   display: flex;
-  border: 2px solid #00000010;
+  border: 2px solid ${props => props.theme.title === 'dark' ? 'transparent' : props.theme.color.border}; 
   border-radius: 8px;
+  background: ${props => props.theme.color.off};
   padding: 8px;
   margin: 0px 20px;
   justify-content: space-between;
@@ -231,8 +232,9 @@ export const BtSettings = styled.button`
 export const Input = styled.input `
   font-size: 22px;
   margin: 8px 0px;
-  border-radius: 6px;
-  border: 2px solid #00000020;
+  border-radius: 6px; 
+  border: 2px solid ${props => props.theme.title === 'dark' ? 'transparent' : props.theme.color.border};  
+  background: ${props => props.theme.color.off};
   transition: .2s linear;
   padding: 6px 8px;
   &:focus {
@@ -333,8 +335,9 @@ export const ItemImg = styled.img`
 export const ItemCard = styled.div`
     flex-direction: column;
     display: flex;
-    border: 2px solid #00000010;
+    border: 2px solid ${props => props.theme.title === 'dark' ? 'transparent' : props.theme.color.border};
     padding: 10px 0px 10px 0px;
+    background: ${props => props.theme.color.off};
     border-radius: 12px;
     margin-right: 20px;
     width: 70%;
@@ -384,10 +387,11 @@ export const B = styled.span`
 `
 
 export const ViewCard = styled.div`
-  border: 2px solid #00000010;
+  border: 2px solid ${props => props.theme.title === 'dark' ? 'transparent' : props.theme.color.border}; 
   padding: 6px;
   border-radius: 8px;
   flex-direction: column;
+  background: ${props => props.theme.color.off2};
   text-align: center;
   flex-grow: 1;
   display: flex;
@@ -444,11 +448,11 @@ export const BtAdd = styled.button`
   border: 2px solid #00000020;
   border-radius: 10px;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   margin-top: 8px;
   margin-left: 10px;
-  background: ${props => props.theme.color.light};
+  background: ${props => props.theme.color.primary};
   color: ${props => props.theme.color.title};
   font-size: 18px;
   font-family: ${props => props.theme.font.medium};

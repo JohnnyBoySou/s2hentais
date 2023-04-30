@@ -21,10 +21,10 @@ export default{
     black: "#000000",
     title: "#072942",
     label: "#70779C",
-    off: "#F1F3FF",
+    off: "#FFFFFF",
     off2: "#E1E4F9",
     background: "#FFF",
-    border: "#00000020",
+    border: "#00000010",
     load: "#333333",
   },
   size: {

@@ -7,9 +7,9 @@ export const Card = styled.div`
     flex-direction: row;
     text-decoration: none;
     transition: linear .2s;
-    border-bottom: 2px solid #00000020;
+    border-bottom: 2px solid ${props => props.theme.color.border};
     &:hover{
-      background: #f9f9f9;
+      background: ${props => props.theme.color.off};  
     }
 
 `
@@ -118,7 +118,7 @@ export const Column = styled.div`
   padding-top: 20px;
   display: flex:
   justify-content: center;
-  border-right: 0.5px solid #00000010;
+  border-right: 0.5px solid ${props => props.theme.color.border};
 `
 
 export const ColumnLabel = styled.span`
@@ -184,7 +184,7 @@ export const CheckboxWrapper = styled.label`
 `;
 
 export const Check = styled.div`
-  border: 2px solid #00000020;
+  border: 2px solid ${props => props.theme.color.border};
   position: relative;
   width: 24px;
   border-radius: 4px;
@@ -195,6 +195,7 @@ export const Check = styled.div`
   font-size: 20px;
   justify-content: center;  
   cursor: pointer;
-  background: ${props => props.checked ? '#5B72F2' : '#fff'};
+  background: ${props => props.checked ? props.theme.color.primary : props.theme.color.background};
+  
   box-sizing: border-box;
 `;

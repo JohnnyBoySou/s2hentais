@@ -47,17 +47,15 @@ const Profile = ( props ) => {
   const [imagem, setImagem] = useState(user.avatar);
   const id = user.ID
   const email = user.user_email
-  const [first_name, setFirstName] = useState(user?.nome)
-  const [last_name, setLastName] = useState(user?.sobrenome)
-  const [cep, setCEP] = useState(user?.cep)
+  const [first_name, setFirstName] = useState(user?.first_name)
+  const [last_name, setLastName] = useState(user?.last_name)
   const [picture, setPicture] = useState();
-  const [telefone, setTelefone] = useState(user?.telefone)
-  const [whatsapp, setWhatsapp] = useState(user?.whatsapp)
+  const [twitter, setTwitter] = useState(user?.twitter)
   const [instagram, setInstagram] = useState(user?.instagram)
-  const [facebook, setFacebook] = useState(user?.facebook)
+  const [discord, setDiscord] = useState(user?.discord)
   const [imgLink, setImgLink] = useState(user?.avatar);
-  const [emailComercial, setEmailComercial] = useState(user?.email_comercial);
-  const [descricao, setDescricao] = useState(user?.descricao);
+  const [linkExternal, setLinkExternal] = useState(user?.link_external);
+  const [descricao, setDescricao] = useState(user?.description);
 
   const a = false;
 
@@ -65,16 +63,14 @@ const Profile = ( props ) => {
     setloadingUser(true)
     requestUserEndpoint(user.ID).then(response => {
       setImagem(response?.avatar)
-      setFirstName(response?.nome)
-      setLastName(response?.sobrenome)
-      setCEP(response?.cep)
+      setFirstName(response?.first_name)
+      setLastName(response?.last_name)
       setImgLink(response?.avatar)
-      setTelefone(response?.telefone)
-      setWhatsapp(response?.whatsapp)
+      setTwitter(response?.twitter)
       setInstagram(response?.instagram)
-      setFacebook(response?.facebook)
-      setEmailComercial(response?.email_comercial)
-      setDescricao(response?.descricao)
+      setDiscord(response?.discord)
+      setLinkExternal(response?.link_external)
+      setDescricao(response?.description)
       setloadingUser(false)
     })
    }
@@ -105,12 +101,10 @@ async function handlePictureUpload(img) {
     "first_name": first_name, 
     "last_name": last_name, 
     "avatar": imgLink,
-    "cep": cep, 
-    "telefone": telefone,  
     "instagram": instagram, 
-    "whatsapp": whatsapp, 
-    "email_comercial": emailComercial,
-    "facebook": facebook,
+    "twitter": twitter, 
+    "link_external": linkExternal,
+    "discord": discord,
     "descricao": descricao,
   }
     requestUserEdit( userData ).then(response => {getUser();})
@@ -178,11 +172,6 @@ async function handlePictureUpload(img) {
               <Input placeholder='Ex: Sousa' onChange={e => setLastName(e.target.value)} 
               value={last_name}/>
 
-
-              <Label>Código Postal (CEP)</Label>
-              <Input placeholder='Ex: 89251901 * apenas números' onChange={e => setCEP(e.target.value)} 
-              value={cep}/>
-
               <Label>Descrição</Label>
               <Input placeholder='Ex: Escreva uma descrição sobre você' onChange={e => setDescricao(e.target.value)} 
               value={descricao}/>
@@ -192,21 +181,17 @@ async function handlePictureUpload(img) {
     }
     {contato && 
      <Column>
-      <Label>Telefone</Label>
-      <PhoneInput onChange={setTelefone}  value={telefone}/>
+      <Label>Discord</Label>
+      <PhoneInput onChange={setDiscord}  value={discord}/>
 
       
-      <Label>WhatsApp</Label>
-      <PhoneInput onChange={setWhatsapp}  value={whatsapp}/>
+      <Label>Twitter</Label>
+      <PhoneInput onChange={setTwitter}  value={twitter}/>
 
-      <Label>E-mail comercial</Label>
-      <EmailInput onChange={setEmailComercial} value={emailComercial}/>
+      <Label>Link externo</Label>
+      <EmailInput onChange={setLinkExternal} value={linkExternal}/>
       
-      <Label>Facebook</Label>
-      <Input placeholder='Ex: @username' onChange={e => setFacebook(e.target.value)} 
-      value={facebook}/>
 
-      
       <Label>Instagram</Label>
       <Input placeholder='Ex: @username' onChange={e => setInstagram(e.target.value)} 
       value={instagram}/>

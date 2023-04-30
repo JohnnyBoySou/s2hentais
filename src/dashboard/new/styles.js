@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 
-export const Container = styled.div `
+export const Container = styled.body `
   background: ${props => props.theme.background};
   padding: 0px 0px;
   flex-direction: row;
   display: flex;
+  margin: -8px;
+  flex: 1;
 `;
 
 export const View = styled.div `
@@ -25,8 +27,9 @@ export const Row = styled.div `
 export const Left = styled.div `
   display: flex;
   flex-direction: column;  
-  width: 18%;
-  border-right: 2px solid #00000010;
+  width: 16%;
+  background: #171717;
+  border-right: 2px solid ${props => props.theme.color.off};
   `
 
 export const Right = styled.div `
@@ -72,10 +75,11 @@ export const Logo = styled.img`
 
 
 export const Input = styled.input `
-  font-size: 22px;
+  font-size: 16px;
   margin: 8px 0px;
-  border-radius: 6px;
-  border: 2px solid #00000020;
+  border-radius: 6px; 
+  border: 2px solid ${props => props.theme.title === 'dark' ? 'transparent' : props.theme.color.border};  
+  background: ${props => props.theme.color.off};
   transition: .2s linear;
   padding: 6px 8px;
   &:focus {
@@ -86,6 +90,7 @@ export const Input = styled.input `
   color: ${props => props.theme.color.label};
   font-family: ${props => props.theme.font.book};
 `
+
 
 export const Checkbox = styled.input.attrs({
   type: 'checkbox'
@@ -227,28 +232,26 @@ export const FinishImg = styled.img `
 export const Bar = styled.div`
     flex-direction: column;
     display: flex;
-    padding-right: 30px;
+    padding-right: 20px;
     background: ${props => props.theme.color.background};
     }
 `
-
 export const LineBar = styled.div`
-  color: ${props => props.checked ? '#5B72F2' : '#70779C'};
+  color: ${props => props.checked ? props.theme.color.light : props.theme.color.label};
   padding: 12px 16px;
   border-radius: 8px;
   font-size: 20px;
-  margin-left: 10px;
+  margin-left: 15px;
   transition: linear .2s;
   cursor: pointer;
   justify-content: center;
-  background: ${props => props.checked ? '#F1F3FF' : "#FFF"};
+  border: none;
+  background: ${props => props.checked ? props.theme.color.primary : props.theme.color.background};
     &:hover{
         background: ${props => props.theme.color.off};
         color: ${props => props.theme.color.primary};
-   
     }
 `
-
 
 export const LineSpan = styled.span`
   font-family: ${props => props.theme.font.medium};
@@ -316,6 +319,7 @@ export const IconBt = styled.button`
     background:  ${props => props.theme.color.primary}20;
     color:  ${props => props.theme.color.primary};
     transition: .2s linear;
+    cursor: pointer;
     margin-left: 16px;
     &:hover{
       background:  ${props => props.theme.color.primary};
@@ -383,19 +387,22 @@ export const SubTitle = styled.span`
 export const ProfileContainer = styled.div`
   flex-direction: row;
   display: flex;
-  height: 46px;
-  padding-right: 10px;
-  padding-left: 20px;
   margin-left: 20px;
-  border-left: 2px solid #00000010;
+  padding: 2px 6px;
+  height: 40px;
+  border: 2px solid ${props => props.theme.title === 'dark' ? 'transparent' : props.theme.color.border};  
   align-items: center;
   cursor: pointer;
-  
+  transition: .2s linear;
+  border-radius: 6px; 
+  &:hover{
+    background: ${props => props.theme.color.off};
+  }
 `
 
 export const ProfileImg = styled.img`
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   border-radius: 100px;
   margin-right: 10px;
 `
@@ -425,7 +432,7 @@ export const CardLabel = styled.span `
   margin-top: 0px;
   color: ${props => props.theme.color.label};
   font-family: ${props => props.theme.font.book};
-  margin-bottom: 12px;
+ 
 `;
 
 export const Notification = styled.div`
@@ -452,7 +459,7 @@ export const NotificationLabel = styled.span`
 `
 
 export const ImoveisContainer = styled.div`
-  border: 2px solid #00000020;
+  border: 2px solid ${props => props.theme.color.border};
   border-bottom: none;
   display: flex;
   flex-direction: column;

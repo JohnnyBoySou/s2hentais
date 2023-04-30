@@ -53,7 +53,7 @@ const Notify = () => {
    const a = false
 return (
     <SideBar>
-      <View style={{flexDirection: 'row', display: 'flex', justifyContent: 'space-between', paddingBottom: 15,}}>
+      <View style={{flexDirection: 'row', display: 'flex', justifyContent: 'space-between', paddingBottom: 15, }}>
         <SubTitle style={{marginLeft: 24, }}>Notificações</SubTitle>
       {a &&  <MarkerRead>Marcar como lida</MarkerRead>}
       </View>

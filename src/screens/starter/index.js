@@ -138,7 +138,7 @@ const Starter = ( ) => {
 
 
 
-      <Section className='fadeUp' style={{background: "#f1f1f1"}}>
+      <Section className='fadeUp'>
         <HeadTitle>
         A nova maneira de negociar imóveis
         </HeadTitle>
@@ -199,9 +199,7 @@ Simples. Prático. Confiavél. Deixa que a parte complicada a gente cuida, divul
       <Title id="planos" style={{color: color.title, fontSize: 28, marginBottom: 10,}}>Escolha um de nossos Planos disponíveis!</Title>
       <Label style={{textAlign: 'center', width: 700, margin: 'auto'}}>Decida o que melhor se encaixa com sua perspectiva de negócio, faça um <i>"upgrade"</i> de plano a qualquer momento.</Label>
       <Planos>
-          <Plans type="normal"/>
-          <Plans type="premium"/>
-          <Plans type="imobil"/>
+          <Plans />
         </Planos>
 
         <ButtonPR style={{width: 300, margin: 'auto', marginBottom: 40, }}>ENTRAR EM CONTATO</ButtonPR>

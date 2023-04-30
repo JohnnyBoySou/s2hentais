@@ -372,7 +372,7 @@ return await Axios.get(`${API_URL}/search/item?id=${id}`, {
 
 
 export async function requestLogin( email, password ){
-return Axios.post(`https://s2hentais.com/novoimovel/wp-json/jwt-auth/v1/token`,  
+return Axios.post(`https://s2hentais.com/wp-json/jwt-auth/v1/token`,  
   {
     email: email, 
     password: password

@@ -273,7 +273,7 @@ const AddImobiil = ( props ) => {
 
   return (
       
-    <View style={{flexDirection: 'column', display:'flex', background: color.light, paddingBottom: 20, }}> 
+    <View style={{flexDirection: 'column', display:'flex', background: color.background, paddingBottom: 20, }}> 
     
       <Step>
         <StepLine>

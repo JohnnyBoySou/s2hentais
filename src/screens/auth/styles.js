@@ -5,6 +5,7 @@ export const Container = styled.div `
   padding: 0px 0px;
   flex-direction: row;
   display: flex;
+  margin: -8px;
 `;
 
 export const View = styled.div `
@@ -26,8 +27,9 @@ export const Left = styled.div `
   display: flex;
   flex-direction: column;  
   width: 40%;
+  align-items: center;
   justify-content: center;
-  padding: 40px 80px;
+  
 `
 
 export const Right = styled.div `
@@ -76,15 +78,20 @@ export const Logo = styled.img`
   align-self: center;
   margin: 0px auto;
   margin-top: -30px;
+  margin-bottom: 20px;
+  align-self: center;
+  border-radius: 8px;
   `
 
 
 
+
 export const Input = styled.input `
-  font-size: 20px;
+  font-size: 22px;
   margin: 8px 0px;
-  border-radius: 6px;
-  border: 2px solid #00000020;
+  border-radius: 6px; 
+  border: 2px solid ${props => props.theme.title === 'dark' ? 'transparent' : props.theme.color.border};  
+  background: ${props => props.theme.color.off};
   transition: .2s linear;
   padding: 6px 8px;
   &:focus {

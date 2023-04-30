@@ -5,7 +5,8 @@ export const Input = styled.input `
   font-size: 16px;
   margin: 8px 0px;
   border-radius: 6px;
-  border: 2px solid #00000020;
+  border: 2px solid ${props => props.theme.title === 'dark' ? 'transparent' : props.theme.color.border};  
+  background: ${props => props.theme.color.off};
   transition: .2s linear;
   padding: 6px 8px;
   &:focus {

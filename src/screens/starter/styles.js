@@ -5,6 +5,7 @@ export const Container = styled.div `
   padding: 0px 0px;
   flex-direction: column;
   display: flex;
+  margin: -8px;
   padding-top: 80px;
 `;
 
@@ -134,7 +135,7 @@ export const Nav = styled.div`
   left: 0;
   width: 100%;
   height: 70px;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: ${props => props.theme.color.background}70;
   backdrop-filter: blur(10px);
   z-index: 9999;
   `
@@ -185,6 +186,7 @@ export const Section = styled.div`
   flex-direction: column;
   padding-top: 40px;
   padding-bottom: 40px;
+  background: ${props => props.theme.color.background};
 `
 
 
@@ -270,7 +272,7 @@ export const Footer = styled.div`
   flex-direction: column;
   margin-bottom: 0px;
   border-radius: 12px;
-  background: #f1f1f1;
+  background: ${props => props.theme.color.off};
   padding: 40px 80px;
   justify-content: space-between;
 `
@@ -300,11 +302,11 @@ export const Tips = styled.div`
   margin: auto;
   flex-direction: row;
   margin-bottom: 30px;
-  background: #FFF;
+  background: ${props => props.theme.color.background};
   width: 80%;
   padding: 40px 80px 0px 80px;
   justify-content: space-between;
-  border-bottom: 2px solid #00000010;
+  border-bottom: 2px solid ${props => props.theme.color.border};
 `
 
 export const TipsImg = styled.img`

@@ -7,19 +7,22 @@ import {
   Column,
   ColumnLabel,
   Title,
-  Circle
+  Circle,
+  GridRow,
+  GridRow2
 } from './styles';
 import { SelectLabel, SelectBt } from '../../../theme/global'
-import { FiCheck, FiX } from 'react-icons/fi'
+import { FiCheck, FiX, FiSearch } from 'react-icons/fi'
+import { BsHandIndex , BsImage} from 'react-icons/bs'
 import Categories  from '../../../api/categories.json'
 import Select from 'react-select' 
-import { customStyles } from './../../../api/customStyles';
 import { requestAuthorImoveisByCategories } from '../../../api/request';
 import ListH7 from './../../../structure/cards/list_h_7/index';
-import { ImoveisContainer } from '../styles';
-import Skeleton from '../../../components_2/skeleton';
+import { ImoveisContainer, Input, Row } from '../styles';
 
 import vid from '../../../assets/imgs/loader.gif'
+import { IconBt } from '../styles';
+import { CustomSelectStyles } from '../../../utils/customSelect';
 
 function ImoveisList(props) {
 
@@ -32,6 +35,7 @@ function ImoveisList(props) {
   const [category, setCategory] = useState(categories[0]);
   const [loading, setLoading] = useState(true);
 
+  const customStyles = CustomSelectStyles();
 
   const handleData = () => {
     setLoading(true);
@@ -73,13 +77,18 @@ function ImoveisList(props) {
       setSelectedIds([...selectedIds, id])
     }
   }
+  const [dataResult, setDataResult] = useState([]);
+  const [search, setSearch] = useState('');
+  const handleSearch = ( type ) => {
+    const result = data.filter(item => item.nome === search)
+    setDataResult(result) 
+   }
 
   return (
 
     <View className='column'>
 
 
-      <View style={{ marginBottom: 20, justifyContent: 'space-between' }} className='row'>
 
 
         {a &&
@@ -89,18 +98,31 @@ function ImoveisList(props) {
         </SelectBt>
           }
 
-        <View className='row'>
-        <Label style={{ paddingRight: 10, }}>Filtrar por</Label>
-          <Select styles={customStyles} onChange={(selectedOption) => setCategory(selectedOption)} options={categories} defaultValue={categories[0]} />
-        </View>
-        <Label style={{ paddingRight: 20, }}>Encontramos <Bold>{value_total}</Bold> imóveis</Label>
-          
-      </View>
+      <GridRow2>
+        <Row style={{marginLeft: 10,}}>
+          <Input style={{borderTopRightRadius:0, borderBottomRightRadius:0,}} onChange={e => setSearch(e.target.value)} placeholder='Pesquise por nome' />
+          <IconBt style={{width: 36, height: 35, marginTop: 8, borderRadius: 0,borderBottomRightRadius:4, borderTopRightRadius:4, marginLeft: 0,}} onClick={handleSearch}><FiSearch/></IconBt>
+          <Label style={{ paddingLeft: 20, marginTop: 12, }}>Encontramos <Bold>{value_total}</Bold> imóveis</Label>
+       
+        </Row>
 
+        <Row style={{marginRight: 10, marginTop: -5,}}>
+          <Label style={{ paddingRight: 10, }}>Filtrar por</Label>
+          <Select  styles={{
+            ...customStyles,
+            
+            input: (provided) => ({
+              ...provided,
+              color: color.title,
+            })
+          }} onChange={(selectedOption) => setCategory(selectedOption)} options={categories} defaultValue={categories[0]} />
+           </Row>
 
-    {value_total >= 1 && <>  {!loading &&   <View style={{ flexDirection: 'row', display: 'flex', borderTop: '2px solid #00000020', borderTopLeftRadius: 12, borderTopRightRadius: 12, borderLeft: '2px solid #00000020', borderRight: '2px solid #00000020', }}>
-       <Column style={{ width: 20 }}><ColumnLabel></ColumnLabel></Column>
-        <Column style={{ width: 20 }}><ColumnLabel></ColumnLabel></Column>
+        </GridRow2>
+
+    {value_total >= 1 && <>  {!loading && <GridRow>
+       <Column style={{ width: 20 }}><ColumnLabel style={{justifyContent: 'center'}}> <BsHandIndex style={{marginTop: 10,}}/></ColumnLabel></Column>
+        <Column style={{ width: 20 }}><ColumnLabel style={{justifyContent: 'center'}}><BsImage style={{marginTop: 10,}}/></ColumnLabel></Column>
         <Column style={{ width: 70, }}><ColumnLabel>Código (ID)</ColumnLabel></Column>
         <Column style={{ width: 100, }}><ColumnLabel>Categoria (Tipo)</ColumnLabel></Column>
         <Column style={{ width: 80, }}><ColumnLabel>Valor (R$)</ColumnLabel></Column>
@@ -115,15 +137,23 @@ function ImoveisList(props) {
           <ColumnLabel style={{ margin: 'auto' }}>Açãoes <br /> rápidas</ColumnLabel>
         </Column>
 
-      </View>}
+      </GridRow>}
       </>}
       
       {loading && <img alt='loader novo imovel' src={vid} style={{ width: 400, height: 300, alignSelf: 'center', }} />}
 
-      {!loading && <ImoveisContainer>
+
+      {!loading &&<View>
+      
+      {dataResult?.length === 0 && <ImoveisContainer>
         {data.map((data, index) => <ListH7 user={user} key={index} token={token} data={data}  onIdClick={handleIdClick} isSelected={selectedIds.includes(data.ID)} />)}
       </ImoveisContainer>}
 
+      {dataResult?.length >= 1 && <ImoveisContainer>
+        {dataResult.map((data, index) => <ListH7 user={user} key={index} token={token} data={data}  onIdClick={handleIdClick} isSelected={selectedIds.includes(data.ID)} />)}
+      </ImoveisContainer>}
+      
+      </View>}
       {!loading && <>
         {value_total === 0 && 
         <Column style={{flexDirection: 'column', display: 'flex'}}>

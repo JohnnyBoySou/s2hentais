@@ -36,7 +36,7 @@ import {
 
 import { useNavigate } from 'react-router-dom';
  
-import logo from '../../assets/imgs/logo_h_light.png'
+import logo from '../../assets/imgs2/logo-colorida-black.png'
 
 import imovel from '../../api/imovel.json'
 import '../animation.css'
@@ -58,6 +58,7 @@ import { Sk3 } from '../../structure/skeleton';
 import { requestLikesForUser, requestViewsForUser, requestMostPopular} from '../../api/request/stats';
 import Team from './team';
 import Search from './search';
+import ThemeToggle from '../../theme/toggle';
 
 const DashMain = ( ) => {
 
@@ -199,7 +200,6 @@ const DashMain = ( ) => {
   const [usersEmails, setUsersEmails] = useState([]);
 
   function handleUsersEmails(usersEmails) {
-    console.log(usersEmails)
     setUsersEmails(usersEmails);
   }
 
@@ -265,6 +265,8 @@ const DashMain = ( ) => {
           </View>
 
         <View className='row'>
+
+          <ThemeToggle/>
           <IconBt onClick={ () => handleScreen('search')}>
             <FiSearch/>
           </IconBt>
@@ -276,8 +278,8 @@ const DashMain = ( ) => {
           <ProfileContainer onClick={toggleDrawer('right', true, 'profile')}>
             <ProfileImg src={avatar}/>
             <View className='column' style={{}}>
-            <CardTitle style={{fontSize: 18, marginTop:10,}}>{userData?.display_name}</CardTitle>
-            <CardLabel style={{fontSize:14,}}>Gerenciar perfil</CardLabel>
+            <CardTitle style={{fontSize: 16, }}>{userData?.display_name}</CardTitle>
+            <CardLabel style={{fontSize:12,}}>Gerenciar perfil</CardLabel>
             </View>
           </ProfileContainer>
 

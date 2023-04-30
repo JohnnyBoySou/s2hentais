@@ -1,7 +1,7 @@
-# Novo-imovel
+# S2 Hentais
 
 Release initial 
 
-Projeto web usando React.
+Projeto web usando React, como CMS Headless conectado com API externa.
 
-Extensão do App Meu Novo Imovel
+Originado do S2 Hentais Native

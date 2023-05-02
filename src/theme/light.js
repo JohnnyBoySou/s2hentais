@@ -6,8 +6,8 @@ export default{
   load: "#333333",
   color: {
     font: "#000000",
-    primary: "#5B72F2",
-    secundary: "#FE7359",
+    primary: "#ED274A",
+    secundary: "#FE8671",
     escuro: "#0D2818",
     bar: "#FFFFFF",
     outlined: '#853EF3',

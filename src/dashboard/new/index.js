@@ -189,11 +189,7 @@ const DashMain = ( ) => {
 
   useEffect(() => {
     revalidateToken().then(token => {setToken(token)})
-    requestFeed().then(response => {
-      setFeed(response)
-    })
     getUserData()
-    
   }, [])
 
 

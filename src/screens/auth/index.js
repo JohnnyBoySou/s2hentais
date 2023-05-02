@@ -147,8 +147,7 @@ const changeMethod = () => {
       }
       requestUser().then(
         function(response) {  
-          console.log(response)
-          if(response.email){
+          if(response?.email){
             setEmail(response.email)
             setPassword(response.password)
             setFirstName(response.name)

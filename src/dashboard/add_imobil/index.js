@@ -71,14 +71,7 @@ import '../animation.css'
 
 import Modal from 'react-modal';
 import Select from 'react-select' 
-import makeAnimated from 'react-select/animated';
 
-import categorias  from '../../api/categorias' 
-import taxas  from '../../api/taxas' 
-import infraestrutura from './../../api/infraestrutura';
-import bairros from './../../api/bairros';
-
-import Item from '../../components/item';
 
 import { MdOutlineArrowForwardIos } from 'react-icons/md'
 import { FiX, FiCheck, FiAlertCircle } from 'react-icons/fi';
@@ -87,86 +80,61 @@ import { requestNewImovel } from '../../api/request/auth_requests';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineCloudUpload } from 'react-icons/ai'
 import Loader from  '../../components/loader'
-import { requestCEP, requestLatLong, } from '../../api/request';
-import { maskValueBR , maskCEP } from '../../utils/masks';
-import { customStyles } from './../../api/customStyles';
-import ImageUploader from './upload';
+import ImageUploader from './upload'; 
 import { tipos } from '../../api/tipos.js';
+import { cores } from '../../api/cores.js'
+import { categorias }  from '../../api/categorias.js';
+
 
 const AddImobiil = ( props ) => {
     const { color, font } = useContext(ThemeContext)
     const Navigate = useNavigate()
-    const userData = props.user
     const token = props.token
-    const authores = props.authores
+    const author = props.user.ID    
     const [newImovelPublish, setNewImovelPublish] = useState(false)
 
     const [images, setImages] = useState([]);
     const handleImagesUploaded = (imageIds) => {
       setImages(imageIds)
     };
-    const animatedComponents = makeAnimated();
 
     const newID = Number(Math.floor(Math.random() * (9999 - 1) + 9999))
-    const [nome, setNome] = useState('Residência Anahara')
-    const [descricao, setDescricao] = useState('')
-    const [categoria, setCategoria] = useState(categorias[0])
-    const [tipo, setTipo] = useState(tipos[0])
-    const [valor_mensal, setValorMensal] = useState('1.200,00')
-    const [valor_unico, setValorUnico] = useState('200.000,00')
-    const [cidade, setCidade] = useState('Jaraguá do Sul')
-    const [bairro, setBairro] = useState('Centro')
-    const [rua, setRua] = useState('')
-    const [numero, setNumero] = useState('32')
-    const [latitude, setLatitude] = useState('')
-    const [longitude, setLongitude] = useState('')
-    const [qtd1, setQtd1] = useState('3')
-    const [qtd2, setQtd2] = useState('1')
-    const [area, setArea] = useState('56')
-    const [areaConstruida, setAreaConstruida] = useState(42);
-    const [CEP, setCEP] = useState('')
 
-    const [conservacao, setConservacao] = useState('')
+    const [nome, setNome] = useState('')
+    const [nomeEstrangeiro, setNomeEstrangeiro] = useState();
+    const [descricao, setDescricao] = useState('')
+    const [categoria, setCategoria] = useState()
+    const [tipo, setTipo] = useState()
+    const [paginas, setPaginas] = useState();
+    const [cor, setCor] = useState();
+    const [artista, setArtista] = useState();
+    const [tradutor, setTradutor] = useState();
+  
+    
   
     const sendRequest = 
     {
       "ID": newID,
       "title": nome,
-      "author": authores,
+      "author": author,
       "token": token,
       
       "acf": {
         "codigo": newID,
         "nome": nome,
+        "nome_estrangeiro": nomeEstrangeiro,
         "descricao": descricao,
-        "area": area,
-
-        "tipo": tipo.label,
-        "valor_mensal": Number(valor_mensal),
-        "valor_unico": Number(valor_unico),
-        "cidade": cidade,
-        "bairro": bairro,
-        "rua": rua,
-        "numero": numero,
-        
-        "item1": "Quarto",
-        "qtd1": qtd1,
-        "item2": "Banheiro",
-        "qtd2": qtd2,
-
-        "latitude": latitude,
-        "longitude": longitude,
-        "taxas": taxas,
-        "categoria": categoria.label,
-        "infraestrutura": infraestrutura.label,
-        "conservacao": conservacao,
-        "criador": authores[0],
+        "cor": cor,
+        "artista": artista,
+        "tradutor": tradutor,
+        "tipo": tipo,
+        "categoria": categoria,
         },
 
         //obrigatorio tratar no back-end
         
-        "content": "api_imovel",
-        "categories": [2],
+        "content": "api_s2hentais",
+        "categories": [5],
         "status": "publish",
         "type": "post",
         "ping_status": "closed",
@@ -197,7 +165,7 @@ const AddImobiil = ( props ) => {
       },
     };
     
-    const [steps, setSteps] = useState([true, false, false, false]);
+    const [steps, setSteps] = useState([true, false, false,]);
     const [index, setIndex] = useState(0);
     
     const nextStep = () => {
@@ -219,6 +187,7 @@ const AddImobiil = ( props ) => {
 
   const [loadingNewImovel, setLoadingNewImovel] = useState(false)
 
+
   function newImovel (){
     setLoadingNewImovel(true)
     requestNewImovel( sendRequest, token ).then(
@@ -232,38 +201,50 @@ const AddImobiil = ( props ) => {
     })
   }
 
-  const [loadingCEP, setLoadingCEP] = useState(false)
-
-  function handleCEP (){
-    setLoadingCEP(true)
-    requestCEP( CEP ).then(
-      function(response, error) {
-        if(response){
-          setLoadingCEP(false)
-          setRua(response.logradouro)
-          setBairro(response.bairro)
-          setCidade(response.localidade)
-          requestLatLong(CEP).then(address => {
-            setLatitude(address?.lat)
-            setLongitude(address.lng)
-            setLoadingCEP(false)
-          })
-        }else if(console.log(error))
-        return})}
-
-
-  const changeCEP = (event ) => {
-    const value = event.target.value;
-    const regex = /^(\d{5})-?(\d{0,3})$/;
-    const matches = value.match(regex);
-    const cepValue = matches ? `${matches[1]}-${matches[2]}` : value.slice(0, 8);
-    setCEP(cepValue);
-  }
   const [modalIsOpen2, setIsOpen2] = useState(false);
   const handleNewImovel = () => {setLoadingNewImovel(!loadingNewImovel);newImovel()}
-  function handleChangeMaskMensal(e) {const { value } = e.target; setValorMensal(value)}
-  function handleChangeMaskUnico(e) {const { value } = e.target; setValorUnico(value)}
 
+  const customStyles = {
+    
+    singleValue: ( provided ) => ({
+      ...provided, 
+      color: "#fff",
+     }),
+    control: () => ({
+      display: 'flex',
+      minWidth: 180,
+      color: "#fff",
+      borderRadius: 5,  
+      background: "#2F2F2F",
+      fontFamily: "Font_Medium, sans-serif",
+      flexDirection: 'row',
+      fontSize: 20,
+      marginTop: 10,
+      marginBottom: 10,
+    }),
+    indicatorSeparator: () => ({
+      background: color.off,
+    }),
+    dropdownIndicator : () => ({
+      color: "#fff",
+      fontSize: 28,
+      marginRight: 5,
+      marginLeft: -5,
+    }),
+    menu: (provided) => ({
+      ...provided,
+      background: color.off2,
+      fontFamily: "Font_Medium, sans-serif",
+      color: "#fff",
+    }),
+    option: (provided) => ({
+      ...provided,
+      '&:hover': {
+        backgroundColor: color.hover,
+      },
+    })
+  }
+  
 
   React.useEffect(() => {
     handleImagesUploaded()
@@ -273,9 +254,15 @@ const AddImobiil = ( props ) => {
 
   return (
       
-    <View style={{flexDirection: 'column', display:'flex', background: color.background, paddingBottom: 20, }}> 
+    <View style={{flexDirection: 'column', display:'flex', background: color.off, paddingBottom: 20, borderRadius: 12, padding: 20, }}> 
     
       <Step>
+        <View style={{marginLeft: 20,}}>
+          {!steps[0] && <ButtonBR  disabled={steps[0]} onClick={previousStep}>ANTERIOR</ButtonBR>}       
+          {!steps[1] && <ButtonPR onClick={nextStep}>PRÓXIMO</ButtonPR>}
+        </View>
+
+        <View style={{alingSelf: 'center', flexDirection: 'row', display: 'flex'}}>  
         <StepLine>
           <StepIcon on={steps[0]}><StepLabel>1</StepLabel></StepIcon>
           <StepTitle>Dados Gerais</StepTitle>
@@ -283,254 +270,93 @@ const AddImobiil = ( props ) => {
         <Arrow>
           <MdOutlineArrowForwardIos/>
         </Arrow>
+        
         <StepLine>
           <StepIcon on={steps[1]}><StepLabel>2</StepLabel></StepIcon>
-          <StepTitle>Local e Endereço</StepTitle>
-        </StepLine>
-        
-        <Arrow>
-          <MdOutlineArrowForwardIos/>
-        </Arrow>
-        <StepLine>
-          <StepIcon on={steps[2]}><StepLabel>3</StepLabel></StepIcon>
           <StepTitle>Mídia e Fotos</StepTitle>
         </StepLine>
-
-        
-        <Arrow>
-          <MdOutlineArrowForwardIos/>
-        </Arrow>
-        <StepLine>
-          <StepIcon on={steps[3]}><StepLabel>4</StepLabel></StepIcon>
-          <StepTitle>Publicar</StepTitle>
-        </StepLine>
-      </Step>
-
-
-
-    
- 
-    {a &&  <View style={{flexDirection: 'row', display: 'flex', justifyContent: 'space-between'}}>
- 
-    <Routes style={{marginLeft: 20, marginTop: 20,}}>
-          <Link to="/dashboard" style={{textDecoration: 'none'}}><Route>Painel</Route></Link>
-          <MdKeyboardArrowRight/>
-          <Route>Imóvel</Route>
-          <MdKeyboardArrowRight/>
-          <Route style={{textDecoration: 'underline', color: color.title,}}>Novo</Route>
-      </Routes>
-          <ButtonPR style={{background:color.red,  fontSize: 14, paddingLeft: 20, paddingRight: 20, paddinTop: 10, paddingBottom: 10, marginTop: 10,}}>SAIR</ButtonPR>
         </View>
-        }
-  
-
-  
-
+        
+      </Step>
 
 
  <Separetor/>
 
 
         {steps[0] &&  <FirstStep className='fadeUp'>
-          <Column style={{width: '50%'}}>
+          <Column style={{width: '40%'}}>
 
-
-          <Label>Nome para o imóvel</Label>
+          <Label>Nome</Label>
           <Input value={nome} onChange={e => setNome(e.target.value)} name="nome" type="text"/>
           
+          <Label>Nome estrangeiro</Label>
+          <Input value={nomeEstrangeiro} onChange={e => setNomeEstrangeiro(e.target.value)} name="nome" type="text"/>
           
-          <Label>Tipo de valor</Label>
-          <Select styles={customStyles} placeholder="Por mês" onChange={setTipo} options={tipos} defaultValue={tipo} />
+          <Label>Páginas</Label>
+          <Input value={paginas} onChange={e => setPaginas(e.target.value)} name="nome" type="number"/>
+          
+          
+          </Column>
+          <Column style={{width: '60%'}}>
+
+          <Label>Cor</Label>
+          <Select styles={customStyles} placeholder="Colorido" onChange={setCor} options={cores} defaultValue={cor} />
          
 
-         <View className='column fadeUp'>
-          {tipo.label === "Por mês" && <Label>Valor mensal</Label>}
-          {tipo.label === "Por mês" && <Input value={valor_mensal} name="valor_mensal"  onChange={handleChangeMaskMensal} placeholder="Exemplo: 800,00" type="text"/>}
-          
-          {tipo.label === "Valor Único" && <Label>Valor Único</Label>}
-          {tipo.label === "Valor Único" && <Input value={valor_unico} name="valor_unico"  onChange={handleChangeMaskUnico} placeholder="Exemplo: 100.000,00" type="text"/>}
-          </View>
-
+          <Label>Tipo</Label>
+          <Select styles={customStyles} placeholder="Doujin" onChange={setTipo} options={tipos} defaultValue={tipo} />
+         
 
           <Label>Categorias</Label>         
-          <Select styles={customStyles} onChange={setCategoria} options={categorias} defaultValue={categorias[0]} />
+          <Select styles={customStyles} placeholder="Chubby, Colegial..." onChange={setCategoria} isMulti options={categorias} defaultValue={categoria} />
           
           
-          
-          </Column>
-          <Column style={{width: '50%'}}>
-          
-         
-          <View className='row' style={{justifyContent: 'space-between'}}>
-          
-          <View style={{width:"48%"}} className='column'>
-          <Label>Qtd. de quartos</Label>
-          <Input value={qtd1} name="qtd1"  onChange={e => setQtd1(e.target.value)} placeholder="Exemplo: 4" type="number"/>
-          </View>
-
-          <View className='column' style={{width:"48%"}}>
-          <Label>Qtd. de banheiros</Label>
-          <Input value={qtd2} name="qtd2" onChange={e => setQtd2(e.target.value)} placeholder="Exemplo: 2" type="number"/>
-          </View>
-          </View>
-
-
-          <Row style={{justifyContent: 'space-between'}}>
-            <Column  style={{width:"48%"}}>
-              <Label>Área construida (m&#178;)</Label>
-              <Input value={areaConstruida} name="area" onChange={e => setAreaConstruida(e.target.value)} placeholder="Exemplo: 130" type="number"/>
-            </Column>
-       <Column  style={{width:"48%"}}>
-          <Label>Área total (m&#178;)</Label>
-          <Input value={area} name="area" onChange={e => setArea(e.target.value)} placeholder="Exemplo: 130" type="number"/>
-          </Column>
-          </Row>
-          <Label>Taxas adicionais</Label>         
-          <Select isMulti closeMenuOnSelect={false} placeholder="Insira as taxas adicionais"
-      components={animatedComponents} styles={customStyles} options={taxas} defaultValue={taxas[0]} />
-      
-          <Label>Infraestrutura</Label>         
-          <Select isMulti closeMenuOnSelect={false} placeholder="Insira itens de infraestrutura"
-      components={animatedComponents} styles={customStyles} options={infraestrutura} defaultValue={infraestrutura[0]} />
-         
-
           </Column>
           </FirstStep>}
           
 
-          {steps[1] && 
-            <SecondStep className='fadeUp'>
-            <Column style={{width: '50%'}}>
-
-            <Label>CEP</Label>
-            <View className="row" style={{justifyContent: 'space-between'}}>
-              <Input style={{width: '100%'}} value={CEP} onChange={changeCEP} placeholder="Exemplo: 89999000" name="numero" type="text" maxLength="9"/>
-              <ButtonPR style={{width: 54, height: 44, marginTop: 6, marginLeft: 15, padding: 0, paddingTop: 6, textAlign: 'center', fontSize: 32,}} onClick={handleCEP}><FiCheck/></ButtonPR>
-            </View>
-            <Label>Bairro</Label>
-            <Input disabled value={bairro} onChange={e => setBairro(e.target.value)} styles={customStyles} placeholder="Ex: Centro" />
-      
-            <Label>Rua</Label>
-            <Input disabled value={rua} onChange={e => setRua(e.target.value)} placeholder="Exemplo: Gov. Jorge Lacerda" name="rua" type="text"/>
-          
-      
-            </Column>
-            <Column style={{width: '50%'}}>
-
-            <Label>Número</Label>
-            <Input value={numero} onChange={e => setNumero(e.target.value)} placeholder="Exemplo: 455" name="numero" type="number"/>
-                  
-            <Label>Latitude e Longitude</Label>
-            <View className="row" style={{justifyContent: 'space-between'}}>
-            <Input  style={{width: '80%'}} disabled value={latitude} name="latitude" onChange={e => setLatitude(e.target.value)} placeholder="-32.000000" type="number"/>
-            
-            <Input style={{marginLeft: 20,}} disabled value={longitude} name="longitude" onChange={e => setLongitude(e.target.value)} placeholder="-46.000000" type="number"/>
-            </View>
-
-
-            
-            <Label>Cidade</Label>
-            <Input disabled value={cidade} onChange={e => setCidade(e.target.value)} placeholder="Exemplo: Joinville" name="cidade" type="text"/>
-                  
-            </Column>
-
-
-            </SecondStep>}
-
-
-          {steps[2] && <ThreeStep className='fadeUp'>
+          {steps[1] && <ThreeStep className='fadeUp'>
             <Column style={{justifyContent: 'center', marginBottom: 0, width: '100%'}}>
           
               <Upload>
                   <IoIosImages size={52} style={{textAlign: 'center', alignSelf: 'center', marginBottom: 20, color: color.primary,}} />
                   
-                  <UploadText style={{color: color.title, marginBottom: 8,}}>Envie as fotos do seu imóvel aqui</UploadText>
-                  <UploadText style={{fontSize: 18, marginTop: 20, marginBottom: 20, width: 500, margin: 'auto',}}>Tamanho recomendado: 1024 x 1920 (9:16), podendo ser enviado até 8 imagens, com no máximo 4MB cada.</UploadText>  
+                  <UploadText style={{color: color.title, marginBottom: 8,}}>Envie as fotos do seu Hentai aqui</UploadText>
+                  <UploadText style={{fontSize: 18, marginTop: 20, marginBottom: 20, width: 500, margin: 'auto',}}>Tamanho recomendado: 1024 x 1920 (9:16), podendo ser enviado até 50 imagens, com no máximo 4MB cada.</UploadText>  
              
                   <ImageUploader token={token}/>
                 
               
               </Upload>
              </Column>
-            </ThreeStep>}
-
-
-
-          {steps[3] && <FourStep className='fadeUp'>
-            <Column style={{justifyContent: 'center', marginTop: 20, marginBottom: 0, width: '100%'}}>
-            
-              <View className='row' style={{flexDirection: 'row', display: 'flex',}}>
-              <View className='column' style={{paddingRight: 40, width: "60%"}}>
-                <Title style={{ marginBottom: 0,}}>Conte um pouco mais do imóvel</Title>
-                <Label style={{ marginBottom: 10,fontSize: 20,}}>Descreva seu imóvel expondo alguns detalhes que possam ser interessantes e chamar a atenção de novos clientes.</Label>
              
-                <Label style={{fontFamily: font.medium, color: color.title,}}>Descrição</Label>
-                <TextArea style={{height: 240,}}  rows={8} cols={6} value={descricao} onChange={e => setDescricao(e.target.value)} placeholder="Exemplo: O imóvel possuí área para churrasco." name="numero" type="textarea"/>
-              
-
-              <View className='row' style={{justifyContent: 'space-between',}}>
+             <View className='row' style={{justifyContent: 'space-between', alignSelf: 'center', marginTop: -20,}}>
                 <PublishBt onClick={handleNewImovel} disabled={loadingNewImovel}>
+               
                 <PublishBtIcon>
                  {!loadingNewImovel && <AiOutlineCloudUpload style={{fontSize: 28, marginBottom: -6, }}/>}
                   {loadingNewImovel &&  <View style={{marginTop: 6,}} ><Loader className='fadeUp' type="spin" size={20} color={color.light}/></View>}
                   {newImovelPublish && <FiCheck style={{fontSize: 24, marginTop: 4,}}/>}
                 </PublishBtIcon>
+                
                 <PublishLabel>
                   PUBLICAR
                 </PublishLabel>
               </PublishBt>
 
-              <PublishTip>
-                <FiAlertCircle style={{paddingRight: 15, fontSize: 42, marginTop: -2,}}/>
-                <PublishTipLabel>Ao publicar, em alguns minutos seu imóvel estará online.</PublishTipLabel>
-              </PublishTip>
               
 
               </View>
-              </View>
-
-              <View style={{ width: "50%"}}>
-              <PublishCard>
-              
-                <View className='row' style={{width: '100%',display: 'flex', justifyContent: 'space-between'}}>
-                  <View className='column'>
-                    <PublishType>{categoria.label}</PublishType>
-                    <PublishTitle>{nome}</PublishTitle>
-                  </View>
-                  <View style={{paddingTop: 20,}}>
-                  {tipo.label === "Por mês" && <PublishValue>R$ {valor_mensal}</PublishValue>}
-                  {tipo.label === "Valor Único" && <PublishValue>R$ {valor_unico}</PublishValue>}
-                  </View>
-                </View>
-                
-                <View className='row' style={{ marginTop: 20, justifyContent: 'space-between'}}>
-                  <Item type="Quarto" amount={qtd1} />
-                  
-                  <Item type="Banheiro" amount={qtd2} />
-                
-                  <Item type="Area" amount={area} />
-
-                </View>
-
-                <PublishDescription>{descricao}</PublishDescription>
-
-              </PublishCard>
-       
-
-              
-            </View>
-          </View>
-                </Column>
-            </FourStep>}
+            </ThreeStep>}
 
           <Separetor style={{marginLeft: 0, marginBottom: 30,}}/>
 
         
-      <View style={{flexDirection: 'row', display: 'flex', justifyContent: 'space-between', paddingLeft: 0, paddingRight: 20,}}>
-            <ButtonBR  disabled={steps[0]} onClick={previousStep}>ANTERIOR</ButtonBR>
+          <View style={{flexDirection: 'row', display: 'flex', justifyContent: 'space-between', paddingLeft: 0, paddingRight: 20,}}>
+            {!steps[0] && <ButtonBR  disabled={steps[0]} onClick={previousStep}>ANTERIOR</ButtonBR>}
             <View>
             
-          {!steps[3] &&  <ButtonPR onClick={nextStep}>PRÓXIMO</ButtonPR>}
+            {!steps[1] && <ButtonPR onClick={nextStep}>PRÓXIMO</ButtonPR>}
             </View>
           </View>
 

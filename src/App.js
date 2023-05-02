@@ -15,7 +15,6 @@ import Home from './screens/home'
 import Feed from './screens/feed'
 
 import Preferences from './screens/preferences'
-import Map from './screens/map/index'
 import Details from './screens/details';
 import CollectionsDetails from './screens/collections';
 import Async from './screens/async'
@@ -86,9 +85,6 @@ const App = () => {
 
         <Route path="/collections" exact element={<CollectionsDetails/>}/>
         <Route path="/colecoes" exact element={<CollectionsDetails/>}/>
-
-        <Route path="/map" exact  element={<Map/>}/>
-        <Route path="/mapa" exact  element={<Map/>}/>
 
         <Route path="/details/:id" element={<Details/>}/>
         <Route path="/detalhes/:id" element={<Details/>}/>

@@ -11,11 +11,11 @@ export const Ripple = styled(Ripples).attrs(() => ({
 
 
 export const ButtonBR = styled.button`
-  border: 2px solid #00000020;
+  border: 2px solid  ${props => props.theme.color.border};
   border-radius: 10px;
   justify-content: center;
   padding: 10px 20px;
-  background: ${props => props.theme.color.light};
+  background: ${props => props.theme.color.border};
   color: ${props => props.theme.color.title};
   font-size: 18px;
   font-family: ${props => props.theme.font.medium};

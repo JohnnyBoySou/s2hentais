@@ -77,7 +77,7 @@ export const Separetor = styled.div`
   
   height: 2px;
   margin: 20px 20px 0px 0px;
-  background: ${props => props.light ? "#ffffff20" : "#00000020" };  ;
+  background: ${props => props.theme.color.border};
 `
 
 
@@ -114,11 +114,11 @@ export const Label = styled.label`
 `;
 
 export const Input = styled.input `
-  font-size: 22px;
+  font-size: 20px;
   margin: 8px 0px;
   border-radius: 6px; 
   border: 2px solid ${props => props.theme.title === 'dark' ? 'transparent' : props.theme.color.border};  
-  background: ${props => props.theme.color.off};
+  background: ${props => props.theme.color.off2};
   transition: .2s linear;
   padding: 6px 8px;
   &:focus {
@@ -185,7 +185,7 @@ export const StepIcon = styled.div`
   width: 38px;
   height: 38px;
   font-family: ${props => props.theme.font.medium};
-  background: ${props => props.on ? "#5B72F2" : "#33333350" }; 
+  background: ${props => props.on ? "#ED274A" : "#33333350" }; 
   border-radius: 100px;
   text-align: center;
   display: flex;
@@ -239,7 +239,7 @@ export const SecondStep = styled.div`
 
 export const ThreeStep = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 `
 
 export const FourStep = styled.div`

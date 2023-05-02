@@ -179,7 +179,7 @@ const Dashboard = ( props ) => {
               <CardLabel style={{fontSize:14,}}>Esperamos que não, digite abaixo <CardLabel style={{fontFamily: font.bold, color: color.primary,}}>meunovoimovel</CardLabel>, para confirmar.</CardLabel>
               <Input onKeyDown={handleKeyDown} value={imovelNome} style={{marginBottom: 20,}} onChange={e => setNomeImovel(e.target.value)}  placeholder="Digite o que está escrito acima" type="text"/>
 
-              <ButtonPR  off={!next} disabled={!next}>PRÓXIMO</ButtonPR>
+              <ButtonPR onClick={click}  off={!next} disabled={!next}>PRÓXIMO</ButtonPR>
             </View>  
             
           </View>

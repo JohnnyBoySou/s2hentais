@@ -14,7 +14,7 @@ const ImageUploaderContainer = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
-  padding: 40px;
+  padding: 20px;
   margin: 30px 40px;
   border-radius: 12px;
   background: ${props => props.theme.color.primary}20;
@@ -126,9 +126,8 @@ const ImageUploader = ({ props, onImagesUploaded }) => {
           <ImageUploaderContainer {...getRootProps()}>
             <input {...getInputProps()} />
             
-            <AiOutlineCloudUpload size={42} style={{color: "#5B72F2", margin: 'auto'}} />
-            <UploadLabel>Arraste e solte uma imagem aqui, ou clique para selecionar uma imagem.</UploadLabel>
-   
+            <AiOutlineCloudUpload size={42} style={{color: "#ED274A", margin: 'auto'}} />
+         
 
             <Grid>
             {images.map((image, index) => (

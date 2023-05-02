@@ -77,7 +77,7 @@ import Modal from 'react-modal';
 import Select from 'react-select' 
 import makeAnimated from 'react-select/animated';
 
-import categorias  from '../../api/categorias.js' 
+import {categorias}  from '../../api/categorias.js' 
 import taxas  from '../../api/taxas.js' 
 import infraestrutura from '../../api/infraestrutura.js';
 import bairros from '../../api/bairros.js';

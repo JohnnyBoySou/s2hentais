@@ -2,15 +2,16 @@
 export const customStyles = {
   option: (provided, state) => ({
     ...provided,
-    color: state.isSelected ? "#F1F3FF" : "#072942",
    fontFamily: "Font_Medium, sans-serif",
    fontSize: 18,
+   color: "#fff",
   }),
   control: () => ({
-    border: '2px solid #00000020',
     display: 'flex',
     minWidth: 180,
+    color: "#fff",
     borderRadius: 5,  
+    background: "#2F2F2F",
     fontFamily: "Font_Medium, sans-serif",
     flexDirection: 'row',
     fontSize: 18,
@@ -23,9 +24,14 @@ export const customStyles = {
   }),
 
   dropdownIndicator : () => ({
-    color: "#000",
+    color: "#fff",
     fontSize: 28,
     marginRight: 5,
     marginLeft: -5,
-  })
+  }),
+  menu: () => ({
+    background: "#2F2F2F",
+    color: "#fff",
+  }),
+
 }

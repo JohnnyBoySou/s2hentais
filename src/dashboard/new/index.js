@@ -4,7 +4,7 @@ import React, { useContext , useState, useEffect} from 'react';
 
 import { FiSearch, FiHelpCircle, FiBell , FiSettings} from 'react-icons/fi'
 import { MdOutlineSpaceDashboard } from 'react-icons/md'
-import { BsHouseDoor , BsCreditCard } from 'react-icons/bs'
+import { BsHouseDoor , BsCreditCard, BsFileRichtext } from 'react-icons/bs'
 import { TfiStatsUp } from 'react-icons/tfi'
 
 
@@ -108,7 +108,7 @@ const DashMain = ( ) => {
     const pages = {
       dashboard: {
         name: 'Dashboard',
-        desc: 'Visão geral de seus imóveis'
+        desc: 'Visão geral de seus hentais'
       },
       plans: {
         name: 'Planos',
@@ -123,8 +123,8 @@ const DashMain = ( ) => {
         desc: 'Ajuste a plataforma a suas preferências.'
       },
       imoveis: {
-        name: 'Imóveis',
-        desc: 'Seus imóveis estão por aqui.'
+        name: 'Hentais',
+        desc: 'Seus Hentais estão por aqui.'
       },
       team: {
         name: 'Equipe',
@@ -220,18 +220,13 @@ const DashMain = ( ) => {
 
 
             <LineBar checked={imoveis} disabled={imoveis} onClick={ () => handleScreen('imoveis')}>
-                <BsHouseDoor style={{marginBottom: -4,}}/>
-                <LineSpan>Imóveis</LineSpan>
+                <BsFileRichtext style={{marginBottom: -4,}}/>
+                <LineSpan>Hentais</LineSpan>
             </LineBar>
 
           <LineBar checked={statistics} disabled={statistics} onClick={ () => handleScreen('statistics')}>
                 <TfiStatsUp style={{marginBottom: -4,}}/>
                 <LineSpan>Estatísticas</LineSpan>
-            </LineBar>
-
-            <LineBar checked={team} disabled={team}  onClick={ () => handleScreen('team')}>
-                <FiSettings style={{marginBottom: -4,}}/>
-                <LineSpan>Equipe</LineSpan>
             </LineBar>
 
             <LineBar checked={plans} disabled={plans} onClick={ () => handleScreen('plans')}>
@@ -291,7 +286,7 @@ const DashMain = ( ) => {
         
         {dashboard && <Dashboard user={userData} item={feed} onUsersEmails={handleUsersEmails} click={handleClick} className="fadeUp" vllike={vllike} vlview={vlview} mostView={mostView} mostLike={mostLike} /> }
         {addimovel && <AddImobil user={userData} authores={usersEmails}  token={token}/>}
-    
+        <AddImobil user={userData}  token={token}/>
         {imoveis &&  <ImoveisList userID={userData} user={userData} token={token}/> }
        
         {settings && <Settings userData={userData}/>}

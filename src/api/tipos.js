@@ -1,5 +1,6 @@
 export const tipos = [
-    { value: 'valor_mensal', label: 'Por mês' },
-    { value: 'valor_unico', label: 'Valor Único' },
+    { value: 'doujin', label: 'Doujin' },
+    { value: 'one-shot', label: 'One-shot' },
+    { value: 'manga', label: 'Mangá' },
   ];
   

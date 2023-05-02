@@ -24,7 +24,7 @@ export const Upload = styled.div`
   text-align: center;
   display: flex;
   flex-direction: column;
-  border: 3px dashed #00000020;
+  border: 3px dashed ${props => props.theme.color.border};
 `
 
 export const UploadSide = styled.div`
